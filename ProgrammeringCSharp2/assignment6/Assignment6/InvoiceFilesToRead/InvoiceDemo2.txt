@@ -1,0 +1,36 @@
+2020-33
+2020-03-01	
+2020-03-31	
+2019-06-29
+Simpson Enterprise
+Homer Simpson
+Springfield 34
+4567
+Lund
+Sweden			
+4
+Strong Bear
+4
+39.90
+25
+Garlic Bread
+2
+4.99
+6
+Garlic Butter
+2
+4.99
+6
+Garlic Bread Book
+1
+42.99
+12
+Apu Beverages Inc
+Verages st 12
+12345
+Somecity
+Some Country
+000 123456
+Beverages.com
+
+

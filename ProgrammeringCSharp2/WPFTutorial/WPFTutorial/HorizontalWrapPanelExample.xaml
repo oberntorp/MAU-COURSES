@@ -1,0 +1,17 @@
+﻿<Window x:Class="WPFTutorial.DockPanelExample"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPFTutorial"
+        mc:Ignorable="d"
+        Title="WrapPanelExample" Height="450" Width="800">
+    <WrapPanel Orientation="Vertical">
+        <Button>Test button 1</Button>
+        <Button>Test button 2</Button>
+        <Button>Test button 3</Button>
+        <Button Height="40" Width="60">Test button 4</Button>
+        <Button>Test button 5</Button>
+        <Button Click="Button_Click_1">Test button 6 (StackPanel)</Button>
+    </WrapPanel>
+</Window>

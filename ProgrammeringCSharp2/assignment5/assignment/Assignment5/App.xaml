@@ -1,0 +1,14 @@
+﻿<Application x:Class="Assignment5.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Assignment5"
+             StartupUri="ControlTowerWindow.xaml">
+    <Application.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Height" Value="30"/>
+        </Style>
+        <Style TargetType="ComboBox">
+            <Setter Property="Height" Value="30"/>
+        </Style>
+    </Application.Resources>
+</Application>
