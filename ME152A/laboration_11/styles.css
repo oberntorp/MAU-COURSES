@@ -1,0 +1,40 @@
+body {
+    padding: 0px;
+    margin: 0px;
+}
+
+#main {
+    width: calc(100% -40px);
+    border: 1px solid black;
+    min-height: 500px;
+}
+
+#main #questionNumber {
+    padding: 4px;
+}
+
+#main #questions {
+    padding: 40px;
+    border: 1px solid black;
+    background: linear-gradient(white, green);
+}
+
+#main #questions .question {
+    display: none;
+    margin-bottom: 10px;
+}
+
+#main #answers::before {
+    display: inline-block;
+    content: "Availible answers";
+    text-decoration: underline;
+    margin-bottom: 5px;
+}
+
+#main #answers>span {
+    display: block;
+}
+
+#main #answers>span:hover {
+    cursor: pointer;
+}
