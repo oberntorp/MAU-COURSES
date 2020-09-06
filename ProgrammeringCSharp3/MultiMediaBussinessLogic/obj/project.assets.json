@@ -185,11 +185,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\wamp64\\www\\GitHub\\MAU-COURSES\\ProgrammeringCSharp3\\MultiMediaBusinessLogic\\MultiMediaClasses.csproj",
-      "projectName": "MultiMediaClasses",
-      "projectPath": "D:\\wamp64\\www\\GitHub\\MAU-COURSES\\ProgrammeringCSharp3\\MultiMediaBusinessLogic\\MultiMediaClasses.csproj",
+      "projectUniqueName": "D:\\wamp64\\www\\GitHub\\MAU-COURSES\\ProgrammeringCSharp3\\MultiMediaBussinessLogic\\MultiMediaBusinessLogic.csproj",
+      "projectName": "MultiMediaBusinessLogic",
+      "projectPath": "D:\\wamp64\\www\\GitHub\\MAU-COURSES\\ProgrammeringCSharp3\\MultiMediaBussinessLogic\\MultiMediaBusinessLogic.csproj",
       "packagesPath": "C:\\Users\\obern\\.nuget\\packages\\",
-      "outputPath": "D:\\wamp64\\www\\GitHub\\MAU-COURSES\\ProgrammeringCSharp3\\MultiMediaBusinessLogic\\obj\\",
+      "outputPath": "D:\\wamp64\\www\\GitHub\\MAU-COURSES\\ProgrammeringCSharp3\\MultiMediaBussinessLogic\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\obern\\AppData\\Roaming\\NuGet\\NuGet.Config",

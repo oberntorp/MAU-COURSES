@@ -24,5 +24,15 @@ namespace MultiMediaApplication
         {
             InitializeComponent();
         }
+
+        private void MenuItemVideo_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void MenuItemImage_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

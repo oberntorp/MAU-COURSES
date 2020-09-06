@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MultiMediaBusinessLogic
+namespace MultiMediaBussinessLogic
 {
     public class Class1
     {

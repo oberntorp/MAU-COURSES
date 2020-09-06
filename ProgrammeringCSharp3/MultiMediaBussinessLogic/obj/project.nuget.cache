@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "YIoPFrhlBOgjUtXYS8bS+VQC/tPU9btyjmZUREUFeLjZIU3GkTc6A+cOUpVUZOm3DaYbHu63tiH9qtzf+VbWBw==",
+  "dgSpecHash": "qCKVLJn1mV7gkHTQptd99kVSVtwIcJ2//zlTUflmxPhRNJET+YaQPKQ1utkSJWjI49h4JGWy+4GT1R28sGHdIg==",
   "success": true,
-  "projectFilePath": "D:\\wamp64\\www\\GitHub\\MAU-COURSES\\ProgrammeringCSharp3\\MultiMediaBusinessLogic\\MultiMediaClasses.csproj",
+  "projectFilePath": "D:\\wamp64\\www\\GitHub\\MAU-COURSES\\ProgrammeringCSharp3\\MultiMediaBussinessLogic\\MultiMediaBusinessLogic.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\obern\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
     "C:\\Users\\obern\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512"
