@@ -94,5 +94,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MultiMediaBussinessLogic\MultiMediaBusinessLogic.csproj">
+      <Project>{0d8c96b6-e73e-4af8-a777-c09651885316}</Project>
+      <Name>MultiMediaBusinessLogic</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

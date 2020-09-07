@@ -25,6 +25,16 @@
         "build": {
           "build/netstandard2.0/NETStandard.Library.targets": {}
         }
+      },
+      "MultiMediaClasses/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "compile": {
+          "bin/placeholder/MultiMediaClasses.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/MultiMediaClasses.dll": {}
+        }
       }
     }
   },
@@ -172,10 +182,16 @@
         "netstandard.library.2.0.3.nupkg.sha512",
         "netstandard.library.nuspec"
       ]
+    },
+    "MultiMediaClasses/1.0.0": {
+      "type": "project",
+      "path": "../MultiMediaBusinessLogic/MultiMediaClasses.csproj",
+      "msbuildProject": "../MultiMediaBusinessLogic/MultiMediaClasses.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETStandard,Version=v2.0": [
+      "MultiMediaClasses >= 1.0.0",
       "NETStandard.Library >= 2.0.3"
     ]
   },
@@ -204,7 +220,11 @@
       },
       "frameworks": {
         "netstandard2.0": {
-          "projectReferences": {}
+          "projectReferences": {
+            "D:\\wamp64\\www\\GitHub\\MAU-COURSES\\ProgrammeringCSharp3\\MultiMediaBusinessLogic\\MultiMediaClasses.csproj": {
+              "projectPath": "D:\\wamp64\\www\\GitHub\\MAU-COURSES\\ProgrammeringCSharp3\\MultiMediaBusinessLogic\\MultiMediaClasses.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

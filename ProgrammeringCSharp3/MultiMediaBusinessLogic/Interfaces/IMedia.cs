@@ -6,5 +6,8 @@ namespace MultiMediaBusinessLogic
 {
     interface IMedia
     {
+        string Name { get; set; }
+        string Source { get; set; }
+        string FileExtention { get; set; }
     }
 }
