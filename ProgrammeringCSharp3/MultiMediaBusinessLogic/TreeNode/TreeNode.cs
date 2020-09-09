@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MultiMediaClasses.TreeNode
 {
-    class TreeNode
+    public class TreeNode
     {
         public TreeNodeTypes type { get; set; }
         public string Name { get; set; }

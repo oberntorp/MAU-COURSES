@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MultiMediaBusinessLogic
 {
-    class Video : MediaFile
+    public class Video : MediaFile
     {
         public int Length { get; set; }
 

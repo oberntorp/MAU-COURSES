@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MultiMediaClasses.TreeNode
 {
-    enum TreeNodeTypes
+    public enum TreeNodeTypes
     {
         directory,
         playlist

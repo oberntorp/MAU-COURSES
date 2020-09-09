@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MultiMediaBusinessLogic
 {
-    interface IMedia
+    public interface IMedia
     {
         string Name { get; set; }
         string Source { get; set; }
