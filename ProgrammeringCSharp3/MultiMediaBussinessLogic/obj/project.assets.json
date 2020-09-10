@@ -26,14 +26,17 @@
           "build/netstandard2.0/NETStandard.Library.targets": {}
         }
       },
-      "MultiMediaClasses/1.0.0": {
+      "MultiMediaClassesAndManagers/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
+        "dependencies": {
+          "Utilities": "1.0.0"
+        },
         "compile": {
-          "bin/placeholder/MultiMediaClasses.dll": {}
+          "bin/placeholder/MultiMediaClassesAndManagers.dll": {}
         },
         "runtime": {
-          "bin/placeholder/MultiMediaClasses.dll": {}
+          "bin/placeholder/MultiMediaClassesAndManagers.dll": {}
         }
       },
       "Utilities/1.0.0": {
@@ -193,10 +196,10 @@
         "netstandard.library.nuspec"
       ]
     },
-    "MultiMediaClasses/1.0.0": {
+    "MultiMediaClassesAndManagers/1.0.0": {
       "type": "project",
-      "path": "../MultiMediaBusinessLogic/MultiMediaClasses.csproj",
-      "msbuildProject": "../MultiMediaBusinessLogic/MultiMediaClasses.csproj"
+      "path": "../MultiMediaBusinessLogic/MultiMediaClassesAndManagers.csproj",
+      "msbuildProject": "../MultiMediaBusinessLogic/MultiMediaClassesAndManagers.csproj"
     },
     "Utilities/1.0.0": {
       "type": "project",
@@ -206,7 +209,7 @@
   },
   "projectFileDependencyGroups": {
     ".NETStandard,Version=v2.0": [
-      "MultiMediaClasses >= 1.0.0",
+      "MultiMediaClassesAndManagers >= 1.0.0",
       "NETStandard.Library >= 2.0.3",
       "Utilities >= 1.0.0"
     ]
@@ -237,8 +240,8 @@
       "frameworks": {
         "netstandard2.0": {
           "projectReferences": {
-            "D:\\wamp64\\www\\GitHub\\MAU-COURSES\\ProgrammeringCSharp3\\MultiMediaBusinessLogic\\MultiMediaClasses.csproj": {
-              "projectPath": "D:\\wamp64\\www\\GitHub\\MAU-COURSES\\ProgrammeringCSharp3\\MultiMediaBusinessLogic\\MultiMediaClasses.csproj"
+            "D:\\wamp64\\www\\GitHub\\MAU-COURSES\\ProgrammeringCSharp3\\MultiMediaBusinessLogic\\MultiMediaClassesAndManagers.csproj": {
+              "projectPath": "D:\\wamp64\\www\\GitHub\\MAU-COURSES\\ProgrammeringCSharp3\\MultiMediaBusinessLogic\\MultiMediaClassesAndManagers.csproj"
             },
             "D:\\wamp64\\www\\GitHub\\MAU-COURSES\\ProgrammeringCSharp3\\Utilities\\Utilities.csproj": {
               "projectPath": "D:\\wamp64\\www\\GitHub\\MAU-COURSES\\ProgrammeringCSharp3\\Utilities\\Utilities.csproj"

@@ -1,7 +1,7 @@
 {
   "format": 1,
   "restore": {
-    "D:\\wamp64\\www\\GitHub\\MAU-COURSES\\ProgrammeringCSharp3\\MultiMediaBussinessLogic\\MultiMediaBusinessLogic.csproj": {}
+    "D:\\wamp64\\www\\GitHub\\MAU-COURSES\\ProgrammeringCSharp3\\MultiMediaManagers\\MultiMediaManagers.csproj": {}
   },
   "projects": {
     "D:\\wamp64\\www\\GitHub\\MAU-COURSES\\ProgrammeringCSharp3\\MultiMediaBusinessLogic\\MultiMediaClassesAndManagers.csproj": {
@@ -63,14 +63,14 @@
         }
       }
     },
-    "D:\\wamp64\\www\\GitHub\\MAU-COURSES\\ProgrammeringCSharp3\\MultiMediaBussinessLogic\\MultiMediaBusinessLogic.csproj": {
+    "D:\\wamp64\\www\\GitHub\\MAU-COURSES\\ProgrammeringCSharp3\\MultiMediaManagers\\MultiMediaManagers.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\wamp64\\www\\GitHub\\MAU-COURSES\\ProgrammeringCSharp3\\MultiMediaBussinessLogic\\MultiMediaBusinessLogic.csproj",
-        "projectName": "MultiMediaBusinessLogic",
-        "projectPath": "D:\\wamp64\\www\\GitHub\\MAU-COURSES\\ProgrammeringCSharp3\\MultiMediaBussinessLogic\\MultiMediaBusinessLogic.csproj",
+        "projectUniqueName": "D:\\wamp64\\www\\GitHub\\MAU-COURSES\\ProgrammeringCSharp3\\MultiMediaManagers\\MultiMediaManagers.csproj",
+        "projectName": "MultiMediaManagers",
+        "projectPath": "D:\\wamp64\\www\\GitHub\\MAU-COURSES\\ProgrammeringCSharp3\\MultiMediaManagers\\MultiMediaManagers.csproj",
         "packagesPath": "C:\\Users\\obern\\.nuget\\packages\\",
-        "outputPath": "D:\\wamp64\\www\\GitHub\\MAU-COURSES\\ProgrammeringCSharp3\\MultiMediaBussinessLogic\\obj\\",
+        "outputPath": "D:\\wamp64\\www\\GitHub\\MAU-COURSES\\ProgrammeringCSharp3\\MultiMediaManagers\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\obern\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -88,9 +88,6 @@
             "projectReferences": {
               "D:\\wamp64\\www\\GitHub\\MAU-COURSES\\ProgrammeringCSharp3\\MultiMediaBusinessLogic\\MultiMediaClassesAndManagers.csproj": {
                 "projectPath": "D:\\wamp64\\www\\GitHub\\MAU-COURSES\\ProgrammeringCSharp3\\MultiMediaBusinessLogic\\MultiMediaClassesAndManagers.csproj"
-              },
-              "D:\\wamp64\\www\\GitHub\\MAU-COURSES\\ProgrammeringCSharp3\\Utilities\\Utilities.csproj": {
-                "projectPath": "D:\\wamp64\\www\\GitHub\\MAU-COURSES\\ProgrammeringCSharp3\\Utilities\\Utilities.csproj"
               }
             }
           }

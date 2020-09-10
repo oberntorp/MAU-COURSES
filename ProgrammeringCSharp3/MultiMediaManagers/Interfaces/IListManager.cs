@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace MultiMediaBussinessLogic
+namespace MultiMediaManagers.Interfaces
 {
     // <summary>
     /// The generic interface of ListManager, ensures structure and that all ListManagers behave the same

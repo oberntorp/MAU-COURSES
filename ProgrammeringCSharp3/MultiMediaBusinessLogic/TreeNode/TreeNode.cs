@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MultiMediaClasses.TreeNode
+namespace MutiMediaClassesAndManagers.TreeNode
 {
     public class TreeNode
     {

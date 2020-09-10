@@ -5,11 +5,11 @@ VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiMediaApplication", "MultiMediaApplication.csproj", "{C45E3B61-7802-4587-A2B9-F3E1D492EAEE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MultiMediaClasses", "..\MultiMediaBusinessLogic\MultiMediaClasses.csproj", "{FD95BFAB-180E-40AE-9414-EEFCF1874EB6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MultiMediaClassesAndManagers", "..\MultiMediaBusinessLogic\MultiMediaClassesAndManagers.csproj", "{FD95BFAB-180E-40AE-9414-EEFCF1874EB6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MultiMediaBusinessLogic", "..\MultiMediaBussinessLogic\MultiMediaBusinessLogic.csproj", "{0D8C96B6-E73E-4AF8-A777-C09651885316}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utilities", "..\Utilities\Utilities.csproj", "{B4B246D1-B6C0-4437-B2BD-BDE15A293244}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Utilities", "..\Utilities\Utilities.csproj", "{B4B246D1-B6C0-4437-B2BD-BDE15A293244}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

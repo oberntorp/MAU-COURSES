@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MultiMediaBusinessLogic\MultiMediaClassesAndManagers.csproj" />
-    <ProjectReference Include="..\Utilities\Utilities.csproj" />
   </ItemGroup>
 
 </Project>

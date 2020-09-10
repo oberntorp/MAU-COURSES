@@ -1,15 +1,16 @@
-﻿using System;
+﻿using MultiMediaClassesAndManagers.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace MultiMediaBussinessLogic
+namespace MultiMediaClassesAndManagers.Managers
 {
     /// <summary>
     /// ListManager is a generic class that now handles all operations of all Managers
     /// </summary>
     /// <typeparam name="T">as this interface is generic, it needs a type</typeparam>
-    class ListManager<T> : IListManager<T>
+    public class ListManager<T> : IListManager<T>
     {
         List<T> objectsInList = null;
         public int Count => objectsInList.Count();
@@ -29,23 +30,23 @@ namespace MultiMediaBussinessLogic
         /// <returns>true/false reflecting success</returns>
         public bool Add(T itemToAdd)
         {
-            int countBeforeInsert = Count;
+            int countBeforeAdd = Count;
             if (itemToAdd != null)
             {
                 objectsInList.Add(itemToAdd);
             }
 
-            return WasAddSuccessfull(countBeforeInsert);
+            return WasAddSuccessfull(countBeforeAdd);
         }
 
         /// <summary>
         /// Checks that add was successfull
         /// </summary>
-        /// <param name="countBeforeInsert">count before insert to compare too if less, then an item was added</param>
+        /// <param name="countBeforeAdd">count before insert to compare too if less, then an item was added</param>
         /// <returns>true/false reflecting success</returns>
-        private bool WasAddSuccessfull(int countBeforeInsert)
+        private bool WasAddSuccessfull(int countBeforeAdd)
         {
-            return Count > countBeforeInsert;
+            return Count > countBeforeAdd;
         }
 
         /// <summary>

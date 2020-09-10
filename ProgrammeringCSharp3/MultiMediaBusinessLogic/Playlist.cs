@@ -1,22 +1,39 @@
-﻿using MultiMediaBusinessLogic;
+﻿using MultiMediaClassesAndManagers.Managers;
+using MutiMediaClassesAndManagers.MediaBaseClass;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace MultiMediaClasses
+namespace MutiMediaClassesAndManagers
 {
     public class Playlist
     {
         public int Id { get; set; }
         private string playlistName = string.Empty;
         private string playlistDescription = string.Empty;
-        private List<MediaFile> playlistContent = null;
+        private ListManager<MediaFile> playlistContent = null;
+        public int PlayListContentCount { get => playlistContent.Count; }
 
-        public Playlist(string nameOfPlayList, string descriptionOfPlaylist, List<MediaFile> contentOfPlayList)
+        public Playlist(string nameOfPlayList, string descriptionOfPlaylist)
         {
             playlistName = nameOfPlayList;
             playlistDescription = descriptionOfPlaylist;
-            playlistContent = contentOfPlayList;
+        }
+
+        public bool AddMediaToPlayList(MediaFile mediaToAdd)
+        {
+            int playListContentCountBeforeAdd = PlayListContentCount;
+            if(mediaToAdd != null)
+            {
+                playlistContent.Add(mediaToAdd);
+            }
+
+            return WasAddSuccessFull(playListContentCountBeforeAdd);
+        }
+
+        private bool WasAddSuccessFull(int countBeforeInsert)
+        {
+            return PlayListContentCount > countBeforeInsert;
         }
     }
 }
