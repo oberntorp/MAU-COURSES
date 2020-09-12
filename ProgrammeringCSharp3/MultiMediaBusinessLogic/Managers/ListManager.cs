@@ -131,16 +131,6 @@ namespace MultiMediaClassesAndManagers.Managers
             return objectsInList[indexToGetAt];
         }
 
-        public string[] ToStringArray()
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<string> ToStringList()
-        {
-            throw new NotImplementedException();
-        }
-
         /// <summary>
         /// Serializes the items in the listmanager
         /// </summary>
@@ -172,6 +162,11 @@ namespace MultiMediaClassesAndManagers.Managers
                     Add(deserializedListItem);
                 }
             }
+        }
+
+        public List<T> GetAllItems()
+        {
+            return objectsInList;
         }
     }
 }

@@ -22,18 +22,22 @@ namespace MutiMediaClassesAndManagers
 
         public bool AddMediaToPlayList(MediaFile mediaToAdd)
         {
-            int playListContentCountBeforeAdd = PlayListContentCount;
             if(mediaToAdd != null)
             {
-                playlistContent.Add(mediaToAdd);
+                return playlistContent.Add(mediaToAdd);
             }
 
-            return WasAddSuccessFull(playListContentCountBeforeAdd);
+            return false;
         }
 
-        private bool WasAddSuccessFull(int countBeforeInsert)
+        public bool DeleteMediaFromPlayList(int indexOfMediaToDelete)
         {
-            return PlayListContentCount > countBeforeInsert;
+            return playlistContent.DeleteAt(indexOfMediaToDelete);
+        }
+
+        public void ClearPlayList()
+        {
+            playlistContent.DeleteAll();
         }
     }
 }

@@ -16,10 +16,9 @@ namespace MultiMediaClassesAndManagers.Interfaces
         void DeleteAll();
         bool DeleteAt(int indexToDeleteAt);
         T GetAt(int indexToGetAt);
-        List<string> ToStringList();
         void XMLSerialize(string fileName);
         void XMLDeserialize(string fileName);
-        string[] ToStringArray();
+        List<T> GetAllItems();
 
 
     }
