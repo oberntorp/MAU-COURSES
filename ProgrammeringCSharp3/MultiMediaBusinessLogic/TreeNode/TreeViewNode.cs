@@ -4,12 +4,14 @@ using System.Text;
 
 namespace MutiMediaClassesAndManagers.TreeNode
 {
-    public class TreeNode
+    public class TreeViewNode
     {
         public TreeNodeTypes type { get; set; }
         public string Name { get; set; }
 
-        public TreeNode(TreeNodeTypes treeNodeType, string treeNodeName)
+        public List<TreeViewNode> SubNodes { get; set; }
+
+        public TreeViewNode(TreeNodeTypes treeNodeType, string treeNodeName)
         {
             type = treeNodeType;
             Name = treeNodeName;

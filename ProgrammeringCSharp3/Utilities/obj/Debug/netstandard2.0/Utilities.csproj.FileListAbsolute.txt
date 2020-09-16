@@ -1,0 +1,9 @@
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Utilities\bin\Debug\netstandard2.0\Utilities.deps.json
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Utilities\bin\Debug\netstandard2.0\Utilities.dll
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Utilities\bin\Debug\netstandard2.0\Utilities.pdb
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Utilities\obj\Debug\netstandard2.0\Utilities.csprojAssemblyReference.cache
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Utilities\obj\Debug\netstandard2.0\Utilities.AssemblyInfoInputs.cache
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Utilities\obj\Debug\netstandard2.0\Utilities.AssemblyInfo.cs
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Utilities\obj\Debug\netstandard2.0\Utilities.csproj.CoreCompileInputs.cache
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Utilities\obj\Debug\netstandard2.0\Utilities.dll
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Utilities\obj\Debug\netstandard2.0\Utilities.pdb

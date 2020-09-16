@@ -37,6 +37,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -96,10 +97,17 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MultiMediaBusinessLogic\MultiMediaClassesAndManagers.csproj">
+      <Project>{fd95bfab-180e-40ae-9414-eefcf1874eb6}</Project>
+      <Name>MultiMediaClassesAndManagers</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MultiMediaBussinessLogic\MultiMediaBusinessLogic.csproj">
       <Project>{0d8c96b6-e73e-4af8-a777-c09651885316}</Project>
       <Name>MultiMediaBusinessLogic</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\folder_icon8.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

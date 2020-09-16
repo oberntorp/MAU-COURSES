@@ -9,6 +9,7 @@
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="File">
+                <MenuItem Header="Choose folders for treeView" Click="FolderForTreeView_Click"/>
                 <MenuItem Header="Import Media">
                     <MenuItem Header="Video" Click="MenuItemVideo_Click"/>
                     <MenuItem Header="Image" Click="MenuItemImage_Click"/>
@@ -24,14 +25,8 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <TreeView>
-                    <TreeView.ItemTemplate>
-                        <HierarchicalDataTemplate DataType="{x:Type self:TreeNode}" ItemsSource="{Binding items}">
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding Title}"/>
-                            </StackPanel>
-                        </HierarchicalDataTemplate>
-                    </TreeView.ItemTemplate>
+                <TreeView x:Name="PlayListTreeView">
+                    
                 </TreeView>
             </Grid>
         </StackPanel>
