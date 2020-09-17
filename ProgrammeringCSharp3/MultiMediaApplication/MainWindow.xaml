@@ -9,7 +9,8 @@
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="File">
-                <MenuItem Header="Choose folders for treeView" Click="FolderForTreeView_Click"/>
+                <MenuItem Header="Choose folders for navigation area" Click="ChoseFolderForNavigationArea_Click"/>
+                <MenuItem Header="Create playlist" Click="CreatePlaylist_Click"/>
                 <MenuItem Header="Import Media">
                     <MenuItem Header="Video" Click="MenuItemVideo_Click"/>
                     <MenuItem Header="Image" Click="MenuItemImage_Click"/>

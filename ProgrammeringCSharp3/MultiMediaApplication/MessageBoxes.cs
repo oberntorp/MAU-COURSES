@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows;
 
-namespace Utilities
+namespace MultiMediaApplication
 {
 /// <summary>
     /// This is a utility class for creating message boxes with different cations in a neater way

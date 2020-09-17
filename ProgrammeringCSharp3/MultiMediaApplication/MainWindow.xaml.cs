@@ -1,4 +1,6 @@
 ﻿using Microsoft.Win32;
+using MultiMediaClassesAndManagers.Implementations;
+using MutiMediaClassesAndManagers;
 using MutiMediaClassesAndManagers.TreeNode;
 using System;
 using System.Collections.Generic;
@@ -24,8 +26,10 @@ namespace MultiMediaApplication
     /// </summary>
     public partial class MainWindow : Window
     {
+        private PlaylistManager playlistManager = null;
         public MainWindow()
         {
+            playlistManager = new PlaylistManager();
             InitializeComponent();
             InitializePlayListTreeView();
         }
@@ -45,8 +49,15 @@ namespace MultiMediaApplication
 
         }
 
-        private void FolderForTreeView_Click(object sender, RoutedEventArgs e)
+        private void ChoseFolderForNavigationArea_Click(object sender, RoutedEventArgs e)
         {
+            if (PlayListTreeView.HasItems)
+            {
+                MessageBoxes.ShowInformationMessageBox("Your current navigation area will be replaced and your playlists created will be removed.");
+            }
+
+            playlistManager.DeleteAll();
+            PlayListTreeView.Items.Clear();
             FillTreeViewWithNodes(GetNodesOfTreeView());
         }
 
@@ -113,7 +124,10 @@ namespace MultiMediaApplication
             StackPanel stack = new StackPanel();
             stack.Orientation = System.Windows.Controls.Orientation.Horizontal;
             Image icon = new Image();
-            icon.Source = new BitmapImage(new Uri("/Images/folder_icon8.png", UriKind.Relative));
+            string iconPath = (treeNode.type == TreeNodeTypes.directory) ? "folder_icon8.png" : "video_playlist_icons8.png";
+            icon.Source = new BitmapImage(new Uri($"/Images/{iconPath}", UriKind.Relative));
+            icon.Height = 16;
+            icon.Width = 16;
             System.Windows.Controls.Label nameOfNode = new System.Windows.Controls.Label();
             nameOfNode.Content = treeNode.Name;
             stack.Children.Add(icon);
@@ -129,6 +143,38 @@ namespace MultiMediaApplication
                 childTreeViewItem.Header = GetStackOfTreeViewNode(subNode);
                 AddSubNodes(subNode, ref childTreeViewItem);
                 parentTreeViewItem.Items.Add(childTreeViewItem);
+            }
+        }
+
+        private void CreatePlaylist_Click(object sender, RoutedEventArgs e)
+        {
+            if (PlayListTreeView.HasItems)
+            {
+                PlaylistCreationWindow creationPlaylistWindow = new PlaylistCreationWindow();
+
+                if (PlayListTreeView.SelectedItem != null)
+                {
+                    bool result = (bool)creationPlaylistWindow.ShowDialog();
+                    if (result)
+                    {
+                        Playlist newPlaylist = new Playlist(creationPlaylistWindow.TitlaOfPlaylist, creationPlaylistWindow.DescriptionOfPlaylist, creationPlaylistWindow.DurationBetweenMedia);
+                        TreeViewNode playlistTreeViewNode = new TreeViewNode(TreeNodeTypes.playlist, newPlaylist.Title);
+
+                        TreeViewItem newPlaylistTreeViewItem = new TreeViewItem();
+                        newPlaylistTreeViewItem.Header = GetStackOfTreeViewNode(playlistTreeViewNode);
+                        (PlayListTreeView.SelectedItem as TreeViewItem).IsExpanded = true;
+                        (PlayListTreeView.SelectedItem as TreeViewItem).Items.Add(newPlaylistTreeViewItem);
+                        playlistManager.Add(newPlaylist);
+                    }
+                }
+                else
+                {
+                    MessageBoxes.ShowInformationMessageBox("Please select a folder in the navigation area where the playlist is created.");
+                }
+            }
+            else
+            {
+                MessageBoxes.ShowErrorMessageBox("Please select a folder to create a navigation area under File.");
             }
         }
     }
