@@ -20,7 +20,7 @@ namespace MultiMediaApplication
     public partial class PlaylistCreationWindow : Window
     {
         private int durationBetweenMedia = 5;
-        public string TitlaOfPlaylist { get; set; }
+        public string TitleOfPlaylist { get; set; }
         public string DescriptionOfPlaylist { get; set; }
         public int DurationBetweenMedia { get => durationBetweenMedia; set { durationBetweenMedia = value; } }
         public PlaylistCreationWindow()
@@ -32,7 +32,7 @@ namespace MultiMediaApplication
         {
             if (CheckValidityOfInput())
             {
-                TitlaOfPlaylist = TitleTextBox.Text;
+                TitleOfPlaylist = TitleTextBox.Text;
                 DescriptionOfPlaylist = DescriptionTextBox.Text;
                 DurationBetweenMedia = (PlaybackDelayBetweenMediaTextBox.Text != "") ? int.Parse(PlaybackDelayBetweenMediaTextBox.Text) : DurationBetweenMedia;
                 this.DialogResult = true;

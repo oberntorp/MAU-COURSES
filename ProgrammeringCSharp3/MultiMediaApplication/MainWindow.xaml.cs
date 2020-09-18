@@ -226,7 +226,7 @@ namespace MultiMediaApplication
                     bool result = (bool)creationPlaylistWindow.ShowDialog();
                     if (result)
                     {
-                        Playlist newPlaylist = new Playlist(creationPlaylistWindow.TitlaOfPlaylist, creationPlaylistWindow.DescriptionOfPlaylist, creationPlaylistWindow.DurationBetweenMedia);
+                        Playlist newPlaylist = new Playlist(creationPlaylistWindow.TitleOfPlaylist, creationPlaylistWindow.DescriptionOfPlaylist, creationPlaylistWindow.DurationBetweenMedia);
                         TreeViewNode playlistTreeViewNode = new TreeViewNode(TreeNodeTypes.playlist, newPlaylist.Title);
 
                         TreeViewItem newPlaylistTreeViewItem = new TreeViewItem();
