@@ -1,7 +1,7 @@
 ﻿using MultiMediaClassesAndManagers.Implementations;
 using MultiMediaClassesAndManagers.Managers;
 using MutiMediaClassesAndManagers;
-using MutiMediaClassesAndManagers.MediaBaseClass;
+using MultiMediaClassesAndManagers.MediaBaseClass;
 using System;
 using System.Collections.Generic;
 using System.Text;

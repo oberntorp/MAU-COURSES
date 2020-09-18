@@ -1,8 +1,9 @@
 ﻿using Microsoft.Win32;
 using MultiMediaClassesAndManagers.Implementations;
 using MutiMediaClassesAndManagers;
-using MutiMediaClassesAndManagers.Interfaces;
-using MutiMediaClassesAndManagers.TreeNode;
+using MultiMediaClassesAndManagers.Interfaces;
+using MultiMediaClassesAndManagers.TreeNode;
+using MultiMediaClassesAndManagers.MediaBaseClass;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -24,7 +25,7 @@ using Utilities;
 using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
 using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
 using Label = System.Windows.Controls.Label;
-using MutiMediaClassesAndManagers.MediaBaseClass;
+using TreeView = System.Windows.Controls.TreeView;
 
 namespace MultiMediaApplication
 {
@@ -56,11 +57,43 @@ namespace MultiMediaApplication
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "Image files | *.jpg; *.jpeg; *.png";
             bool wasFileSelected = (bool)openFileDialog.ShowDialog();
+            int indexOfPlaylist = 0;
 
-            if(wasFileSelected && !string.IsNullOrWhiteSpace(openFileDialog.FileName))
+            if (wasFileSelected && !string.IsNullOrWhiteSpace(openFileDialog.FileName))
             {
-                AddMediaToSelectedPlaylist(CreateImageFile(openFileDialog.FileName));
+                int idOfPlayList = GetPlaylistIdOfSelected(NameOfSelectedTreeViewNode());
+                indexOfPlaylist = idOfPlayList - 1;
+
+                if (PlayListTreeView.SelectedItem != null && idOfPlayList > 0)
+                {
+                    AddMediaToSelectedPlaylist(indexOfPlaylist, CreateImageFile(openFileDialog.FileName));
+                }
+                else
+                {
+                    MessageBoxes.ShowInformationMessageBox("Please select a playlist.");
+                }
             }
+            else
+            {
+                MessageBoxes.ShowInformationMessageBox("No File was selected");
+            }
+        }
+
+        private string NameOfSelectedTreeViewNode()
+        {
+            return (((PlayListTreeView.SelectedItem as TreeViewItem).Header as StackPanel).Children[1] as Label).Content.ToString();
+        }
+
+        private int GetPlaylistIdOfSelected(string nameOfSelectedTreeViewNode)
+        {
+            int idToReturn = 0;
+            Playlist playList = playlistManager.GetAllItems().Where(pl => pl.Title == nameOfSelectedTreeViewNode).FirstOrDefault();
+            if (playList != null)
+            {
+                idToReturn = playList.Id;
+            }
+
+            return idToReturn;
         }
 
         private IMediaFile CreateImageFile(string fullPath)
@@ -68,35 +101,13 @@ namespace MultiMediaApplication
             Bitmap image = new Bitmap(fullPath);
 
             string fileName = FileHandler.GetFileName(fullPath);
-            return new MutiMediaClassesAndManagers.MediaSubClasses.Image(fileName, fullPath, FileHandler.GetFileExtension(fileName), image.Width, image.Height);
+            return new MultiMediaClassesAndManagers.MediaSubClasses.Image(fileName, fullPath, FileHandler.GetFileExtension(fileName), image.Width, image.Height);
         }
 
-        private void AddMediaToSelectedPlaylist(IMediaFile mediaFile)
+        private void AddMediaToSelectedPlaylist(int indexOfPlaylistToReceiveMedia, IMediaFile mediaFileToAdd)
         {
-            if(PlayListTreeView.SelectedItem != null)
-            {
-                int idOfPlayList = GetPlaylistIfOfSelected((((PlayListTreeView.SelectedItem as TreeViewItem).Header as StackPanel).Children[1] as Label).Content.ToString());
-                if (idOfPlayList == 0)
-                {
-                    MessageBoxes.ShowErrorMessageBox("Please select a playlist.");
-                }
-                else
-                {
-                    playlistManager.GetAt(idOfPlayList-1).AddMediaToPlayList((MediaFile)mediaFile);
-                }
-            }
-        }
-
-        private int GetPlaylistIfOfSelected(string nameOfSelectedTreeViewNode)
-        {
-            int idToReturn = 0;
-            Playlist playList = playlistManager.GetAllItems().Where(pl => pl.Title == nameOfSelectedTreeViewNode).FirstOrDefault();
-            if(playList != null)
-            {
-                idToReturn = playList.Id;
-            }
-
-            return idToReturn;
+            Playlist updatedPlaylist = playlistManager.GetAt(indexOfPlaylistToReceiveMedia);
+            updatedPlaylist.AddMediaToPlayList((MultiMediaClassesAndManagers.MediaSubClasses.Image)mediaFileToAdd);
         }
 
         private void ChoseFolderForNavigationArea_Click(object sender, RoutedEventArgs e)
@@ -108,7 +119,11 @@ namespace MultiMediaApplication
 
             playlistManager.DeleteAll();
             PlayListTreeView.Items.Clear();
-            FillTreeViewWithNodes(GetNodesOfTreeView());
+            List<TreeViewNode> treeViewNodes = GetNodesOfTreeView();
+            if(treeViewNodes.Count != 0)
+            {
+                FillTreeViewWithNodes(treeViewNodes);
+            }
         }
 
         private static List<TreeViewNode> GetNodesOfTreeView()
@@ -116,15 +131,19 @@ namespace MultiMediaApplication
             FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
             DialogResult dialogResult = folderBrowserDialog.ShowDialog();
 
-            if (dialogResult == System.Windows.Forms.DialogResult.OK && !string.IsNullOrWhiteSpace(folderBrowserDialog.SelectedPath))
+            if (!string.IsNullOrWhiteSpace(folderBrowserDialog.SelectedPath))
             {
                 List<string> folderPaths = new List<string>();
                 folderPaths.Add(folderBrowserDialog.SelectedPath);
                 folderPaths.AddRange(Directory.GetDirectories(folderBrowserDialog.SelectedPath));
                 return CreateTreeViewNodesFromFolderContent(folderPaths);
             }
+            else
+            {
+                MessageBoxes.ShowInformationMessageBox("You did no selection. The navigation area was not created.");
+            }
 
-            return null;
+            return new List<TreeViewNode>();
         }
 
         private static List<TreeViewNode> CreateTreeViewNodesFromFolderContent(List<string> selectedFolders)
@@ -147,7 +166,7 @@ namespace MultiMediaApplication
 
             foreach (string nameOfSubDirectory in Directory.GetDirectories(folderPath))
             {
-                TreeViewNode subTreeViewNode = new TreeViewNode(TreeNodeTypes.directory,FileHandler.GetFileName(nameOfSubDirectory));
+                TreeViewNode subTreeViewNode = new TreeViewNode(TreeNodeTypes.directory, FileHandler.GetFileName(nameOfSubDirectory));
                 subTreeViewNode.SubNodes = subTreeViewNode.SubNodes = GetSubTreeViewNodes(nameOfSubDirectory);
                 treeViewNodeList.Add(subTreeViewNode);
             }
@@ -226,6 +245,22 @@ namespace MultiMediaApplication
             {
                 MessageBoxes.ShowErrorMessageBox("Please select a folder to create a navigation area under File.");
             }
+        }
+
+        private void PlayListTreeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            int idOfPlayList = GetPlaylistIdOfSelected(NameOfSelectedTreeViewNode());
+            int indexOfPlaylist = idOfPlayList - 1;
+
+            if ((sender as TreeView).SelectedItem != null && indexOfPlaylist > 0)
+            {
+                ShowMediaFiles();
+            }
+        }
+
+        private void ShowMediaFiles()
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -1,8 +1,8 @@
-﻿using MutiMediaClassesAndManagers.Interfaces;
+﻿using MultiMediaClassesAndManagers.Interfaces;
 using System;
 using System;
 
-namespace MutiMediaClassesAndManagers.MediaBaseClass
+namespace MultiMediaClassesAndManagers.MediaBaseClass
 {
     public class MediaFile : IMediaFile
     {

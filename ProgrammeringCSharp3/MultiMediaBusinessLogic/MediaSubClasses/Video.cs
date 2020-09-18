@@ -1,9 +1,9 @@
-﻿using MutiMediaClassesAndManagers.MediaBaseClass;
+﻿using MultiMediaClassesAndManagers.MediaBaseClass;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace MutiMediaClassesAndManagers.MediaSubClasses
+namespace MultiMediaClassesAndManagers.MediaSubClasses
 {
     public class Video : MediaFile
     {

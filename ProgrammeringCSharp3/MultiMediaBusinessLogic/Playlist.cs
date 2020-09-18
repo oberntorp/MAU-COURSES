@@ -1,5 +1,5 @@
 ﻿using MultiMediaClassesAndManagers.Managers;
-using MutiMediaClassesAndManagers.MediaBaseClass;
+using MultiMediaClassesAndManagers.MediaBaseClass;
 using System;
 using System.Collections.Generic;
 using System.Text;

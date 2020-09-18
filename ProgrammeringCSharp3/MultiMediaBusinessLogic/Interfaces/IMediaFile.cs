@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MutiMediaClassesAndManagers.Interfaces
+namespace MultiMediaClassesAndManagers.Interfaces
 {
     public interface IMediaFile
     {
