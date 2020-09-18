@@ -109,10 +109,6 @@
       <Project>{fd95bfab-180e-40ae-9414-eefcf1874eb6}</Project>
       <Name>MultiMediaClassesAndManagers</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MultiMediaBussinessLogic\MultiMediaBusinessLogic.csproj">
-      <Project>{0d8c96b6-e73e-4af8-a777-c09651885316}</Project>
-      <Name>MultiMediaBusinessLogic</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Utilities\Utilities.csproj">
       <Project>{b4b246d1-b6c0-4437-b2bd-bde15a293244}</Project>
       <Name>Utilities</Name>

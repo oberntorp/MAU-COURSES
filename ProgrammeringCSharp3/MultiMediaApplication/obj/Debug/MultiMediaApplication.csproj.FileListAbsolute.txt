@@ -1,10 +1,8 @@
 D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\MultiMediaApplication\bin\Debug\MultiMediaApplication.exe.config
 D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\MultiMediaApplication\bin\Debug\MultiMediaApplication.exe
 D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\MultiMediaApplication\bin\Debug\MultiMediaApplication.pdb
-D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\MultiMediaApplication\bin\Debug\MultiMediaBusinessLogic.dll
 D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\MultiMediaApplication\bin\Debug\MultiMediaClassesAndManagers.dll
 D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\MultiMediaApplication\bin\Debug\Utilities.dll
-D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\MultiMediaApplication\bin\Debug\MultiMediaBusinessLogic.pdb
 D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\MultiMediaApplication\bin\Debug\MultiMediaClassesAndManagers.pdb
 D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\MultiMediaApplication\bin\Debug\Utilities.pdb
 D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\MultiMediaApplication\obj\Debug\MultiMediaApplication.csprojAssemblyReference.cache

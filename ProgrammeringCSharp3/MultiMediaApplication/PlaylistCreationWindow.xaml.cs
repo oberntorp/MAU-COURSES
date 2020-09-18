@@ -46,7 +46,7 @@ namespace MultiMediaApplication
 
         private bool CheckValidityOfInput()
         {
-            return (TitleTextBox.Text != null && DescriptionTextBox.Text != null) && (PlaybackDelayBetweenMediaTextBox.Text != "" && int.TryParse(PlaybackDelayBetweenMediaTextBox.Text, out int result));
+            return (TitleTextBox.Text != null && DescriptionTextBox.Text != null) && ((PlaybackDelayBetweenMediaTextBox.Text != "" && int.TryParse(PlaybackDelayBetweenMediaTextBox.Text, out int result)) || (PlaybackDelayBetweenMediaTextBox.Text == "" && !int.TryParse(PlaybackDelayBetweenMediaTextBox.Text, out int result2)));
         }
     }
 }

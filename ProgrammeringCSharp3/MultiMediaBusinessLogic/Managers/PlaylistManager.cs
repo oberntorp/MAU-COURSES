@@ -6,6 +6,9 @@ using System.Text;
 
 namespace MultiMediaClassesAndManagers.Implementations
 {
+    /// <summary>
+    /// This Class Manages the insertion/deletion of Playlists
+    /// </summary>
     public class PlaylistManager: ListManager<Playlist>
     {
         private int playlistId = 1;
@@ -22,9 +25,9 @@ namespace MultiMediaClassesAndManagers.Implementations
         }
 
         /// <summary>
-        /// This method adds an id to the animal
+        /// This method adds an id to the Playlist
         /// </summary>
-        /// <param name="animalToAddAnId">animal to assign id, that is passed by reference</param>
+        /// <param name="playlistToAddAnId">The Playlistobject getting an id</param>
         private void AddIdToPlaylist(ref Playlist playlistToAddAnId)
         {
             if (Count == 0)
@@ -35,6 +38,24 @@ namespace MultiMediaClassesAndManagers.Implementations
             {
                 playlistToAddAnId.Id = Count + 1;
             }
+        }
+
+        /// <summary>
+        /// Delete a specific Playlist
+        /// </summary>
+        /// <param name="idOfPlaylistToRemove">The id of the Playlist to remove</param>
+        /// <returns>true/false to keep track of success</returns>
+        public bool DeletePlaylist(int idOfPlaylistToRemove)
+        {
+            return DeleteAt(idOfPlaylistToRemove);
+        }
+
+        /// <summary>
+        /// Delete all Playlists
+        /// </summary>
+        public void DeleteAllPlaylists()
+        {
+            DeleteAll();
         }
     }
 }

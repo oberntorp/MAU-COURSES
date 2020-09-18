@@ -4,6 +4,9 @@ using System.Text;
 
 namespace MultiMediaClassesAndManagers.TreeNode
 {
+    /// <summary>
+    /// This class is used when setting up the TreeView (holds information needed)
+    /// </summary>
     public class TreeViewNode
     {
         public TreeNodeTypes type { get; set; }
@@ -11,6 +14,11 @@ namespace MultiMediaClassesAndManagers.TreeNode
 
         public List<TreeViewNode> SubNodes { get; set; }
 
+        /// <summary>
+        /// THe TreeViewNode constructor, initializes a treeViewNode
+        /// </summary>
+        /// <param name="treeNodeType">The type of the tree node (directory/playlist)</param>
+        /// <param name="treeNodeName">the name of the treeNode</param>
         public TreeViewNode(TreeNodeTypes treeNodeType, string treeNodeName)
         {
             type = treeNodeType;

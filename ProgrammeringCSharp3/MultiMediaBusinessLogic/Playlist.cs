@@ -6,6 +6,9 @@ using System.Text;
 
 namespace MutiMediaClassesAndManagers
 {
+    /// <summary>
+    /// This class makes up how a playlist looks and what is possible to do
+    /// </summary>
     public class Playlist
     {
         public int Id { get; set; }
@@ -19,6 +22,12 @@ namespace MutiMediaClassesAndManagers
 
         public int PlayListContentCount { get => playlistContent.Count; }
 
+        /// <summary>
+        /// The Playlist constructor, initializes a playlist
+        /// </summary>
+        /// <param name="nameOfPlayList">thename of the playlist</param>
+        /// <param name="descriptionOfPlaylist">the description of the playlist</param>
+        /// <param name="playbackDelayBetweenMediaSec">the time between playing clips</param>
         public Playlist(string nameOfPlayList, string descriptionOfPlaylist, int playbackDelayBetweenMediaSec = 5)
         {
             playlistContent = new ListManager<MediaFile>();
