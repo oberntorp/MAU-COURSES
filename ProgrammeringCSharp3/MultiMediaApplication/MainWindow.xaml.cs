@@ -1,9 +1,11 @@
 ﻿using Microsoft.Win32;
 using MultiMediaClassesAndManagers.Implementations;
 using MutiMediaClassesAndManagers;
+using MutiMediaClassesAndManagers.Interfaces;
 using MutiMediaClassesAndManagers.TreeNode;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -18,6 +20,11 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Utilities;
+using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
+using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
+using Label = System.Windows.Controls.Label;
+using MutiMediaClassesAndManagers.MediaBaseClass;
 
 namespace MultiMediaApplication
 {
@@ -46,7 +53,50 @@ namespace MultiMediaApplication
 
         private void MenuItemImage_Click(object sender, RoutedEventArgs e)
         {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Image files | *.jpg; *.jpeg; *.png";
+            bool wasFileSelected = (bool)openFileDialog.ShowDialog();
 
+            if(wasFileSelected && !string.IsNullOrWhiteSpace(openFileDialog.FileName))
+            {
+                AddMediaToSelectedPlaylist(CreateImageFile(openFileDialog.FileName));
+            }
+        }
+
+        private IMediaFile CreateImageFile(string fullPath)
+        {
+            Bitmap image = new Bitmap(fullPath);
+
+            string fileName = FileHandler.GetFileName(fullPath);
+            return new MutiMediaClassesAndManagers.MediaSubClasses.Image(fileName, fullPath, FileHandler.GetFileExtension(fileName), image.Width, image.Height);
+        }
+
+        private void AddMediaToSelectedPlaylist(IMediaFile mediaFile)
+        {
+            if(PlayListTreeView.SelectedItem != null)
+            {
+                int idOfPlayList = GetPlaylistIfOfSelected((((PlayListTreeView.SelectedItem as TreeViewItem).Header as StackPanel).Children[1] as Label).Content.ToString());
+                if (idOfPlayList == 0)
+                {
+                    MessageBoxes.ShowErrorMessageBox("Please select a playlist.");
+                }
+                else
+                {
+                    playlistManager.GetAt(idOfPlayList-1).AddMediaToPlayList((MediaFile)mediaFile);
+                }
+            }
+        }
+
+        private int GetPlaylistIfOfSelected(string nameOfSelectedTreeViewNode)
+        {
+            int idToReturn = 0;
+            Playlist playList = playlistManager.GetAllItems().Where(pl => pl.Title == nameOfSelectedTreeViewNode).FirstOrDefault();
+            if(playList != null)
+            {
+                idToReturn = playList.Id;
+            }
+
+            return idToReturn;
         }
 
         private void ChoseFolderForNavigationArea_Click(object sender, RoutedEventArgs e)
@@ -97,7 +147,7 @@ namespace MultiMediaApplication
 
             foreach (string nameOfSubDirectory in Directory.GetDirectories(folderPath))
             {
-                TreeViewNode subTreeViewNode = new TreeViewNode(TreeNodeTypes.directory, nameOfSubDirectory.Split('\\').Last());
+                TreeViewNode subTreeViewNode = new TreeViewNode(TreeNodeTypes.directory,FileHandler.GetFileName(nameOfSubDirectory));
                 subTreeViewNode.SubNodes = subTreeViewNode.SubNodes = GetSubTreeViewNodes(nameOfSubDirectory);
                 treeViewNodeList.Add(subTreeViewNode);
             }
@@ -123,12 +173,12 @@ namespace MultiMediaApplication
         {
             StackPanel stack = new StackPanel();
             stack.Orientation = System.Windows.Controls.Orientation.Horizontal;
-            Image icon = new Image();
+            System.Windows.Controls.Image icon = new System.Windows.Controls.Image();
             string iconPath = (treeNode.type == TreeNodeTypes.directory) ? "folder_icon8.png" : "video_playlist_icons8.png";
             icon.Source = new BitmapImage(new Uri($"/Images/{iconPath}", UriKind.Relative));
             icon.Height = 16;
             icon.Width = 16;
-            System.Windows.Controls.Label nameOfNode = new System.Windows.Controls.Label();
+            Label nameOfNode = new Label();
             nameOfNode.Content = treeNode.Name;
             stack.Children.Add(icon);
             stack.Children.Add(nameOfNode);
@@ -164,7 +214,7 @@ namespace MultiMediaApplication
                         newPlaylistTreeViewItem.Header = GetStackOfTreeViewNode(playlistTreeViewNode);
                         (PlayListTreeView.SelectedItem as TreeViewItem).IsExpanded = true;
                         (PlayListTreeView.SelectedItem as TreeViewItem).Items.Add(newPlaylistTreeViewItem);
-                        playlistManager.Add(newPlaylist);
+                        playlistManager.AddPlaylist(newPlaylist);
                     }
                 }
                 else

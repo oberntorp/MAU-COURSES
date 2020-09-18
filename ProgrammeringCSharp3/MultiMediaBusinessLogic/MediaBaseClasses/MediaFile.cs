@@ -4,17 +4,17 @@ using System;
 
 namespace MutiMediaClassesAndManagers.MediaBaseClass
 {
-    public class MediaFile : IMedia
+    public class MediaFile : IMediaFile
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Source { get; set; }
+        public string SourceUrl { get; set; }
         public string FileExtention { get; set; }
 
         public MediaFile(string name, string source, string fileExtention)
         {
             Name = name;
-            Source = source;
+            SourceUrl = source;
             fileExtention = FileExtention;
         }
     }

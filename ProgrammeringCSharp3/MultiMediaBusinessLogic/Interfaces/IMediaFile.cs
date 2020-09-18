@@ -4,11 +4,11 @@ using System.Text;
 
 namespace MutiMediaClassesAndManagers.Interfaces
 {
-    public interface IMedia
+    public interface IMediaFile
     {
         int Id { get; set; }
         string Name { get; set; }
-        string Source { get; set; }
+        string SourceUrl { get; set; }
         string FileExtention { get; set; }
     }
 }

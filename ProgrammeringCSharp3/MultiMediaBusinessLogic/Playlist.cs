@@ -9,7 +9,7 @@ namespace MutiMediaClassesAndManagers
     public class Playlist
     {
         public int Id { get; set; }
-        public string playlistName = string.Empty;
+        private string playlistName = string.Empty;
         private string playlistDescription = string.Empty;
         private int playlistPlaybackDelayBetweenMediaSec = 0;
         private ListManager<MediaFile> playlistContent = null;
@@ -21,6 +21,7 @@ namespace MutiMediaClassesAndManagers
 
         public Playlist(string nameOfPlayList, string descriptionOfPlaylist, int playbackDelayBetweenMediaSec = 5)
         {
+            playlistContent = new ListManager<MediaFile>();
             playlistName = nameOfPlayList;
             playlistDescription = descriptionOfPlaylist;
             playlistPlaybackDelayBetweenMediaSec = playbackDelayBetweenMediaSec;
