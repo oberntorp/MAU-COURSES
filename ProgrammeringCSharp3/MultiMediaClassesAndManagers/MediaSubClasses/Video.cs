@@ -17,9 +17,10 @@ namespace MultiMediaClassesAndManagers.MediaSubClasses
         /// </summary>
         /// <param name="name">The name of the video</param>
         /// <param name="source">The source of the video</param>
+        /// <param name="previewUrl">Url of preview (differs for type)</param>
         /// <param name="fileExtention">The fileExtention of the video</param>
         /// <param name="lengthInMinutes">The vides length</param>
-        public Video(string name, string source, string fileExtention, int lengthInMinutes) : base(name, source, fileExtention)
+        public Video(string name, string source, string previewUrl, string fileExtention, int lengthInMinutes) : base(name, source, previewUrl, fileExtention)
         {
             LengthInMinutes = lengthInMinutes;
         }

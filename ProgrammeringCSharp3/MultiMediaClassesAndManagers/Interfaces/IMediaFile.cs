@@ -13,6 +13,8 @@ namespace MultiMediaClassesAndManagers.Interfaces
         int Id { get; set; }
         string Name { get; set; }
         string SourceUrl { get; set; }
+        string PreviewUrl { get; set; }
+
         string FileExtention { get; set; }
     }
 }

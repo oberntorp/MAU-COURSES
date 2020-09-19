@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,16 +24,15 @@ namespace MultiMediaApplication.UserControls
         public int MediaId { get; set; }
         public string MediaName { get; set; }
         public string MediaImageSource { get; set; }
-        public bool IsSelected { get; set; }
         public MediaViewSelectionUserControl()
         {
             InitializeComponent();
-            IsSelected = false;
+            this.DataContext = this;
         }
 
         private void StackPanel_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            IsSelected = true;
+            System.Diagnostics.Process.Start(MediaImageSource);
         }
     }
 }

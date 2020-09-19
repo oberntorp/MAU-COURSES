@@ -12,6 +12,7 @@ namespace MultiMediaClassesAndManagers.MediaBaseClass
         public int Id { get; set; }
         public string Name { get; set; }
         public string SourceUrl { get; set; }
+        public string PreviewUrl { get; set; }
         public string FileExtention { get; set; }
 
         /// <summary>
@@ -19,8 +20,9 @@ namespace MultiMediaClassesAndManagers.MediaBaseClass
         /// </summary>
         /// <param name="name">the name of the media file</param>
         /// <param name="sourceUrl">the source of the MediaFile</param>
+        /// <param name="previewUrl">Url of preview (differs for type)</param>
         /// <param name="fileExtention">the MediaFiles fileExtention</param>
-        public MediaFile(string name, string sourceUrl, string fileExtention)
+        public MediaFile(string name, string sourceUrl, string previewUrl, string fileExtention)
         {
             Name = name;
             SourceUrl = sourceUrl;

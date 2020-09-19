@@ -41,13 +41,14 @@ namespace MultiMediaApplication
         PlaylistHandler playlistHandler = null;
         TreeViewNodesHandler treeViewNodesHandler = null;
         MediaHandler mediaHandler = null;
-        ObservableCollection<MediaViewSelectionUserControl> mediaList = null;
+        ObservableCollection<MediaViewSelectionUserControl> mediaToItemsControl = null;
+        public ObservableCollection<MediaViewSelectionUserControl> MediaToItemsControl { get => mediaToItemsControl; }
         public MainWindow()
         {
             playlistHandler = new PlaylistHandler();
             treeViewNodesHandler = new TreeViewNodesHandler();
             mediaHandler = new MediaHandler();
-            mediaList = new ObservableCollection<MediaViewSelectionUserControl>();
+            mediaToItemsControl = new ObservableCollection<MediaViewSelectionUserControl>();
 
             InitializeComponent();
             InitializePlayListTreeView();
@@ -213,7 +214,8 @@ namespace MultiMediaApplication
                     Video video = (media as Video);
                     userControl.MediaId = video.Id;
                     userControl.MediaName = video.Name;
-                    mediaList.Add(userControl);
+                    userControl.MediaImageSource = video.SourceUrl;
+                    mediaToItemsControl.Add(userControl);
                 }
                 else
                 {
@@ -221,9 +223,11 @@ namespace MultiMediaApplication
                     MultiMediaClassesAndManagers.MediaSubClasses.Image image = (media as MultiMediaClassesAndManagers.MediaSubClasses.Image);
                     userControl.MediaId = image.Id;
                     userControl.MediaName = image.Name;
-                    mediaList.Add(userControl);
+                    userControl.MediaImageSource = image.SourceUrl;
+                    mediaToItemsControl.Add(userControl);
                 }
             }
+            mediaItemsControl.ItemsSource = mediaToItemsControl;
         }
     }
 }
