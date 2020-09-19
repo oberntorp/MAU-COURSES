@@ -26,19 +26,6 @@
           "build/netstandard2.0/NETStandard.Library.targets": {}
         }
       },
-      "MultiMediaClassesAndManagers/1.0.0": {
-        "type": "project",
-        "framework": ".NETStandard,Version=v2.0",
-        "dependencies": {
-          "Utilities": "1.0.0"
-        },
-        "compile": {
-          "bin/placeholder/MultiMediaClassesAndManagers.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/MultiMediaClassesAndManagers.dll": {}
-        }
-      },
       "Utilities/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
@@ -196,11 +183,6 @@
         "netstandard.library.nuspec"
       ]
     },
-    "MultiMediaClassesAndManagers/1.0.0": {
-      "type": "project",
-      "path": "../MultiMediaClassesAndManagers/MultiMediaClassesAndManagers.csproj",
-      "msbuildProject": "../MultiMediaClassesAndManagers/MultiMediaClassesAndManagers.csproj"
-    },
     "Utilities/1.0.0": {
       "type": "project",
       "path": "../Utilities/Utilities.csproj",
@@ -209,8 +191,8 @@
   },
   "projectFileDependencyGroups": {
     ".NETStandard,Version=v2.0": [
-      "MultiMediaClassesAndManagers >= 1.0.0",
-      "NETStandard.Library >= 2.0.3"
+      "NETStandard.Library >= 2.0.3",
+      "Utilities >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -219,11 +201,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\wamp64\\www\\GitHub\\MAU-COURSES\\ProgrammeringCSharp3\\MultiMediaBussinessLogic\\MultiMediaBussinessLogic.csproj",
-      "projectName": "MultiMediaBussinessLogic",
-      "projectPath": "D:\\wamp64\\www\\GitHub\\MAU-COURSES\\ProgrammeringCSharp3\\MultiMediaBussinessLogic\\MultiMediaBussinessLogic.csproj",
+      "projectUniqueName": "D:\\wamp64\\www\\GitHub\\MAU-COURSES\\ProgrammeringCSharp3\\MultiMediaClassesAndManagers\\MultiMediaClassesAndManagers.csproj",
+      "projectName": "MultiMediaClassesAndManagers",
+      "projectPath": "D:\\wamp64\\www\\GitHub\\MAU-COURSES\\ProgrammeringCSharp3\\MultiMediaClassesAndManagers\\MultiMediaClassesAndManagers.csproj",
       "packagesPath": "C:\\Users\\obern\\.nuget\\packages\\",
-      "outputPath": "D:\\wamp64\\www\\GitHub\\MAU-COURSES\\ProgrammeringCSharp3\\MultiMediaBussinessLogic\\obj\\",
+      "outputPath": "D:\\wamp64\\www\\GitHub\\MAU-COURSES\\ProgrammeringCSharp3\\MultiMediaClassesAndManagers\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\obern\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -239,8 +221,8 @@
       "frameworks": {
         "netstandard2.0": {
           "projectReferences": {
-            "D:\\wamp64\\www\\GitHub\\MAU-COURSES\\ProgrammeringCSharp3\\MultiMediaClassesAndManagers\\MultiMediaClassesAndManagers.csproj": {
-              "projectPath": "D:\\wamp64\\www\\GitHub\\MAU-COURSES\\ProgrammeringCSharp3\\MultiMediaClassesAndManagers\\MultiMediaClassesAndManagers.csproj"
+            "D:\\wamp64\\www\\GitHub\\MAU-COURSES\\ProgrammeringCSharp3\\Utilities\\Utilities.csproj": {
+              "projectPath": "D:\\wamp64\\www\\GitHub\\MAU-COURSES\\ProgrammeringCSharp3\\Utilities\\Utilities.csproj"
             }
           }
         }

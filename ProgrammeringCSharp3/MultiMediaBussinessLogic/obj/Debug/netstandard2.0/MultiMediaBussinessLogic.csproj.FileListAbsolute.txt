@@ -1,0 +1,14 @@
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\MultiMediaBussinessLogic\bin\Debug\netstandard2.0\MultiMediaBussinessLogic.deps.json
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\MultiMediaBussinessLogic\bin\Debug\netstandard2.0\MultiMediaBussinessLogic.dll
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\MultiMediaBussinessLogic\bin\Debug\netstandard2.0\MultiMediaBussinessLogic.pdb
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\MultiMediaBussinessLogic\bin\Debug\netstandard2.0\MultiMediaClassesAndManagers.dll
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\MultiMediaBussinessLogic\bin\Debug\netstandard2.0\Utilities.dll
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\MultiMediaBussinessLogic\bin\Debug\netstandard2.0\MultiMediaClassesAndManagers.pdb
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\MultiMediaBussinessLogic\bin\Debug\netstandard2.0\Utilities.pdb
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\MultiMediaBussinessLogic\obj\Debug\netstandard2.0\MultiMediaBussinessLogic.csprojAssemblyReference.cache
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\MultiMediaBussinessLogic\obj\Debug\netstandard2.0\MultiMediaBussinessLogic.AssemblyInfoInputs.cache
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\MultiMediaBussinessLogic\obj\Debug\netstandard2.0\MultiMediaBussinessLogic.AssemblyInfo.cs
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\MultiMediaBussinessLogic\obj\Debug\netstandard2.0\MultiMediaBussinessLogic.csproj.CoreCompileInputs.cache
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\MultiMediaBussinessLogic\obj\Debug\netstandard2.0\MultiMediaBussinessLogic.csproj.CopyComplete
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\MultiMediaBussinessLogic\obj\Debug\netstandard2.0\MultiMediaBussinessLogic.dll
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\MultiMediaBussinessLogic\obj\Debug\netstandard2.0\MultiMediaBussinessLogic.pdb
