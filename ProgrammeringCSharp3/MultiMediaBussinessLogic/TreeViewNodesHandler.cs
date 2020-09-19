@@ -10,9 +10,16 @@ using Utilities;
 
 namespace MultiMediaBussinessLogic
 {
-
+    /// <summary>
+    /// Class that is responsible for creating TreeViewNodes
+    /// </summary>
     public class TreeViewNodesHandler
     {
+        /// <summary>
+        /// Method that creates a treeViewNodes from a set of folders that has been selected
+        /// </summary>
+        /// <param name="selectedFolders">The folders from which the treeViewNodes are created</param>
+        /// <returns></returns>
         public static List<TreeViewNode> CreateTreeViewNodesFromFolderContent(List<string> selectedFolders)
         {
             List<TreeViewNode> treeViewNodes = new List<TreeViewNode>();
@@ -27,6 +34,11 @@ namespace MultiMediaBussinessLogic
             return treeViewNodes;
         }
 
+        /// <summary>
+        /// Get subNodes of specific folder
+        /// </summary>
+        /// <param name="folderPath">folder path to check for subNodes</param>
+        /// <returns></returns>
         private static List<TreeViewNode> GetSubTreeViewNodes(string folderPath)
         {
             List<TreeViewNode> treeViewNodeList = new List<TreeViewNode>();
@@ -41,6 +53,11 @@ namespace MultiMediaBussinessLogic
             return treeViewNodeList;
         }
 
+        /// <summary>
+        /// Get the root treeViewNode of all treeViewNodes
+        /// </summary>
+        /// <param name="treeNodes">A collection of all treeViewNodes</param>
+        /// <returns>The root treeViewNode</returns>
         public TreeViewItem GetRootTreeViewItem(List<TreeViewNode> treeNodes)
         {
             TreeViewItem treeViewItem = new TreeViewItem();
@@ -48,6 +65,11 @@ namespace MultiMediaBussinessLogic
             return treeViewItem;
         }
 
+        /// <summary>
+        /// Creates the stackPanel with content that a TreeViewItem.Header contains
+        /// </summary>
+        /// <param name="treeNode">The treeNode containing the name and type of the treeViewItem being created</param>
+        /// <returns></returns>
         public StackPanel GetStackOfTreeViewNode(TreeViewNode treeNode)
         {
             StackPanel stack = new StackPanel();
@@ -64,17 +86,27 @@ namespace MultiMediaBussinessLogic
             return stack;
         }
 
-        public void AddSubNodes(TreeViewNode currentNode, ref TreeViewItem parentTreeViewItem)
+        /// <summary>
+        /// Add subNodes to a treeViewItemParent
+        /// </summary>
+        /// <param name="currentNode">Current node to check for subnodes of</param>
+        /// <param name="parentTreeViewItem">Parent TreeViewItem that will contain the subNodes</param>
+        public void AddSubNodesToParent(TreeViewNode currentNode, ref TreeViewItem parentTreeViewItem)
         {
             foreach (TreeViewNode subNode in currentNode.SubNodes)
             {
                 TreeViewItem childTreeViewItem = new TreeViewItem();
                 childTreeViewItem.Header = GetStackOfTreeViewNode(subNode);
-                AddSubNodes(subNode, ref childTreeViewItem);
+                AddSubNodesToParent(subNode, ref childTreeViewItem);
                 parentTreeViewItem.Items.Add(childTreeViewItem);
             }
         }
 
+        /// <summary>
+        /// Get the name of a currently selected treeViewNode
+        /// </summary>
+        /// <param name="playlistTreeView">TreeView to look for currently selected name</param>
+        /// <returns>The name of the currently selected node</returns>
         public string NameOfSelectedTreeViewNode(TreeView playlistTreeView)
         {
             return (((playlistTreeView.SelectedItem as TreeViewItem).Header as StackPanel).Children[1] as Label).Content.ToString();

@@ -13,11 +13,19 @@ namespace MultiMediaBussinessLogic
     {
         public PlaylistManager PlaylistManager { get; set; }
 
+        /// <summary>
+        /// PlaylistHandler constructor, initializes PlaylistManager
+        /// </summary>
         public PlaylistHandler()
         {
             PlaylistManager = new PlaylistManager();
         }
 
+        /// <summary>
+        /// Get id of an selected Playlist
+        /// </summary>
+        /// <param name="nameOfSelectedTreeViewNode">The nameof the selected TreeViewNode</param>
+        /// <returns></returns>
         public int GetPlaylistIdOfSelected(string nameOfSelectedTreeViewNode)
         {
             int idToReturn = 0;
@@ -30,12 +38,20 @@ namespace MultiMediaBussinessLogic
             return idToReturn;
         }
 
+        /// <summary>
+        /// Adds a media file to a selectedPlaylist
+        /// </summary>
+        /// <param name="indexOfPlaylistToReceiveMedia">Index where the playlist being updated resides</param>
+        /// <param name="mediaFileToAdd">The media file to add</param>
         public void AddMediaToSelectedPlaylist(int indexOfPlaylistToReceiveMedia, IMediaFile mediaFileToAdd)
         {
             Playlist updatedPlaylist = PlaylistManager.GetAt(indexOfPlaylistToReceiveMedia);
             updatedPlaylist.AddMediaToPlayList((MultiMediaClassesAndManagers.MediaSubClasses.Image)mediaFileToAdd);
         }
 
+        /// <summary>
+        /// Deletes all playlists
+        /// </summary>
         public void DeleteAllPlaylists()
         {
             PlaylistManager.DeleteAll();

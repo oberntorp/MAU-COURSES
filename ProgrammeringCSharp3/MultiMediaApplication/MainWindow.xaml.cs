@@ -90,7 +90,7 @@ namespace MultiMediaApplication
             Bitmap image = new Bitmap(fullPath);
 
             string fileName = FileHandler.GetFileName(fullPath);
-            return mediaHandler.GetImageObject(fullPath, image, fileName);
+            return mediaHandler.CreateImageObject(fullPath, image, fileName);
         }
 
         private void ChoseFolderForNavigationArea_Click(object sender, RoutedEventArgs e)
@@ -132,7 +132,7 @@ namespace MultiMediaApplication
         private void FillTreeViewWithNodes(List<TreeViewNode> treeNodes)
         {
             TreeViewItem rootNode = treeViewNodesHandler.GetRootTreeViewItem(treeNodes);
-            treeViewNodesHandler.AddSubNodes(treeNodes[0], ref rootNode);
+            treeViewNodesHandler.AddSubNodesToParent(treeNodes[0], ref rootNode);
             PlayListTreeView.Items.Add(rootNode);
         }
 

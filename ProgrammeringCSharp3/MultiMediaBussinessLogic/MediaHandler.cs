@@ -7,9 +7,19 @@ using Utilities;
 
 namespace MultiMediaBussinessLogic
 {
+    /// <summary>
+    /// This class Handles the Access/Retreival operations of Media (Image/Video classes)
+    /// </summary>
     public class MediaHandler
     {
-        public IMediaFile GetImageObject(string fullPath, Bitmap image, string fileName)
+        /// <summary>
+        /// Creates a Image Object
+        /// </summary>
+        /// <param name="fullPath">path to set in object</param>
+        /// <param name="image">the bitmapimage to add Width/Height</param>
+        /// <param name="fileName">The name of the image</param>
+        /// <returns>IMediaFile</returns>
+        public IMediaFile CreateImageObject(string fullPath, Bitmap image, string fileName)
         {
             return new MultiMediaClassesAndManagers.MediaSubClasses.Image(fileName, fullPath, FileHandler.GetFileExtension(fileName), image.Width, image.Height);
         }
