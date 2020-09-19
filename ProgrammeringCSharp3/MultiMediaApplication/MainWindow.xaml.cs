@@ -88,9 +88,7 @@ namespace MultiMediaApplication
         private IMediaFile CreateImageFile(string fullPath)
         {
             Bitmap image = new Bitmap(fullPath);
-
-            string fileName = FileHandler.GetFileName(fullPath);
-            return mediaHandler.CreateImageObject(fullPath, image, fileName);
+            return mediaHandler.CreateImageObject(fullPath, image, FileHandler.GetFileName(fullPath));
         }
 
         private void ChoseFolderForNavigationArea_Click(object sender, RoutedEventArgs e)
@@ -109,7 +107,7 @@ namespace MultiMediaApplication
             }
         }
 
-        private static List<TreeViewNode> GetNodesOfTreeView()
+        private List<TreeViewNode> GetNodesOfTreeView()
         {
             FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
             DialogResult dialogResult = folderBrowserDialog.ShowDialog();
@@ -119,7 +117,8 @@ namespace MultiMediaApplication
                 List<string> folderPaths = new List<string>();
                 folderPaths.Add(folderBrowserDialog.SelectedPath);
                 folderPaths.AddRange(Directory.GetDirectories(folderBrowserDialog.SelectedPath));
-                return TreeViewNodesHandler.CreateTreeViewNodesFromFolderContent(folderPaths);
+                treeViewNodesHandler.CreateTreeViewNodesFromFolderContent(folderPaths);
+                return treeViewNodesHandler.TreeViewNodes;
             }
             else
             {
@@ -140,7 +139,7 @@ namespace MultiMediaApplication
         {
             if (PlayListTreeView.HasItems)
             {
-                PlaylistCreationWindow creationPlaylistWindow = new PlaylistCreationWindow();
+                PlaylistCreationWindow creationPlaylistWindow = new PlaylistCreationWindow(playlistHandler.PlaylistManager.GetAllItems());
 
                 if (PlayListTreeView.SelectedItem != null)
                 {
@@ -148,13 +147,19 @@ namespace MultiMediaApplication
                     if (result)
                     {
                         Playlist newPlaylist = new Playlist(creationPlaylistWindow.TitlaOfPlaylist, creationPlaylistWindow.DescriptionOfPlaylist, creationPlaylistWindow.DurationBetweenMedia);
-                        TreeViewNode playlistTreeViewNode = new TreeViewNode(TreeNodeTypes.playlist, newPlaylist.Title);
+                        if(playlistHandler.AddPlaylist(newPlaylist))
+                        {
+                            TreeViewNode playlistTreeViewNode = new TreeViewNode(TreeNodeTypes.playlist, newPlaylist.Title);
 
-                        TreeViewItem newPlaylistTreeViewItem = new TreeViewItem();
-                        newPlaylistTreeViewItem.Header = treeViewNodesHandler.GetStackOfTreeViewNode(playlistTreeViewNode);
-                        (PlayListTreeView.SelectedItem as TreeViewItem).IsExpanded = true;
-                        (PlayListTreeView.SelectedItem as TreeViewItem).Items.Add(newPlaylistTreeViewItem);
-                        playlistHandler.PlaylistManager.AddPlaylist(newPlaylist);
+                            TreeViewItem newPlaylistTreeViewItem = new TreeViewItem();
+                            newPlaylistTreeViewItem.Header = treeViewNodesHandler.GetStackOfTreeViewNode(playlistTreeViewNode);
+                            (PlayListTreeView.SelectedItem as TreeViewItem).IsExpanded = true;
+                            (PlayListTreeView.SelectedItem as TreeViewItem).Items.Add(newPlaylistTreeViewItem);
+                        }
+                        else
+                        {
+                            MessageBoxes.ShowErrorMessageBox("Something went wrong, the playlist was not added.");
+                        }
                     }
                 }
                 else

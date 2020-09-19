@@ -11,14 +11,19 @@ namespace MultiMediaBussinessLogic
     /// </summary>
     public class PlaylistHandler
     {
-        public PlaylistManager PlaylistManager { get; set; }
-
+        private PlaylistManager playlistManager = null;
+        public PlaylistManager PlaylistManager { get => playlistManager; }
         /// <summary>
         /// PlaylistHandler constructor, initializes PlaylistManager
         /// </summary>
         public PlaylistHandler()
         {
-            PlaylistManager = new PlaylistManager();
+            playlistManager = new PlaylistManager();
+        }
+
+        public bool AddPlaylist(Playlist playlistToAdd)
+        {
+            return playlistManager.Add(playlistToAdd);
         }
 
         /// <summary>
@@ -29,7 +34,7 @@ namespace MultiMediaBussinessLogic
         public int GetPlaylistIdOfSelected(string nameOfSelectedTreeViewNode)
         {
             int idToReturn = 0;
-            Playlist playList = PlaylistManager.GetAllItems().Where(pl => pl.Title == nameOfSelectedTreeViewNode).FirstOrDefault();
+            Playlist playList = playlistManager.GetAllItems().Where(pl => pl.Title == nameOfSelectedTreeViewNode).FirstOrDefault();
             if (playList != null)
             {
                 idToReturn = playList.Id;
@@ -45,7 +50,7 @@ namespace MultiMediaBussinessLogic
         /// <param name="mediaFileToAdd">The media file to add</param>
         public void AddMediaToSelectedPlaylist(int indexOfPlaylistToReceiveMedia, IMediaFile mediaFileToAdd)
         {
-            Playlist updatedPlaylist = PlaylistManager.GetAt(indexOfPlaylistToReceiveMedia);
+            Playlist updatedPlaylist = playlistManager.GetAt(indexOfPlaylistToReceiveMedia);
             updatedPlaylist.AddMediaToPlayList((MultiMediaClassesAndManagers.MediaSubClasses.Image)mediaFileToAdd);
         }
 
@@ -54,7 +59,7 @@ namespace MultiMediaBussinessLogic
         /// </summary>
         public void DeleteAllPlaylists()
         {
-            PlaylistManager.DeleteAll();
+            playlistManager.DeleteAll();
         }
     }
 }

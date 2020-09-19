@@ -9,7 +9,7 @@ namespace MultiMediaClassesAndManagers.TreeNode
     /// </summary>
     public class TreeViewNode
     {
-        public TreeNodeTypes type { get; set; }
+        public TreeNodeTypes Type { get; set; }
         public string Name { get; set; }
 
         public List<TreeViewNode> SubNodes { get; set; }
@@ -21,7 +21,7 @@ namespace MultiMediaClassesAndManagers.TreeNode
         /// <param name="treeNodeName">the name of the treeNode</param>
         public TreeViewNode(TreeNodeTypes treeNodeType, string treeNodeName)
         {
-            type = treeNodeType;
+            Type = treeNodeType;
             Name = treeNodeName;
         }
     }
