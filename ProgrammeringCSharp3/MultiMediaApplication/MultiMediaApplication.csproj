@@ -105,7 +105,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MultiMediaBusinessLogic\MultiMediaClassesAndManagers.csproj">
+    <ProjectReference Include="..\MultiMediaClassesAndManagers\MultiMediaClassesAndManagers.csproj">
       <Project>{fd95bfab-180e-40ae-9414-eefcf1874eb6}</Project>
       <Name>MultiMediaClassesAndManagers</Name>
     </ProjectReference>
