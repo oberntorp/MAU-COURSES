@@ -72,12 +72,19 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="UserControls\MediaViewSelectionUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="PlaylistCreationWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="UserControls\MediaViewSelectionUserControl.xaml.cs">
+      <DependentUpon>MediaViewSelectionUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MessageBoxes.cs" />
     <Compile Include="PlaylistCreationWindow.xaml.cs">
       <DependentUpon>PlaylistCreationWindow.xaml</DependentUpon>

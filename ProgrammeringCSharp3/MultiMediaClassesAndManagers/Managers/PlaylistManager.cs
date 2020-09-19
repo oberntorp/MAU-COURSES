@@ -18,10 +18,10 @@ namespace MultiMediaClassesAndManagers.Implementations
         /// </summary>
         /// <param name="animalToAdd"> the animal to add</param>
         /// <returns></returns>
-        public Playlist AddPlaylist(Playlist playlistToAdd)
+        public bool AddPlaylist(Playlist playlistToAdd)
         {
             AddIdToPlaylist(ref playlistToAdd);
-            return Add(playlistToAdd) ? playlistToAdd : null;
+            return Add(playlistToAdd);
         }
 
         /// <summary>

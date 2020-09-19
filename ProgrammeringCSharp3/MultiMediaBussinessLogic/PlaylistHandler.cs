@@ -1,8 +1,12 @@
 ﻿using MultiMediaClassesAndManagers.Implementations;
 using MultiMediaClassesAndManagers.Interfaces;
+using MultiMediaClassesAndManagers.MediaBaseClass;
+using MultiMediaClassesAndManagers.MediaSubClasses;
 using MutiMediaClassesAndManagers;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Documents;
 
 namespace MultiMediaBussinessLogic
 {
@@ -23,7 +27,7 @@ namespace MultiMediaBussinessLogic
 
         public bool AddPlaylist(Playlist playlistToAdd)
         {
-            return playlistManager.Add(playlistToAdd);
+            return playlistManager.AddPlaylist(playlistToAdd);
         }
 
         /// <summary>
@@ -51,7 +55,7 @@ namespace MultiMediaBussinessLogic
         public void AddMediaToSelectedPlaylist(int indexOfPlaylistToReceiveMedia, IMediaFile mediaFileToAdd)
         {
             Playlist updatedPlaylist = playlistManager.GetAt(indexOfPlaylistToReceiveMedia);
-            updatedPlaylist.AddMediaToPlayList((MultiMediaClassesAndManagers.MediaSubClasses.Image)mediaFileToAdd);
+            updatedPlaylist.AddMediaToPlaylist((MultiMediaClassesAndManagers.MediaSubClasses.Image)mediaFileToAdd);
         }
 
         /// <summary>
@@ -60,6 +64,27 @@ namespace MultiMediaBussinessLogic
         public void DeleteAllPlaylists()
         {
             playlistManager.DeleteAll();
+        }
+
+
+        public List<MediaFile> GetMediaFiles(int indexOfPlaylist)
+        {
+            return playlistManager.GetAt(indexOfPlaylist).GetAllMediaFromPlaylist();
+        }
+
+        public bool IsMediaVideo(MediaFile mediaToCheck)
+        {
+            return mediaToCheck is Video;
+        }
+
+        public void CreateVideoThumpnail(MediaFile media)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CreateImageThumpnail(MediaFile media)
+        {
+            throw new NotImplementedException();
         }
     }
 }

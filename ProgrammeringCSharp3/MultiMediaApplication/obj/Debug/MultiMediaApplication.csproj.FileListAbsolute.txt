@@ -23,3 +23,5 @@ D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\MultiMediaApplication\obj\
 D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\MultiMediaApplication\bin\Debug\MultiMediaBussinessLogic.dll
 D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\MultiMediaApplication\bin\Debug\MultiMediaBussinessLogic.pdb
 D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\MultiMediaApplication\bin\Debug\System.Drawing.Common.dll
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\MultiMediaApplication\obj\Debug\UserControls\MediaViewSelectionUserControl.g.cs
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\MultiMediaApplication\obj\Debug\UserControls\MediaViewSelectionUserControl.baml

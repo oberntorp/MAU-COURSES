@@ -1,4 +1,5 @@
-﻿using MultiMediaClassesAndManagers.Managers;
+﻿using MultiMediaClassesAndManagers.Interfaces;
+using MultiMediaClassesAndManagers.Managers;
 using MultiMediaClassesAndManagers.MediaBaseClass;
 using System;
 using System.Collections.Generic;
@@ -36,7 +37,7 @@ namespace MutiMediaClassesAndManagers
             playlistPlaybackDelayBetweenMediaSec = playbackDelayBetweenMediaSec;
         }
 
-        public bool AddMediaToPlayList(MediaFile mediaToAdd)
+        public bool AddMediaToPlaylist(MediaFile mediaToAdd)
         {
             if(mediaToAdd != null)
             {
@@ -46,14 +47,19 @@ namespace MutiMediaClassesAndManagers
             return false;
         }
 
-        public bool DeleteMediaFromPlayList(int indexOfMediaToDelete)
+        public bool DeleteMediaFromPlaylist(int indexOfMediaToDelete)
         {
             return playlistContent.DeleteAt(indexOfMediaToDelete);
         }
 
-        public void ClearPlayList()
+        public void ClearPlaylist()
         {
             playlistContent.DeleteAll();
+        }
+
+        public List<MediaFile> GetAllMediaFromPlaylist()
+        {
+            return playlistContent.GetAllItems();
         }
     }
 }
