@@ -26,6 +26,7 @@ using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
 using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
 using Label = System.Windows.Controls.Label;
 using TreeView = System.Windows.Controls.TreeView;
+using MultiMediaBussinessLogic;
 
 namespace MultiMediaApplication
 {
@@ -34,10 +35,15 @@ namespace MultiMediaApplication
     /// </summary>
     public partial class MainWindow : Window
     {
-        private PlaylistManager playlistManager = null;
+        PlaylistHandler playlistHandler = null;
+        TreeViewNodesHandler treeViewNodesHandler = null;
+        MediaHandler mediaHandler = null;
         public MainWindow()
         {
-            playlistManager = new PlaylistManager();
+            playlistHandler = new PlaylistHandler();
+            treeViewNodesHandler = new TreeViewNodesHandler();
+            mediaHandler = new MediaHandler();
+
             InitializeComponent();
             InitializePlayListTreeView();
         }
@@ -61,12 +67,12 @@ namespace MultiMediaApplication
 
             if (wasFileSelected && !string.IsNullOrWhiteSpace(openFileDialog.FileName))
             {
-                int idOfPlayList = GetPlaylistIdOfSelected(NameOfSelectedTreeViewNode());
+                int idOfPlayList =  playlistHandler.GetPlaylistIdOfSelected(treeViewNodesHandler.NameOfSelectedTreeViewNode(PlayListTreeView));
                 indexOfPlaylist = idOfPlayList - 1;
 
                 if (PlayListTreeView.SelectedItem != null && idOfPlayList > 0)
                 {
-                    AddMediaToSelectedPlaylist(indexOfPlaylist, CreateImageFile(openFileDialog.FileName));
+                    playlistHandler.AddMediaToSelectedPlaylist(indexOfPlaylist, CreateImageFile(openFileDialog.FileName));
                 }
                 else
                 {
@@ -79,35 +85,12 @@ namespace MultiMediaApplication
             }
         }
 
-        private string NameOfSelectedTreeViewNode()
-        {
-            return (((PlayListTreeView.SelectedItem as TreeViewItem).Header as StackPanel).Children[1] as Label).Content.ToString();
-        }
-
-        private int GetPlaylistIdOfSelected(string nameOfSelectedTreeViewNode)
-        {
-            int idToReturn = 0;
-            Playlist playList = playlistManager.GetAllItems().Where(pl => pl.Title == nameOfSelectedTreeViewNode).FirstOrDefault();
-            if (playList != null)
-            {
-                idToReturn = playList.Id;
-            }
-
-            return idToReturn;
-        }
-
         private IMediaFile CreateImageFile(string fullPath)
         {
             Bitmap image = new Bitmap(fullPath);
 
             string fileName = FileHandler.GetFileName(fullPath);
-            return new MultiMediaClassesAndManagers.MediaSubClasses.Image(fileName, fullPath, FileHandler.GetFileExtension(fileName), image.Width, image.Height);
-        }
-
-        private void AddMediaToSelectedPlaylist(int indexOfPlaylistToReceiveMedia, IMediaFile mediaFileToAdd)
-        {
-            Playlist updatedPlaylist = playlistManager.GetAt(indexOfPlaylistToReceiveMedia);
-            updatedPlaylist.AddMediaToPlayList((MultiMediaClassesAndManagers.MediaSubClasses.Image)mediaFileToAdd);
+            return mediaHandler.GetImageObject(fullPath, image, fileName);
         }
 
         private void ChoseFolderForNavigationArea_Click(object sender, RoutedEventArgs e)
@@ -117,7 +100,7 @@ namespace MultiMediaApplication
                 MessageBoxes.ShowInformationMessageBox("Your current navigation area will be replaced and your playlists created will be removed.");
             }
 
-            playlistManager.DeleteAll();
+            playlistHandler.DeleteAllPlaylists();
             PlayListTreeView.Items.Clear();
             List<TreeViewNode> treeViewNodes = GetNodesOfTreeView();
             if(treeViewNodes.Count != 0)
@@ -136,7 +119,7 @@ namespace MultiMediaApplication
                 List<string> folderPaths = new List<string>();
                 folderPaths.Add(folderBrowserDialog.SelectedPath);
                 folderPaths.AddRange(Directory.GetDirectories(folderBrowserDialog.SelectedPath));
-                return CreateTreeViewNodesFromFolderContent(folderPaths);
+                return TreeViewNodesHandler.CreateTreeViewNodesFromFolderContent(folderPaths);
             }
             else
             {
@@ -146,73 +129,11 @@ namespace MultiMediaApplication
             return new List<TreeViewNode>();
         }
 
-        private static List<TreeViewNode> CreateTreeViewNodesFromFolderContent(List<string> selectedFolders)
-        {
-            List<TreeViewNode> treeViewNodes = new List<TreeViewNode>();
-
-            foreach (string folderPath in selectedFolders)
-            {
-                TreeViewNode treeViewNode = new TreeViewNode(TreeNodeTypes.directory, folderPath.Split('\\').Last());
-                treeViewNode.SubNodes = GetSubTreeViewNodes(folderPath);
-                treeViewNodes.Add(treeViewNode);
-            }
-
-            return treeViewNodes;
-        }
-
-        private static List<TreeViewNode> GetSubTreeViewNodes(string folderPath)
-        {
-            List<TreeViewNode> treeViewNodeList = new List<TreeViewNode>();
-
-            foreach (string nameOfSubDirectory in Directory.GetDirectories(folderPath))
-            {
-                TreeViewNode subTreeViewNode = new TreeViewNode(TreeNodeTypes.directory, FileHandler.GetFileName(nameOfSubDirectory));
-                subTreeViewNode.SubNodes = subTreeViewNode.SubNodes = GetSubTreeViewNodes(nameOfSubDirectory);
-                treeViewNodeList.Add(subTreeViewNode);
-            }
-
-            return treeViewNodeList;
-        }
-
         private void FillTreeViewWithNodes(List<TreeViewNode> treeNodes)
         {
-            TreeViewItem rootNode = GetRootTreeViewItem(treeNodes);
-            AddSubNodes(treeNodes[0], ref rootNode);
+            TreeViewItem rootNode = treeViewNodesHandler.GetRootTreeViewItem(treeNodes);
+            treeViewNodesHandler.AddSubNodes(treeNodes[0], ref rootNode);
             PlayListTreeView.Items.Add(rootNode);
-        }
-
-        private TreeViewItem GetRootTreeViewItem(List<TreeViewNode> treeNodes)
-        {
-            TreeViewItem treeViewItem = new TreeViewItem();
-            treeViewItem.Header = GetStackOfTreeViewNode(treeNodes.ElementAt(0));
-            return treeViewItem;
-        }
-
-        private static StackPanel GetStackOfTreeViewNode(TreeViewNode treeNode)
-        {
-            StackPanel stack = new StackPanel();
-            stack.Orientation = System.Windows.Controls.Orientation.Horizontal;
-            System.Windows.Controls.Image icon = new System.Windows.Controls.Image();
-            string iconPath = (treeNode.type == TreeNodeTypes.directory) ? "folder_icon8.png" : "video_playlist_icons8.png";
-            icon.Source = new BitmapImage(new Uri($"/Images/{iconPath}", UriKind.Relative));
-            icon.Height = 16;
-            icon.Width = 16;
-            Label nameOfNode = new Label();
-            nameOfNode.Content = treeNode.Name;
-            stack.Children.Add(icon);
-            stack.Children.Add(nameOfNode);
-            return stack;
-        }
-
-        private static void AddSubNodes(TreeViewNode currentNode, ref TreeViewItem parentTreeViewItem)
-        {
-            foreach (TreeViewNode subNode in currentNode.SubNodes)
-            {
-                TreeViewItem childTreeViewItem = new TreeViewItem();
-                childTreeViewItem.Header = GetStackOfTreeViewNode(subNode);
-                AddSubNodes(subNode, ref childTreeViewItem);
-                parentTreeViewItem.Items.Add(childTreeViewItem);
-            }
         }
 
         private void CreatePlaylist_Click(object sender, RoutedEventArgs e)
@@ -230,10 +151,10 @@ namespace MultiMediaApplication
                         TreeViewNode playlistTreeViewNode = new TreeViewNode(TreeNodeTypes.playlist, newPlaylist.Title);
 
                         TreeViewItem newPlaylistTreeViewItem = new TreeViewItem();
-                        newPlaylistTreeViewItem.Header = GetStackOfTreeViewNode(playlistTreeViewNode);
+                        newPlaylistTreeViewItem.Header = treeViewNodesHandler.GetStackOfTreeViewNode(playlistTreeViewNode);
                         (PlayListTreeView.SelectedItem as TreeViewItem).IsExpanded = true;
                         (PlayListTreeView.SelectedItem as TreeViewItem).Items.Add(newPlaylistTreeViewItem);
-                        playlistManager.AddPlaylist(newPlaylist);
+                        playlistHandler.PlaylistManager.AddPlaylist(newPlaylist);
                     }
                 }
                 else
@@ -249,7 +170,7 @@ namespace MultiMediaApplication
 
         private void PlayListTreeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            int idOfPlayList = GetPlaylistIdOfSelected(NameOfSelectedTreeViewNode());
+            int idOfPlayList = playlistHandler.GetPlaylistIdOfSelected(treeViewNodesHandler.NameOfSelectedTreeViewNode(PlayListTreeView));
             int indexOfPlaylist = idOfPlayList - 1;
 
             if ((sender as TreeView).SelectedItem != null && indexOfPlaylist > 0)

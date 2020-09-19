@@ -38,6 +38,9 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Common, Version=4.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Drawing.Common.4.7.0\lib\net461\System.Drawing.Common.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -96,6 +99,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -105,6 +109,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MultiMediaBussinessLogic\MultiMediaBussinessLogic.csproj">
+      <Project>{870b6196-ff1e-4f6c-8936-af5c98cf4fce}</Project>
+      <Name>MultiMediaBussinessLogic</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MultiMediaClassesAndManagers\MultiMediaClassesAndManagers.csproj">
       <Project>{fd95bfab-180e-40ae-9414-eefcf1874eb6}</Project>
       <Name>MultiMediaClassesAndManagers</Name>
