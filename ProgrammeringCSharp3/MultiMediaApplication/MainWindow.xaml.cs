@@ -29,6 +29,7 @@ using TreeView = System.Windows.Controls.TreeView;
 using MultiMediaBussinessLogic;
 using MultiMediaClassesAndManagers.MediaSubClasses;
 using MultiMediaApplication.UserControls;
+using MultiMediaApplication.PlaylistWindows;
 using System.Collections.ObjectModel;
 
 namespace MultiMediaApplication
@@ -73,12 +74,13 @@ namespace MultiMediaApplication
 
             if (wasFileSelected && !string.IsNullOrWhiteSpace(openFileDialog.FileName))
             {
-                int idOfPlayList =  playlistHandler.GetPlaylistIdOfSelected(treeViewNodesHandler.NameOfSelectedTreeViewNode(PlaylistTreeView));
+                int idOfPlayList = playlistHandler.GetPlaylistIdOfSelected(treeViewNodesHandler.NameOfSelectedTreeViewNode(PlaylistTreeView));
                 indexOfPlaylist = idOfPlayList - 1;
 
                 if (PlaylistTreeView.SelectedItem != null && idOfPlayList > 0)
                 {
                     playlistHandler.AddMediaToSelectedPlaylist(indexOfPlaylist, CreateImageFile(openFileDialog.FileName));
+                    InitiateViewPlaylist(indexOfPlaylist);
                 }
                 else
                 {
@@ -94,7 +96,7 @@ namespace MultiMediaApplication
         private IMediaFile CreateImageFile(string fullPath)
         {
             Bitmap image = new Bitmap(fullPath);
-            return mediaHandler.CreateImageObject(fullPath, image, FileHandler.GetFileName(fullPath));
+            return mediaHandler.CreateImageObject(fullPath, fullPath, image, FileHandler.GetFileName(fullPath));
         }
 
         private void ChoseFolderForNavigationArea_Click(object sender, RoutedEventArgs e)
@@ -107,7 +109,7 @@ namespace MultiMediaApplication
             playlistHandler.DeleteAllPlaylists();
             PlaylistTreeView.Items.Clear();
             List<TreeViewNode> treeViewNodes = GetNodesOfTreeView();
-            if(treeViewNodes.Count != 0)
+            if (treeViewNodes.Count != 0)
             {
                 FillTreeViewWithNodes(treeViewNodes);
                 HideInitialExplination();
@@ -159,7 +161,7 @@ namespace MultiMediaApplication
                     if (result)
                     {
                         Playlist newPlaylist = new Playlist(creationPlaylistWindow.TitlaOfPlaylist, creationPlaylistWindow.DescriptionOfPlaylist, creationPlaylistWindow.DurationBetweenMedia);
-                        if(playlistHandler.AddPlaylist(newPlaylist))
+                        if (playlistHandler.AddPlaylist(newPlaylist))
                         {
                             TreeViewNode playlistTreeViewNode = new TreeViewNode(TreeNodeTypes.playlist, newPlaylist.Title);
 
@@ -189,29 +191,36 @@ namespace MultiMediaApplication
         {
             int idOfPlayList = playlistHandler.GetPlaylistIdOfSelected(treeViewNodesHandler.NameOfSelectedTreeViewNode(PlaylistTreeView));
             int indexOfPlaylist = idOfPlayList - 1;
+            TreeViewItem selectedNode = (TreeViewItem)(sender as TreeView).SelectedItem;
 
-            if ((sender as TreeView).SelectedItem != null && indexOfPlaylist != -1)
+            if (selectedNode != null && indexOfPlaylist != -1)
             {
-                List<MediaFile> mediaFileList = playlistHandler.GetMediaFiles(indexOfPlaylist);
-                if (mediaFileList.Count > 0)
-                {
-                    CreateUiForEveryMediaType(mediaFileList);
-                }
-                else
-                {
-                    MessageBoxes.ShowInformationMessageBox("No media to show in the Playlist selected");
-                }
+                InitiateViewPlaylist(indexOfPlaylist);
             }
         }
 
-        private void CreateUiForEveryMediaType(List<MediaFile> mediaFiles)
+        private void InitiateViewPlaylist(int indexOfPlaylist)
         {
-            foreach(MediaFile media in mediaFiles)
+            List<MediaFile> mediaFileList = playlistHandler.GetMediaFiles(indexOfPlaylist);
+            if (mediaFileList.Count > 0)
             {
-                if(playlistHandler.IsMediaVideo(media))
+                CreateUiForEveryMediaType(mediaFileList, indexOfPlaylist);
+            }
+            else
+            {
+                MessageBoxes.ShowInformationMessageBox("No media to show in the Playlist selected");
+            }
+        }
+
+        private void CreateUiForEveryMediaType(List<MediaFile> mediaFiles, int indexOfPlaylist)
+        {
+            foreach (MediaFile media in mediaFiles)
+            {
+                if (playlistHandler.IsMediaVideo(media))
                 {
                     MediaViewSelectionUserControl userControl = new MediaViewSelectionUserControl();
                     Video video = (media as Video);
+                    userControl.PlaylistIndex = indexOfPlaylist;
                     userControl.MediaId = video.Id;
                     userControl.MediaName = video.Name;
                     userControl.MediaImageSource = video.SourceUrl;
@@ -221,6 +230,7 @@ namespace MultiMediaApplication
                 {
                     MediaViewSelectionUserControl userControl = new MediaViewSelectionUserControl();
                     MultiMediaClassesAndManagers.MediaSubClasses.Image image = (media as MultiMediaClassesAndManagers.MediaSubClasses.Image);
+                    userControl.PlaylistIndex = indexOfPlaylist;
                     userControl.MediaId = image.Id;
                     userControl.MediaName = image.Name;
                     userControl.MediaImageSource = image.SourceUrl;

@@ -1,4 +1,7 @@
-﻿using System;
+﻿using MultiMediaApplication.PlaylistWindows;
+using MultiMediaClassesAndManagers.Managers;
+using MutiMediaClassesAndManagers;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -21,6 +24,7 @@ namespace MultiMediaApplication.UserControls
     /// </summary>
     public partial class MediaViewSelectionUserControl : UserControl
     {
+        public int PlaylistIndex { get; set; }
         public int MediaId { get; set; }
         public string MediaName { get; set; }
         public string MediaImageSource { get; set; }
@@ -32,7 +36,7 @@ namespace MultiMediaApplication.UserControls
 
         private void StackPanel_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            System.Diagnostics.Process.Start(MediaImageSource);
+            PlaylistPlayWindow newPlayWindow = new PlaylistPlayWindow(PlaylistIndex);
         }
     }
 }

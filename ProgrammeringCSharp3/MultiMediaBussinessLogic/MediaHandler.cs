@@ -16,12 +16,13 @@ namespace MultiMediaBussinessLogic
         /// Creates a Image Object
         /// </summary>
         /// <param name="fullPath">path to set in object</param>
+        /// <param name="previewUrl">Url of preview (differs for type)</param>
         /// <param name="image">the bitmapimage to add Width/Height</param>
         /// <param name="fileName">The name of the image</param>
         /// <returns>IMediaFile</returns>
-        public IMediaFile CreateImageObject(string fullPath, Bitmap image, string fileName)
+        public IMediaFile CreateImageObject(string fullPath, string previewUrl, Bitmap image, string fileName)
         {
-            return new MultiMediaClassesAndManagers.MediaSubClasses.Image(fileName, fullPath, FileHandler.GetFileExtension(fileName), image.Width, image.Height);
+            return new MultiMediaClassesAndManagers.MediaSubClasses.Image(fileName, fullPath, previewUrl, FileHandler.GetFileExtension(fullPath), image.Width, image.Height);
         }
     }
 }

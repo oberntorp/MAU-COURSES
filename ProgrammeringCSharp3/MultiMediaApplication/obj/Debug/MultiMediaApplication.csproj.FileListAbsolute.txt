@@ -18,11 +18,12 @@ D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\MultiMediaApplication\obj\
 D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\MultiMediaApplication\obj\Debug\MultiMediaApplication.csproj.CopyComplete
 D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\MultiMediaApplication\obj\Debug\MultiMediaApplication.exe
 D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\MultiMediaApplication\obj\Debug\MultiMediaApplication.pdb
-D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\MultiMediaApplication\obj\Debug\PlaylistCreationWindow.g.cs
-D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\MultiMediaApplication\obj\Debug\PlaylistCreationWindow.baml
 D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\MultiMediaApplication\bin\Debug\MultiMediaBussinessLogic.dll
 D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\MultiMediaApplication\bin\Debug\MultiMediaBussinessLogic.pdb
 D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\MultiMediaApplication\bin\Debug\System.Drawing.Common.dll
 D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\MultiMediaApplication\obj\Debug\UserControls\MediaViewSelectionUserControl.g.cs
 D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\MultiMediaApplication\obj\Debug\UserControls\MediaViewSelectionUserControl.baml
-D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\MultiMediaApplication\obj\Debug\GeneratedInternalTypeHelper.g.cs
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\MultiMediaApplication\obj\Debug\PlaylistWindows\PlaylistPlayWindow.g.cs
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\MultiMediaApplication\obj\Debug\PlaylistWindows\PlaylistCreationWindow.g.cs
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\MultiMediaApplication\obj\Debug\PlaylistWindows\PlaylistPlayWindow.baml
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\MultiMediaApplication\obj\Debug\PlaylistWindows\PlaylistCreationWindow.baml

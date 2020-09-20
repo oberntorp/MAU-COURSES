@@ -17,7 +17,7 @@ namespace Utilities
         /// <returns></returns>
         public static string GetFileName(string filePath)
         {
-            return filePath.Split('\\').Last();
+            return filePath.Split('\\').Last().Split('.').First();
         }
 
         /// <summary>
@@ -25,9 +25,10 @@ namespace Utilities
         /// </summary>
         /// <param name="fileName">The file name</param>
         /// <returns></returns>
-        public static string GetFileExtension(string fileName)
+        public static string GetFileExtension(string filePath)
         {
-            return fileName.Split('.').Last();
+
+            return filePath.Split('\\').Last().Split('.').Last();
         }
     }
 }
