@@ -18,6 +18,7 @@ namespace MultiMediaBussinessLogic
         private PlaylistManager playlistManager = null;
         private MediaHandler mediaHandler = null;
         public PlaylistManager PlaylistManager { get => playlistManager; }
+
         /// <summary>
         /// PlaylistHandler constructor, initializes PlaylistManager
         /// </summary>
@@ -27,6 +28,11 @@ namespace MultiMediaBussinessLogic
             mediaHandler = new MediaHandler();
         }
 
+        /// <summary>
+        /// Calls AddPlaylist on playlistManager, this way the playlist gets an id
+        /// </summary>
+        /// <param name="playlistToAdd">The playlist being added</param>
+        /// <returns>true/false for success</returns>
         public bool AddPlaylist(Playlist playlistToAdd)
         {
             return playlistManager.AddPlaylist(playlistToAdd);
@@ -36,7 +42,7 @@ namespace MultiMediaBussinessLogic
         /// Get id of an selected Playlist
         /// </summary>
         /// <param name="nameOfSelectedTreeViewNode">The nameof the selected TreeViewNode</param>
-        /// <returns></returns>
+        /// <returns>The id of the selected Playlist</returns>
         public int GetPlaylistIdOfSelected(string nameOfSelectedTreeViewNode)
         {
             int idToReturn = 0;
@@ -52,7 +58,7 @@ namespace MultiMediaBussinessLogic
         /// <summary>
         /// Adds a media file to a selectedPlaylist
         /// </summary>
-        /// <param name="indexOfPlaylistToReceiveMedia">Index where the playlist being updated resides</param>
+        /// <param name="indexOfPlaylistToReceiveMedia">Index where the playlist being updated resides, first the mediaFile needs to be of Video or Image type</param>
         /// <param name="mediaFileToAdd">The media file to add</param>
         public void AddMediaToSelectedPlaylist(int indexOfPlaylistToReceiveMedia, IMediaFile mediaFileToAdd)
         {
@@ -60,15 +66,20 @@ namespace MultiMediaBussinessLogic
             updatedPlaylist.AddMediaToPlaylist(CastMediaToVideoOrImage(mediaFileToAdd));
         }
 
-        private MediaFile CastMediaToVideoOrImage(IMediaFile mediaFileToAdd)
+        /// <summary>
+        /// Casts a given media into Video or Image
+        /// </summary>
+        /// <param name="mediaFileToCast">The mediaFile needing cast operation</param>
+        /// <returns>MediaFile going into the playlist media collection</returns>
+        private MediaFile CastMediaToVideoOrImage(IMediaFile mediaFileToCast)
         {
-            if (mediaHandler.IsMediaVideo((MediaFile)mediaFileToAdd))
+            if (mediaHandler.IsMediaVideo((MediaFile)mediaFileToCast))
             {
-                return (MultiMediaClassesAndManagers.MediaSubClasses.Video)mediaFileToAdd;
+                return (MultiMediaClassesAndManagers.MediaSubClasses.Video)mediaFileToCast;
             }
             else
             {
-                return (MultiMediaClassesAndManagers.MediaSubClasses.Image)mediaFileToAdd;
+                return (MultiMediaClassesAndManagers.MediaSubClasses.Image)mediaFileToCast;
             }
         }
 
@@ -80,7 +91,11 @@ namespace MultiMediaBussinessLogic
             playlistManager.DeleteAll();
         }
 
-
+        /// <summary>
+        /// Get all nedia files in a playlist
+        /// </summary>
+        /// <param name="indexOfPlaylist">index of playlist where the media is stored</param>
+        /// <returns></returns>
         public List<MediaFile> GetMediaFiles(int indexOfPlaylist)
         {
             return playlistManager.GetAt(indexOfPlaylist).GetAllMediaFromPlaylist();

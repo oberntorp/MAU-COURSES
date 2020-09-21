@@ -18,8 +18,8 @@ namespace MultiMediaBussinessLogic
         /// <summary>
         /// Creates a Image Object
         /// </summary>
-        /// <param name="fullPath">path to set in object</param>
-        /// <param name="previewUrl">Url of preview (differs for type)</param>
+        /// <param name="fullPath">The fullPath of the media</param>
+        /// <param name="previewUrl">A preview url needed when displaying a thumbnail of the media</param>
         /// <param name="image">the bitmapimage to add Width/Height</param>
         /// <param name="fileName">The name of the image</param>
         /// <returns>IMediaFile</returns>
@@ -28,11 +28,24 @@ namespace MultiMediaBussinessLogic
             return new MultiMediaClassesAndManagers.MediaSubClasses.Image(fileName, fullPath, previewUrl, FileHandler.GetFileExtension(fullPath), image.Width, image.Height);
         }
 
+        /// <summary>
+        /// Creates a Video object
+        /// </summary>
+        /// <param name="fullPath">The fullPath of the media</param>
+        /// <param name="previewUrl">A preview url needed when displaying a thumbnail of the media</param>
+        /// <param name="vidoInfo">An object needed to obtain the length of the video in question</param>
+        /// <param name="fileName">The name of the video</param>
+        /// <returns></returns>
         public IMediaFile CreateVideoObject(string fullPath, string previewUrl, IWMPMedia vidoInfo, string fileName)
         {
             return new MultiMediaClassesAndManagers.MediaSubClasses.Video(fileName, fullPath, previewUrl, FileHandler.GetFileExtension(fullPath), vidoInfo.duration);
         }
 
+        /// <summary>
+        /// This method checks to see if a MediFile is a video or an image
+        /// </summary>
+        /// <param name="mediaToCheck">The media to check</param>
+        /// <returns>true/false</returns>
         public bool IsMediaVideo(MediaFile mediaToCheck)
         {
             return mediaToCheck is Video;
