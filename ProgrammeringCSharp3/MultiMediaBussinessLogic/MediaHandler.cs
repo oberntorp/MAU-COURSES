@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
 using Utilities;
+using WMPLib;
+using MultiMediaClassesAndManagers.MediaBaseClass;
+using MultiMediaClassesAndManagers.MediaSubClasses;
 
 namespace MultiMediaBussinessLogic
 {
@@ -23,6 +26,16 @@ namespace MultiMediaBussinessLogic
         public IMediaFile CreateImageObject(string fullPath, string previewUrl, Bitmap image, string fileName)
         {
             return new MultiMediaClassesAndManagers.MediaSubClasses.Image(fileName, fullPath, previewUrl, FileHandler.GetFileExtension(fullPath), image.Width, image.Height);
+        }
+
+        public IMediaFile CreateVideoObject(string fullPath, string previewUrl, IWMPMedia vidoInfo, string fileName)
+        {
+            return new MultiMediaClassesAndManagers.MediaSubClasses.Video(fileName, fullPath, previewUrl, FileHandler.GetFileExtension(fullPath), vidoInfo.duration);
+        }
+
+        public bool IsMediaVideo(MediaFile mediaToCheck)
+        {
+            return mediaToCheck is Video;
         }
     }
 }

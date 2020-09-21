@@ -28,3 +28,6 @@ D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\MultiMediaApplication\obj\
 D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\MultiMediaApplication\obj\Debug\PlaylistWindows\PlaylistPlayWindow.baml
 D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\MultiMediaApplication\obj\Debug\PlaylistWindows\PlaylistCreationWindow.baml
 D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\MultiMediaApplication\obj\Debug\GeneratedInternalTypeHelper.g.cs
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\MultiMediaApplication\bin\Debug\Interop.WMPLib.dll
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\MultiMediaApplication\obj\Debug\Interop.WMPLib.dll
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\MultiMediaApplication\obj\Debug\MultiMediaApplication.csproj.ResolveComReference.cache

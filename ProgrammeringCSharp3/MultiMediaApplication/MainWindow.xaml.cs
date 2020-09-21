@@ -31,6 +31,7 @@ using MultiMediaClassesAndManagers.MediaSubClasses;
 using MultiMediaApplication.UserControls;
 using MultiMediaApplication.PlaylistWindows;
 using System.Collections.ObjectModel;
+using WMPLib;
 
 namespace MultiMediaApplication
 {
@@ -62,34 +63,63 @@ namespace MultiMediaApplication
 
         private void MenuItemVideo_Click(object sender, RoutedEventArgs e)
         {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Video files | *.mp4; *.wmv;";
 
+            int idOfPlayList = playlistHandler.GetPlaylistIdOfSelected(treeViewNodesHandler.NameOfSelectedTreeViewNode(PlaylistTreeView));
+            int indexOfPlaylist = 0;
+            indexOfPlaylist = idOfPlayList - 1;
+            if (PlaylistTreeView.SelectedItem != null && idOfPlayList > 0)
+            {
+                bool wasFileSelected = (bool)openFileDialog.ShowDialog();
+
+                if (wasFileSelected && !string.IsNullOrWhiteSpace(openFileDialog.FileName))
+                {
+                    playlistHandler.AddMediaToSelectedPlaylist(indexOfPlaylist, CreateVideoFile(openFileDialog.FileName));
+                    InitiateViewPlaylist(indexOfPlaylist);
+                }
+                else
+                {
+                    MessageBoxes.ShowInformationMessageBox("No File was selected");
+                }
+            }
+            else
+            {
+                MessageBoxes.ShowInformationMessageBox("Please select a playlist.");
+            }
+        }
+
+        private IMediaFile CreateVideoFile(string fullPath)
+        {
+            WindowsMediaPlayer wmp = new WindowsMediaPlayer();
+            return mediaHandler.CreateVideoObject(fullPath, "../Images/video_icons8.png", wmp.newMedia(fullPath), FileHandler.GetFileName(fullPath));
         }
 
         private void MenuItemImage_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "Image files | *.jpg; *.jpeg; *.png";
-            bool wasFileSelected = (bool)openFileDialog.ShowDialog();
+
+            int idOfPlayList = playlistHandler.GetPlaylistIdOfSelected(treeViewNodesHandler.NameOfSelectedTreeViewNode(PlaylistTreeView));
             int indexOfPlaylist = 0;
-
-            if (wasFileSelected && !string.IsNullOrWhiteSpace(openFileDialog.FileName))
+            indexOfPlaylist = idOfPlayList - 1;
+            if (PlaylistTreeView.SelectedItem != null && idOfPlayList > 0)
             {
-                int idOfPlayList = playlistHandler.GetPlaylistIdOfSelected(treeViewNodesHandler.NameOfSelectedTreeViewNode(PlaylistTreeView));
-                indexOfPlaylist = idOfPlayList - 1;
+                bool wasFileSelected = (bool)openFileDialog.ShowDialog();
 
-                if (PlaylistTreeView.SelectedItem != null && idOfPlayList > 0)
+                if (wasFileSelected && !string.IsNullOrWhiteSpace(openFileDialog.FileName))
                 {
                     playlistHandler.AddMediaToSelectedPlaylist(indexOfPlaylist, CreateImageFile(openFileDialog.FileName));
                     InitiateViewPlaylist(indexOfPlaylist);
                 }
                 else
                 {
-                    MessageBoxes.ShowInformationMessageBox("Please select a playlist.");
+                    MessageBoxes.ShowInformationMessageBox("No File was selected");
                 }
             }
             else
             {
-                MessageBoxes.ShowInformationMessageBox("No File was selected");
+                MessageBoxes.ShowInformationMessageBox("Please select a playlist.");
             }
         }
 
@@ -217,7 +247,7 @@ namespace MultiMediaApplication
             mediaToItemsControl.Clear();
             foreach (MediaFile media in mediaFiles)
             {
-                if (playlistHandler.IsMediaVideo(media))
+                if (mediaHandler.IsMediaVideo(media))
                 {
                     Video video = (media as Video);
 

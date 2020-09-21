@@ -26,6 +26,7 @@ namespace MultiMediaClassesAndManagers.MediaBaseClass
         {
             Name = name;
             SourceUrl = sourceUrl;
+            PreviewUrl = previewUrl;
             FileExtention = fileExtention;
         }
     }

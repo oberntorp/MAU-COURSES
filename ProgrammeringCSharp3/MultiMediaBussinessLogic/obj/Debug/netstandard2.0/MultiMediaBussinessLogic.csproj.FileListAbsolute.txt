@@ -40,3 +40,4 @@ D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\MultiMediaBussinessLogic\b
 D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\MultiMediaBussinessLogic\bin\Debug\netstandard2.0\System.Windows.Forms.xml
 D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\MultiMediaBussinessLogic\bin\Debug\netstandard2.0\System.Runtime.Serialization.Formatters.Soap.xml
 D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\MultiMediaBussinessLogic\obj\Debug\netstandard2.0\MultiMediaBussinessLogic.csproj.CoreCompileInputs.cache
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\MultiMediaBussinessLogic\bin\Debug\netstandard2.0\Interop.WMPLib.dll

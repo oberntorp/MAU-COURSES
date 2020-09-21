@@ -14,6 +14,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="Interop.WMPLib">
+      <HintPath>..\MultiMediaApplication\obj\Debug\Interop.WMPLib.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore">
       <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\PresentationCore.dll</HintPath>
     </Reference>

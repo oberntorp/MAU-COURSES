@@ -17,3 +17,4 @@ D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Utilities\bin\Debug\netsta
 D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Utilities\bin\Debug\netstandard2.0\System.Security.xml
 D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Utilities\bin\Debug\netstandard2.0\System.Configuration.xml
 D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Utilities\obj\Debug\netstandard2.0\Utilities.csproj.CopyComplete
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Utilities\obj\Debug\netstandard2.0\Utilities.csprojAssemblyReference.cache

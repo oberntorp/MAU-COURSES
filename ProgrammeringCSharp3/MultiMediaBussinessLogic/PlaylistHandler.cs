@@ -16,6 +16,7 @@ namespace MultiMediaBussinessLogic
     public class PlaylistHandler
     {
         private PlaylistManager playlistManager = null;
+        private MediaHandler mediaHandler = null;
         public PlaylistManager PlaylistManager { get => playlistManager; }
         /// <summary>
         /// PlaylistHandler constructor, initializes PlaylistManager
@@ -23,6 +24,7 @@ namespace MultiMediaBussinessLogic
         public PlaylistHandler()
         {
             playlistManager = new PlaylistManager();
+            mediaHandler = new MediaHandler();
         }
 
         public bool AddPlaylist(Playlist playlistToAdd)
@@ -55,7 +57,19 @@ namespace MultiMediaBussinessLogic
         public void AddMediaToSelectedPlaylist(int indexOfPlaylistToReceiveMedia, IMediaFile mediaFileToAdd)
         {
             Playlist updatedPlaylist = playlistManager.GetAt(indexOfPlaylistToReceiveMedia);
-            updatedPlaylist.AddMediaToPlaylist((MultiMediaClassesAndManagers.MediaSubClasses.Image)mediaFileToAdd);
+            updatedPlaylist.AddMediaToPlaylist(CastMediaToVideoOrImage(mediaFileToAdd));
+        }
+
+        private MediaFile CastMediaToVideoOrImage(IMediaFile mediaFileToAdd)
+        {
+            if (mediaHandler.IsMediaVideo((MediaFile)mediaFileToAdd))
+            {
+                return (MultiMediaClassesAndManagers.MediaSubClasses.Video)mediaFileToAdd;
+            }
+            else
+            {
+                return (MultiMediaClassesAndManagers.MediaSubClasses.Image)mediaFileToAdd;
+            }
         }
 
         /// <summary>
@@ -70,21 +84,6 @@ namespace MultiMediaBussinessLogic
         public List<MediaFile> GetMediaFiles(int indexOfPlaylist)
         {
             return playlistManager.GetAt(indexOfPlaylist).GetAllMediaFromPlaylist();
-        }
-
-        public bool IsMediaVideo(MediaFile mediaToCheck)
-        {
-            return mediaToCheck is Video;
-        }
-
-        public void CreateVideoThumpnail(MediaFile media)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void CreateImageThumpnail(MediaFile media)
-        {
-            throw new NotImplementedException();
         }
     }
 }

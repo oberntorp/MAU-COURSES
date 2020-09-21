@@ -13,6 +13,7 @@
           "NETStandard.Library": "2.0.3",
           "System.Drawing.Common": "4.7.0",
           "WindowsBase": "4.6.1055",
+          "Interop.WMPLib": "1.0.0.0",
           "PresentationCore": "4.0.0.0",
           "PresentationFramework": "4.0.0.0"
         },
@@ -53,6 +54,14 @@
       "Utilities/1.0.0": {
         "runtime": {
           "Utilities.dll": {}
+        }
+      },
+      "Interop.WMPLib/1.0.0.0": {
+        "runtime": {
+          "Interop.WMPLib.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       },
       "PresentationCore/4.0.0.0": {
@@ -210,6 +219,11 @@
     },
     "Utilities/1.0.0": {
       "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Interop.WMPLib/1.0.0.0": {
+      "type": "reference",
       "serviceable": false,
       "sha512": ""
     },
