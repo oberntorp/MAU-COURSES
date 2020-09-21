@@ -89,6 +89,7 @@
     <Compile Include="PlaylistWindows\PlaylistPlayWindow.xaml.cs">
       <DependentUpon>PlaylistPlayWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\DependencyProperties\MediaViewSelectionDependencyProperties.cs" />
     <Compile Include="UserControls\MediaViewSelectionUserControl.xaml.cs">
       <DependentUpon>MediaViewSelectionUserControl.xaml</DependentUpon>
     </Compile>

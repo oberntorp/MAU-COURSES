@@ -42,14 +42,14 @@ namespace MultiMediaApplication
         PlaylistHandler playlistHandler = null;
         TreeViewNodesHandler treeViewNodesHandler = null;
         MediaHandler mediaHandler = null;
-        ObservableCollection<MediaViewSelectionUserControl> mediaToItemsControl = null;
-        public ObservableCollection<MediaViewSelectionUserControl> MediaToItemsControl { get => mediaToItemsControl; }
+        ObservableCollection<MediaFile> mediaToItemsControl = null;
+        public ObservableCollection<MediaFile> MediaToItemsControl { get => mediaToItemsControl; }
         public MainWindow()
         {
             playlistHandler = new PlaylistHandler();
             treeViewNodesHandler = new TreeViewNodesHandler();
             mediaHandler = new MediaHandler();
-            mediaToItemsControl = new ObservableCollection<MediaViewSelectionUserControl>();
+            mediaToItemsControl = new ObservableCollection<MediaFile>();
 
             InitializeComponent();
             InitializePlayListTreeView();
@@ -214,27 +214,19 @@ namespace MultiMediaApplication
 
         private void CreateUiForEveryMediaType(List<MediaFile> mediaFiles, int indexOfPlaylist)
         {
+            mediaToItemsControl.Clear();
             foreach (MediaFile media in mediaFiles)
             {
                 if (playlistHandler.IsMediaVideo(media))
                 {
-                    MediaViewSelectionUserControl userControl = new MediaViewSelectionUserControl();
                     Video video = (media as Video);
-                    userControl.PlaylistIndex = indexOfPlaylist;
-                    userControl.MediaId = video.Id;
-                    userControl.MediaName = video.Name;
-                    userControl.MediaImageSource = video.SourceUrl;
-                    mediaToItemsControl.Add(userControl);
+
+                    mediaToItemsControl.Add(video);
                 }
                 else
                 {
-                    MediaViewSelectionUserControl userControl = new MediaViewSelectionUserControl();
                     MultiMediaClassesAndManagers.MediaSubClasses.Image image = (media as MultiMediaClassesAndManagers.MediaSubClasses.Image);
-                    userControl.PlaylistIndex = indexOfPlaylist;
-                    userControl.MediaId = image.Id;
-                    userControl.MediaName = image.Name;
-                    userControl.MediaImageSource = image.SourceUrl;
-                    mediaToItemsControl.Add(userControl);
+                    mediaToItemsControl.Add(image);
                 }
             }
             mediaItemsControl.ItemsSource = mediaToItemsControl;

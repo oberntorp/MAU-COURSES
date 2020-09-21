@@ -17,6 +17,7 @@ namespace MutiMediaClassesAndManagers
         private string playlistDescription = string.Empty;
         private int playlistPlaybackDelayBetweenMediaSec = 0;
         private ListManager<MediaFile> playlistContent = null;
+        private int mediaId = 1;
 
         public string Title { get => playlistName; }
         public string Description { get => playlistDescription; }
@@ -39,12 +40,25 @@ namespace MutiMediaClassesAndManagers
 
         public bool AddMediaToPlaylist(MediaFile mediaToAdd)
         {
+            AddIdToMediaFile(ref mediaToAdd);
             if(mediaToAdd != null)
             {
                 return playlistContent.Add(mediaToAdd);
             }
 
             return false;
+        }
+
+        private void AddIdToMediaFile(ref MediaFile mediaFileToAddAnId)
+        {
+            if (PlayListContentCount == 0)
+            {
+                mediaFileToAddAnId.Id = mediaId++;
+            }
+            else
+            {
+                mediaFileToAddAnId.Id = PlayListContentCount + 1;
+            }
         }
 
         public bool DeleteMediaFromPlaylist(int indexOfMediaToDelete)
