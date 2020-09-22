@@ -66,27 +66,41 @@ namespace MultiMediaApplication
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "Video files | *.mp4; *.wmv;";
 
-            int idOfPlayList = playlistHandler.GetPlaylistIdOfSelected(treeViewNodesHandler.NameOfSelectedTreeViewNode(PlaylistTreeView));
-            int indexOfPlaylist = 0;
-            indexOfPlaylist = idOfPlayList - 1;
-            if (PlaylistTreeView.SelectedItem != null && idOfPlayList > 0)
+            if (PlaylistTreeView.HasItems && playlistHandler.PlaylistManager.Count != 0)
             {
-                bool wasFileSelected = (bool)openFileDialog.ShowDialog();
-
-                if (wasFileSelected && !string.IsNullOrWhiteSpace(openFileDialog.FileName))
+                int idOfPlayList = playlistHandler.GetPlaylistIdOfSelected(treeViewNodesHandler.NameOfSelectedTreeViewNode(PlaylistTreeView));
+                int indexOfPlaylist = 0;
+                indexOfPlaylist = idOfPlayList - 1;
+                if (PlaylistTreeView.SelectedItem != null && idOfPlayList > 0)
                 {
-                    playlistHandler.AddMediaToSelectedPlaylist(indexOfPlaylist, CreateVideoFile(openFileDialog.FileName));
-                    InitiateViewPlaylist(indexOfPlaylist);
+                    bool wasFileSelected = (bool)openFileDialog.ShowDialog();
+
+                    if (wasFileSelected && !string.IsNullOrWhiteSpace(openFileDialog.FileName))
+                    {
+                        playlistHandler.AddMediaToSelectedPlaylist(indexOfPlaylist, CreateVideoFile(openFileDialog.FileName));
+                        InitiateViewPlaylist(indexOfPlaylist);
+                    }
+                    else
+                    {
+                        MessageBoxes.ShowInformationMessageBox("No File was selected");
+                    }
                 }
                 else
                 {
-                    MessageBoxes.ShowInformationMessageBox("No File was selected");
+                    MessageBoxes.ShowInformationMessageBox("Please select a playlist.");
                 }
             }
             else
             {
-                MessageBoxes.ShowInformationMessageBox("Please select a playlist.");
+                ErrorMessageNonavigationAreaOrPlaylits();
             }
+
+        }
+
+        private void ErrorMessageNonavigationAreaOrPlaylits()
+        {
+            string message = PlaylistTreeView.HasItems && playlistHandler.PlaylistManager.Count == 0 ? "There are no playlists, please create one." : "Please select a folder to create a navigation area under File.";
+            MessageBoxes.ShowErrorMessageBox(message);
         }
 
         private IMediaFile CreateVideoFile(string fullPath)
@@ -100,26 +114,33 @@ namespace MultiMediaApplication
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "Image files | *.jpg; *.jpeg; *.png";
 
-            int idOfPlayList = playlistHandler.GetPlaylistIdOfSelected(treeViewNodesHandler.NameOfSelectedTreeViewNode(PlaylistTreeView));
-            int indexOfPlaylist = 0;
-            indexOfPlaylist = idOfPlayList - 1;
-            if (PlaylistTreeView.SelectedItem != null && idOfPlayList > 0)
+            if (PlaylistTreeView.HasItems && playlistHandler.PlaylistManager.Count != 0)
             {
-                bool wasFileSelected = (bool)openFileDialog.ShowDialog();
-
-                if (wasFileSelected && !string.IsNullOrWhiteSpace(openFileDialog.FileName))
+                int idOfPlayList = playlistHandler.GetPlaylistIdOfSelected(treeViewNodesHandler.NameOfSelectedTreeViewNode(PlaylistTreeView));
+                int indexOfPlaylist = 0;
+                indexOfPlaylist = idOfPlayList - 1;
+                if (PlaylistTreeView.SelectedItem != null && idOfPlayList > 0)
                 {
-                    playlistHandler.AddMediaToSelectedPlaylist(indexOfPlaylist, CreateImageFile(openFileDialog.FileName));
-                    InitiateViewPlaylist(indexOfPlaylist);
+                    bool wasFileSelected = (bool)openFileDialog.ShowDialog();
+
+                    if (wasFileSelected && !string.IsNullOrWhiteSpace(openFileDialog.FileName))
+                    {
+                        playlistHandler.AddMediaToSelectedPlaylist(indexOfPlaylist, CreateImageFile(openFileDialog.FileName));
+                        InitiateViewPlaylist(indexOfPlaylist);
+                    }
+                    else
+                    {
+                        MessageBoxes.ShowInformationMessageBox("No File was selected");
+                    }
                 }
                 else
                 {
-                    MessageBoxes.ShowInformationMessageBox("No File was selected");
+                    MessageBoxes.ShowInformationMessageBox("Please select a playlist.");
                 }
             }
             else
             {
-                MessageBoxes.ShowInformationMessageBox("Please select a playlist.");
+                ErrorMessageNonavigationAreaOrPlaylits();
             }
         }
 
@@ -161,7 +182,7 @@ namespace MultiMediaApplication
             }
             else
             {
-                MessageBoxes.ShowInformationMessageBox("You did no selection. ThFe navigation area was not created.");
+                MessageBoxes.ShowInformationMessageBox("You did no selection. The navigation area was not created.");
             }
 
             return new List<TreeViewNode>();
@@ -190,7 +211,7 @@ namespace MultiMediaApplication
                     bool result = (bool)creationPlaylistWindow.ShowDialog();
                     if (result)
                     {
-                        Playlist newPlaylist = new Playlist(creationPlaylistWindow.TitlaOfPlaylist, creationPlaylistWindow.DescriptionOfPlaylist, creationPlaylistWindow.DurationBetweenMedia);
+                        Playlist newPlaylist = new Playlist(creationPlaylistWindow.TitlaOfPlaylist.Trim(), creationPlaylistWindow.DescriptionOfPlaylist.Trim(), Convert.ToInt32(creationPlaylistWindow.DurationBetweenMedia.ToString().Trim()));
                         if (playlistHandler.AddPlaylist(newPlaylist))
                         {
                             TreeViewNode playlistTreeViewNode = new TreeViewNode(TreeNodeTypes.playlist, newPlaylist.Title);
@@ -225,8 +246,55 @@ namespace MultiMediaApplication
 
             if (selectedNode != null && indexOfPlaylist != -1)
             {
+                ShowInformationAboutPlaylist(indexOfPlaylist);
                 InitiateViewPlaylist(indexOfPlaylist);
             }
+            else
+            {
+                HidePlaylistInfo();
+            }
+        }
+
+        private void ShowInformationAboutPlaylist(int indexOfPlaylist)
+        {
+            PlaylistInfoStackPanel.Children.Clear();
+            string playlistTitle = playlistHandler.PlaylistManager.GetAt(indexOfPlaylist).Title;
+            string playlistDescription = playlistHandler.PlaylistManager.GetAt(indexOfPlaylist).Description;
+            string playlistContentCount = playlistHandler.PlaylistManager.GetAt(indexOfPlaylist).PlayListContentCount.ToString();
+            string playlistPlaybackDelayMedia = playlistHandler.PlaylistManager.GetAt(indexOfPlaylist).PlaylistPlaybackDelayBetweenMediaSec.ToString();
+
+            Label playlistTitleLabel = new Label();
+            playlistTitleLabel.Content = $"Playlist title: {playlistTitle}";
+
+            Label playlistDescripeionLabel = new Label();
+            playlistDescripeionLabel.Content = "Playlist description:";
+
+            TextBlock playlistDescriptionTextBlock = new TextBlock();
+            playlistDescriptionTextBlock.TextWrapping = TextWrapping.Wrap;
+            playlistDescriptionTextBlock.Text = playlistDescription;
+            Thickness marginLeft = playlistDescriptionTextBlock.Margin;
+            marginLeft.Left = 5;
+            playlistDescriptionTextBlock.Margin = marginLeft;
+
+            Label playlistContentCountLabel = new Label();
+            playlistContentCountLabel.Content = $"Media count: {playlistContentCount}";
+
+            Label playlistDelayMediaLabel = new Label();
+            playlistDelayMediaLabel.Content = $"Delay between media clips: {playlistPlaybackDelayMedia}";
+
+            PlaylistInfoStackPanel.Children.Add(playlistTitleLabel);
+            PlaylistInfoStackPanel.Children.Add(playlistDescripeionLabel);
+            PlaylistInfoStackPanel.Children.Add(playlistDescriptionTextBlock);
+            PlaylistInfoStackPanel.Children.Add(playlistContentCountLabel);
+            PlaylistInfoStackPanel.Children.Add(playlistDelayMediaLabel);
+
+            PlaylistInfoStackPanelBorder.Visibility = Visibility.Visible;
+
+        }
+
+        private void HidePlaylistInfo()
+        {
+            PlaylistInfoStackPanelBorder.Visibility = Visibility.Hidden;
         }
 
         private void InitiateViewPlaylist(int indexOfPlaylist)
@@ -260,6 +328,61 @@ namespace MultiMediaApplication
                 }
             }
             mediaItemsControl.ItemsSource = mediaToItemsControl;
+        }
+
+        private void ChangePlaylistSettings_Click(object sender, RoutedEventArgs e)
+        {
+            if (PlaylistTreeView.HasItems && playlistHandler.PlaylistManager.Count != 0)
+            {
+                int idOfPlayList = playlistHandler.GetPlaylistIdOfSelected(treeViewNodesHandler.NameOfSelectedTreeViewNode(PlaylistTreeView));
+                int indexOfPlaylist = idOfPlayList - 1;
+                if (PlaylistTreeView.SelectedItem != null && idOfPlayList > 0)
+                {
+                    Playlist playlistInfo = playlistHandler.PlaylistManager.GetAt(indexOfPlaylist);
+                    ChangePlaylistSettings changePlaylistSettingsWindow = new ChangePlaylistSettings(playlistInfo.Title, playlistInfo.Description, playlistInfo.PlaylistPlaybackDelayBetweenMediaSec);
+                    bool result = (bool)changePlaylistSettingsWindow.ShowDialog();
+                    if (result && changePlaylistSettingsWindow.ChangesMade)
+                    {
+                        playlistInfo.Description = changePlaylistSettingsWindow.PlaylistDescription;
+                        playlistInfo.PlaylistPlaybackDelayBetweenMediaSec = changePlaylistSettingsWindow.PlaylistMediaDelay;
+                        playlistHandler.PlaylistManager.ChangeAt(playlistInfo, indexOfPlaylist);
+                        ShowInformationAboutPlaylist(indexOfPlaylist);
+                    }
+
+                }
+                else
+                {
+                    MessageBoxes.ShowInformationMessageBox("Please select a playlist.");
+                }
+            }
+            else
+            {
+                ErrorMessageNonavigationAreaOrPlaylits();
+            }
+        }
+
+        private void PlayPlaylist_Click(object sender, RoutedEventArgs e)
+        {
+            if (PlaylistTreeView.HasItems && playlistHandler.PlaylistManager.Count != 0)
+            {
+                int idOfPlayList = playlistHandler.GetPlaylistIdOfSelected(treeViewNodesHandler.NameOfSelectedTreeViewNode(PlaylistTreeView));
+                int indexOfPlaylist = idOfPlayList - 1;
+                if (PlaylistTreeView.SelectedItem != null && idOfPlayList > 0)
+                {
+                    Playlist playlistInfo = playlistHandler.PlaylistManager.GetAt(indexOfPlaylist);
+                    PlaylistPlayWindow playBackWindow = new PlaylistPlayWindow(playlistInfo.Title, playlistHandler.GetMediaFiles(indexOfPlaylist), playlistInfo.PlaylistPlaybackDelayBetweenMediaSec);
+                    playBackWindow.Show();
+                    playBackWindow.BeginPlayingMedia();
+                }
+                else
+                {
+                    MessageBoxes.ShowInformationMessageBox("Please select a playlist.");
+                }
+            }
+            else
+            {
+                ErrorMessageNonavigationAreaOrPlaylits();
+            }
         }
     }
 }

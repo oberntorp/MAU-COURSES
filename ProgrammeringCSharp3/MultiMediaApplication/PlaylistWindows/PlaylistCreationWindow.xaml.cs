@@ -62,7 +62,7 @@ namespace MultiMediaApplication.PlaylistWindows
 
         private bool CheckValidityOfInput()
         {
-            return (TitleTextBox.Text != null && DescriptionTextBox.Text != null) && ((PlaybackDelayBetweenMediaTextBox.Text != "" && int.TryParse(PlaybackDelayBetweenMediaTextBox.Text, out int result)) || (PlaybackDelayBetweenMediaTextBox.Text == "" && !int.TryParse(PlaybackDelayBetweenMediaTextBox.Text, out int result2)));
+            return (TitleTextBox.Text.Trim() != "" && DescriptionTextBox.Text.Trim() != "") && ((PlaybackDelayBetweenMediaTextBox.Text.Trim() != "" && int.TryParse(PlaybackDelayBetweenMediaTextBox.Text, out int result)) || (PlaybackDelayBetweenMediaTextBox.Text.Trim() == "" && !int.TryParse(PlaybackDelayBetweenMediaTextBox.Text, out int result2)));
         }
     }
 }

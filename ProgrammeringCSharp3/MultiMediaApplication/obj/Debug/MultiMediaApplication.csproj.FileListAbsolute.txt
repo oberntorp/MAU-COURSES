@@ -31,3 +31,5 @@ D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\MultiMediaApplication\obj\
 D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\MultiMediaApplication\bin\Debug\Interop.WMPLib.dll
 D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\MultiMediaApplication\obj\Debug\Interop.WMPLib.dll
 D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\MultiMediaApplication\obj\Debug\MultiMediaApplication.csproj.ResolveComReference.cache
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\MultiMediaApplication\obj\Debug\PlaylistWindows\ChangePlaylistSettings.g.cs
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\MultiMediaApplication\obj\Debug\PlaylistWindows\ChangePlaylistSettings.baml

@@ -20,7 +20,8 @@ namespace MutiMediaClassesAndManagers
         private int mediaId = 1;
 
         public string Title { get => playlistName; }
-        public string Description { get => playlistDescription; }
+        public string Description { set => playlistDescription = value;  get => playlistDescription; }
+        public int PlaylistPlaybackDelayBetweenMediaSec { set => playlistPlaybackDelayBetweenMediaSec = value; get => playlistPlaybackDelayBetweenMediaSec; }
 
         public int PlayListContentCount { get => playlistContent.Count; }
 

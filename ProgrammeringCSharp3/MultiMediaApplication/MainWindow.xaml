@@ -5,21 +5,25 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:uc="clr-namespace:MultiMediaApplication.UserControls"
         xmlns:local="clr-namespace:MultiMediaApplication"
-        xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MultiMediaViewer" Height="450" Width="800">
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="File">
                 <MenuItem Header="Choose folders for navigation area" Click="ChoseFolderForNavigationArea_Click"/>
+            </MenuItem>
+            <MenuItem Header="Playlist">
                 <MenuItem Header="Create playlist" Click="CreatePlaylist_Click"/>
                 <MenuItem Header="Import Media">
                     <MenuItem Header="Video" Click="MenuItemVideo_Click"/>
                     <MenuItem Header="Image" Click="MenuItemImage_Click"/>
                 </MenuItem>
+                <MenuItem Header="Change Playlist settings" Click="ChangePlaylistSettings_Click" />
+                <Separator/>
+                <MenuItem Header="Play playlist" Click="PlayPlaylist_Click" />
             </MenuItem>
         </Menu>
-        <StackPanel>
+        <ScrollViewer>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"/>
@@ -39,19 +43,29 @@
                     <TextBlock Text=" -> " />
                     <TextBlock Text="Choose folders for navigation area" FontWeight="Bold" />
                 </StackPanel>
-                <ItemsControl x:Name="mediaItemsControl" Grid.Column="1">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <UniformGrid Columns="2"/>
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <uc:MediaViewSelectionUserControl MediaId="{Binding Id, Mode=TwoWay, diag:PresentationTraceSources.TraceLevel=High}" MediaName="{Binding Name, Mode=TwoWay}" MediaImageSource="{Binding SourceUrl, Mode=TwoWay, diag:PresentationTraceSources.TraceLevel=High}" MediaPreviewSource="{Binding PreviewUrl, Mode=TwoWay}"/>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
+                    <ItemsControl x:Name="mediaItemsControl" Grid.Column="1">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Columns="2"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <uc:MediaViewSelectionUserControl MediaId="{Binding Id, Mode=TwoWay}" MediaName="{Binding Name, Mode=TwoWay}" MediaImageSource="{Binding SourceUrl, Mode=TwoWay}" MediaPreviewSource="{Binding PreviewUrl, Mode=TwoWay}"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                <Border x:Name="PlaylistInfoStackPanelBorder" BorderThickness="1" BorderBrush="Black" Visibility="Hidden" Grid.Row="2">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                        </Grid.RowDefinitions>
+                        <Label Content="Information about the selected playlist:" Grid.Row="0" />
+                        <StackPanel x:Name="PlaylistInfoStackPanel" Grid.Row="1" />
+                    </Grid>
+                </Border>
             </Grid>
-        </StackPanel>
+        </ScrollViewer>
     </DockPanel>
 </Window>

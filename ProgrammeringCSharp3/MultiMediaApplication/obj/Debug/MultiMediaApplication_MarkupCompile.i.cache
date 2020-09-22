@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\MultiMediaApplication\App.xaml
-4-838683989
+5397829274
 
-10-1355390952
+111425989599
 21362956258
-MainWindow.xaml;PlaylistWindows\PlaylistPlayWindow.xaml;UserControls\MediaViewSelectionUserControl.xaml;PlaylistWindows\PlaylistCreationWindow.xaml;
+MainWindow.xaml;PlaylistWindows\ChangePlaylistSettings.xaml;PlaylistWindows\PlaylistPlayWindow.xaml;UserControls\MediaViewSelectionUserControl.xaml;PlaylistWindows\PlaylistCreationWindow.xaml;
 
-False
+True
 

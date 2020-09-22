@@ -25,11 +25,6 @@ namespace MultiMediaApplication.UserControls
     /// </summary>
     public partial class MediaViewSelectionUserControl : UserControl
     {
-        private PlaylistHandler playlistHandler = null;
-        public int PlaylistIndex { get; set; }
-
-
-
         public int MediaId
         {
             get { return (int)GetValue(MediaIdProperty); }
@@ -77,7 +72,7 @@ namespace MultiMediaApplication.UserControls
 
         private void StackPanel_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            PlaylistPlayWindow newPlayWindow = new PlaylistPlayWindow(PlaylistIndex);
+            //PlaylistPlayWindow newPlayWindow = new PlaylistPlayWindow(PlaylistIndex);
         }
     }
 }

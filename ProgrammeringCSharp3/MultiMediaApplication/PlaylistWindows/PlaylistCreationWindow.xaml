@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MultiMediaApplication"
         mc:Ignorable="d"
-        Title="Information about new Playlist" Height="250" Width="350">
+        Title="Information about new Playlist" Height="240" Width="350">
     <Window.Resources>
         <Style TargetType="StackPanel">
             <Setter Property="Width" Value="200"/>
@@ -13,8 +13,8 @@
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="60"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0">

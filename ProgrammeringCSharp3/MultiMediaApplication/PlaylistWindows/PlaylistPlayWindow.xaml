@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         Title="PlaylistPlayWindow" Height="450" Width="800">
     <Grid>
-        
+        <MediaElement Name="VideoMediaElement" Visibility="Hidden"/>
+        <Image Name="ImageMediaElement" Visibility="Hidden"/>
     </Grid>
 </Window>
