@@ -99,7 +99,7 @@ namespace MultiMediaClassesAndManagers.Managers
         /// Delete an item at a specified index
         /// </summary>
         /// <param name="indexToDeleteAt"></param>
-        /// <returns></returns>
+        /// <returns>true/false reflecting Success</returns>
         public bool DeleteAt(int indexToDeleteAt)
         {
             int countBeforeDelete = Count;
@@ -124,7 +124,7 @@ namespace MultiMediaClassesAndManagers.Managers
         /// <summary>
         /// Get an object from the list at a specified index
         /// </summary>
-        /// <param name="indexToGetAt"></param>
+        /// <param name="indexToGetAt">index of item to get (where located in list)</param>
         /// <returns></returns>
         public T GetAt(int indexToGetAt)
         {
@@ -143,16 +143,16 @@ namespace MultiMediaClassesAndManagers.Managers
         /// <summary>
         /// Deserializes an xml file back into the listmanager items
         /// </summary>
-        /// <param name="fileName"></param>
-        public void XMLDeserialize(string fileName)
+        /// <param name="filePath">Path where to get XML from</param>
+        public void XMLDeserialize(string filePath)
         {
-            AddDeserializedObjectsToList(Utilities.SerializerUtility.DeserializeXMLFile<List<T>>(fileName));
+            AddDeserializedObjectsToList(Utilities.SerializerUtility.DeserializeXMLFile<List<T>>(filePath));
         }
 
         /// <summary>
         /// Adds the deserialized items to the listManager
         /// </summary>
-        /// <param name="deserializedList"></param>
+        /// <param name="deserializedList">list of deserialized items to save</param>
         private void AddDeserializedObjectsToList(List<T> deserializedList)
         {
             if (deserializedList.Count > 0)
@@ -164,6 +164,10 @@ namespace MultiMediaClassesAndManagers.Managers
             }
         }
 
+        /// <summary>
+        /// Get all items of internal list
+        /// </summary>
+        /// <returns>List of items</returns>
         public List<T> GetAllItems()
         {
             return objectsInList;

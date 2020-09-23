@@ -17,7 +17,7 @@ namespace MultiMediaClassesAndManagers.Implementations
         /// As an Playlist shall have an Id, this method first adds that it, then calls Add from ListManager
         /// </summary>
         /// <param name="animalToAdd"> the animal to add</param>
-        /// <returns></returns>
+        /// <returns>true/false</returns>
         public bool AddPlaylist(Playlist playlistToAdd)
         {
             AddIdToPlaylist(ref playlistToAdd);

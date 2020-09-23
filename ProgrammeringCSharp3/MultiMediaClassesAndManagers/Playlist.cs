@@ -39,6 +39,11 @@ namespace MutiMediaClassesAndManagers
             playlistPlaybackDelayBetweenMediaSec = playbackDelayBetweenMediaSec;
         }
 
+        /// <summary>
+        /// Adds the media to the playlist, by first giving it an id, then adding it by the base classes method
+        /// </summary>
+        /// <param name="mediaToAdd">The media being added</param>
+        /// <returns></returns>
         public bool AddMediaToPlaylist(MediaFile mediaToAdd)
         {
             AddIdToMediaFile(ref mediaToAdd);
@@ -50,6 +55,10 @@ namespace MutiMediaClassesAndManagers
             return false;
         }
 
+        /// <summary>
+        /// Adds an id to the media being added
+        /// </summary>
+        /// <param name="mediaFileToAddAnId"></param>
         private void AddIdToMediaFile(ref MediaFile mediaFileToAddAnId)
         {
             if (PlayListContentCount == 0)
@@ -62,16 +71,28 @@ namespace MutiMediaClassesAndManagers
             }
         }
 
+        /// <summary>
+        /// Deletes a particular media
+        /// </summary>
+        /// <param name="indexOfMediaToDelete"></param>
+        /// <returns>true/false</returns>
         public bool DeleteMediaFromPlaylist(int indexOfMediaToDelete)
         {
             return playlistContent.DeleteAt(indexOfMediaToDelete);
         }
 
+        /// <summary>
+        /// Removes all media from a playlist
+        /// </summary>
         public void ClearPlaylist()
         {
             playlistContent.DeleteAll();
         }
 
+        /// <summary>
+        /// Gets all media from a playlist
+        /// </summary>
+        /// <returns>List of media in playlist</returns>
         public List<MediaFile> GetAllMediaFromPlaylist()
         {
             return playlistContent.GetAllItems();

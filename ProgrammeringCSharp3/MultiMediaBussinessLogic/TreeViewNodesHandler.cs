@@ -19,6 +19,9 @@ namespace MultiMediaBussinessLogic
 
         public List<TreeViewNode> TreeViewNodes { get => treeViewNodes; }
 
+        /// <summary>
+        /// TreeViewNodesHandlers constructor, listOfTreeNodes gets initialized
+        /// </summary>
         public TreeViewNodesHandler()
         {
             treeViewNodes = new List<TreeViewNode>();
@@ -78,7 +81,7 @@ namespace MultiMediaBussinessLogic
         /// Creates the stackPanel with content that a TreeViewItem.Header contains
         /// </summary>
         /// <param name="treeNode">The treeNode containing the name and type of the treeViewItem being created</param>
-        /// <returns></returns>
+        /// <returns>StackPanel used in TreeViewItem.Header</returns>
         public StackPanel GetStackOfTreeViewNode(TreeViewNode treeNode)
         {
             StackPanel stack = new StackPanel();

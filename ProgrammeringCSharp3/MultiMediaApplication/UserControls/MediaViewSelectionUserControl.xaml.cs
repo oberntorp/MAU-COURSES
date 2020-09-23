@@ -22,6 +22,9 @@ namespace MultiMediaApplication.UserControls
 {
     /// <summary>
     /// Interaction logic for MediaViewSelectionUserControl.xaml
+    /// A UserControl is a control that you can create to display data on specific places in your application.
+    /// This is done by binding data to controls already existing in WPF, this allows you to build customized experiences
+    /// It uses DependencyProperties to be able to get/set its data used on controls in the control itself 
     /// </summary>
     public partial class MediaViewSelectionUserControl : UserControl
     {
@@ -65,14 +68,12 @@ namespace MultiMediaApplication.UserControls
         public static readonly DependencyProperty MediaPreviewSourceProperty =
             DependencyProperty.Register("MediaPreviewSource", typeof(string), typeof(MediaViewSelectionUserControl));
 
+        /// <summary>
+        /// MediaViewSelectionUserControls constructor
+        /// </summary>
         public MediaViewSelectionUserControl()
         {
             InitializeComponent();
-        }
-
-        private void StackPanel_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            //PlaylistPlayWindow newPlayWindow = new PlaylistPlayWindow(PlaylistIndex);
         }
     }
 }

@@ -45,6 +45,10 @@ namespace MultiMediaApplication
         MediaHandler mediaHandler = null;
         ObservableCollection<MediaFile> mediaToItemsControl = null;
         public ObservableCollection<MediaFile> MediaToItemsControl { get => mediaToItemsControl; }
+
+        /// <summary>
+        /// MainWindow constructor, initiates dependencies
+        /// </summary>
         public MainWindow()
         {
             playlistHandler = new PlaylistHandler();
@@ -53,14 +57,13 @@ namespace MultiMediaApplication
             mediaToItemsControl = new ObservableCollection<MediaFile>();
 
             InitializeComponent();
-            InitializePlayListTreeView();
         }
 
-        private void InitializePlayListTreeView()
-        {
-
-        }
-
+        /// <summary>
+        /// MenuItem click handler for importing video to a selected playlist, if selected, otherwise displays a error
+        /// </summary>
+        /// <param name="sender">The sending object, in this case a MenuItem</param>
+        /// <param name="e">Arguments related to the event</param>
         private void MenuItemVideo_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -97,18 +100,31 @@ namespace MultiMediaApplication
 
         }
 
-        private void ErrorMessageNonavigationAreaOrPlaylits()
-        {
-            string message = PlaylistTreeView.HasItems && playlistHandler.PlaylistManager.Count == 0 ? "There are no playlists, please create one." : "Please select a folder to create a navigation area under File.";
-            MessageBoxes.ShowErrorMessageBox(message);
-        }
-
+        /// <summary>
+        /// Creates a MediaFile object representing the video object
+        /// </summary>
+        /// <param name="fullPath">Full path to the video needed when creating the video object</param>
+        /// <returns>MediaFile object</returns>
         private IMediaFile CreateVideoFile(string fullPath)
         {
             WindowsMediaPlayer wmp = new WindowsMediaPlayer();
             return mediaHandler.CreateVideoObject(fullPath, "../Images/video_icons8.png", wmp.newMedia(fullPath), FileHandler.GetFileName(fullPath));
         }
 
+        /// <summary>
+        /// Displays an error regarding if a playlist was not selected or if the navigation area has no items
+        /// </summary>
+        private void ErrorMessageNonavigationAreaOrPlaylits()
+        {
+            string message = PlaylistTreeView.HasItems && playlistHandler.PlaylistManager.Count == 0 ? "There are no playlists, please create one." : "Please select a folder to create a navigation area under File.";
+            MessageBoxes.ShowErrorMessageBox(message);
+        }
+
+        /// <summary>
+        /// MenuItem click handler for importing image to a selected playlist, if selected, otherwise displays a error
+        /// </summary>
+        /// <param name="sender">The sending object, in this case a MenuItem</param>
+        /// <param name="e">Arguments related to the event</param>
         private void MenuItemImage_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -144,29 +160,51 @@ namespace MultiMediaApplication
             }
         }
 
+        /// <summary>
+        /// Creates a MediaFile object representing the image object
+        /// </summary>
+        /// <param name="fullPath">Full path to image needed when creating the image object</param>
+        /// <returns>MediaFile object</returns>
         private IMediaFile CreateImageFile(string fullPath)
         {
             Bitmap image = new Bitmap(fullPath);
             return mediaHandler.CreateImageObject(fullPath, fullPath, image, FileHandler.GetFileName(fullPath));
         }
 
+        /// <summary>
+        /// This is the click handler for the first step (filling of NavigationArea with nodes)
+        /// First, if already initialized it informs you that your navigation as well as playlists are lost, if you continue
+        /// </summary>
+        /// <param name="sender">The sending object, in this case a MenuItem</param>
+        /// <param name="e">Arguments related to the event</param>
         private void ChoseFolderForNavigationArea_Click(object sender, RoutedEventArgs e)
         {
-            if (PlaylistTreeView.HasItems)
+            if (!PlaylistTreeView.HasItems || (PlaylistTreeView.HasItems && WantToContinueWithoutSaving()))
             {
-                MessageBoxes.ShowInformationMessageBox("Your current navigation area will be replaced and your playlists created will be removed.");
-            }
-
-            playlistHandler.DeleteAllPlaylists();
-            PlaylistTreeView.Items.Clear();
-            List<TreeViewNode> treeViewNodes = GetNodesOfTreeView();
-            if (treeViewNodes.Count != 0)
-            {
-                FillTreeViewWithNodes(treeViewNodes);
-                HideInitialExplination();
+                playlistHandler.DeleteAllPlaylists();
+                PlaylistTreeView.Items.Clear();
+                List<TreeViewNode> treeViewNodes = GetNodesOfTreeView();
+                if (treeViewNodes.Count != 0)
+                {
+                    FillTreeViewWithNodes(treeViewNodes);
+                    HideInitialExplination();
+                }
             }
         }
 
+        /// <summary>
+        /// Asks theuser if they want to continue without saving
+        /// </summary>
+        /// <returns>true/false</returns>
+        private static bool WantToContinueWithoutSaving()
+        {
+            return (MessageBoxes.ShowSaveWarningMessageBox("Your current navigation area will be replaced and your playlists created will be removed, please save them first. Do you want to continue?") == MessageBoxResult.Yes);
+        }
+
+        /// <summary>
+        /// Gets the treeNodes needed to fill the navigationAreaTreeView
+        /// </summary>
+        /// <returns></returns>
         private List<TreeViewNode> GetNodesOfTreeView()
         {
             FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
@@ -188,6 +226,10 @@ namespace MultiMediaApplication
             return new List<TreeViewNode>();
         }
 
+        /// <summary>
+        /// The treeNode is filled with its node from the first step
+        /// </summary>
+        /// <param name="treeNodes">The nodes constituting the navigation area</param>
         private void FillTreeViewWithNodes(List<TreeViewNode> treeNodes)
         {
             TreeViewItem rootNode = treeViewNodesHandler.GetRootTreeViewItem(treeNodes);
@@ -195,11 +237,20 @@ namespace MultiMediaApplication
             PlaylistTreeView.Items.Add(rootNode);
         }
 
+        /// <summary>
+        /// The application hints where to start, when that is done, the hint is hidden
+        /// </summary>
         private void HideInitialExplination()
         {
             InitialEplinationStackPanel.Visibility = Visibility.Hidden;
         }
 
+        /// <summary>
+        /// This is the click handler for Create Playlist under File. After checking that a treeViewNode has been selected, it creates the createPlaylistWindow, creates the node for it and expands its parent node
+        /// If no navigationItems are set, it urges you to create it, if you have none selected it gives you an error about that, if something went wrong in the creation, you are told that
+        /// </summary>
+        /// <param name="sender">The sending object, in this case a MenuItem</param>
+        /// <param name="e">Arguments related to the event</param>
         private void CreatePlaylist_Click(object sender, RoutedEventArgs e)
         {
             if (PlaylistTreeView.HasItems)
@@ -238,6 +289,11 @@ namespace MultiMediaApplication
             }
         }
 
+        /// <summary>
+        /// SelectedItemChanged event handler for TreeView. Used to show/hide information about the playlist selected, not selected
+        /// </summary>
+        /// <param name="sender">The sending object, in this case TreeViewItem</param>
+        /// <param name="e">Arguments related to the event</param>
         private void PlaylistTreeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
             int idOfPlayList = playlistHandler.GetPlaylistIdOfSelected(treeViewNodesHandler.NameOfSelectedTreeViewNode(PlaylistTreeView));
@@ -255,6 +311,10 @@ namespace MultiMediaApplication
             }
         }
 
+        /// <summary>
+        /// Gathers and shows information about the currently selected playlist
+        /// </summary>
+        /// <param name="indexOfPlaylist">index of playlist to gather information about</param>
         private void ShowInformationAboutPlaylist(int indexOfPlaylist)
         {
             PlaylistInfoStackPanel.Children.Clear();
@@ -292,17 +352,24 @@ namespace MultiMediaApplication
 
         }
 
+        /// <summary>
+        /// Hides information about playlist if none is selected
+        /// </summary>
         private void HidePlaylistInfo()
         {
             PlaylistInfoStackPanelBorder.Visibility = Visibility.Hidden;
         }
 
+        /// <summary>
+        /// Initiates the view of media in a playlist
+        /// </summary>
+        /// <param name="indexOfPlaylist">index of playlist to show media from</param>
         private void InitiateViewPlaylist(int indexOfPlaylist)
         {
             List<MediaFile> mediaFileList = playlistHandler.GetMediaFiles(indexOfPlaylist);
             if (mediaFileList.Count > 0)
             {
-                CreateUiForEveryMediaType(mediaFileList, indexOfPlaylist);
+                CollectMediaToItemsControl(mediaFileList);
             }
             else
             {
@@ -310,7 +377,11 @@ namespace MultiMediaApplication
             }
         }
 
-        private void CreateUiForEveryMediaType(List<MediaFile> mediaFiles, int indexOfPlaylist)
+        /// <summary>
+        /// Collects media to be displayed when clicking a playlist
+        /// </summary>
+        /// <param name="mediaFiles">mediaFiles containing the media</param>
+        private void CollectMediaToItemsControl(List<MediaFile> mediaFiles)
         {
             mediaToItemsControl.Clear();
             foreach (MediaFile media in mediaFiles)
@@ -330,6 +401,12 @@ namespace MultiMediaApplication
             mediaItemsControl.ItemsSource = mediaToItemsControl;
         }
 
+        /// <summary>
+        /// This is the click handler for Change playlist settings under the Playlist menu option it simply checks that a playlist was selected and if so, 
+        /// prepares and starts the Playlist settings window and if changes were made, they are saved in the PlaylistManager, if no playlist was selected an error is displayed
+        /// </summary>
+        /// <param name="sender">The sending object, in this case a MenuItem</param>
+        /// <param name="e">Arguments related to the event</param>
         private void ChangePlaylistSettings_Click(object sender, RoutedEventArgs e)
         {
             if (PlaylistTreeView.HasItems && playlistHandler.PlaylistManager.Count != 0)
@@ -339,7 +416,7 @@ namespace MultiMediaApplication
                 if (PlaylistTreeView.SelectedItem != null && idOfPlayList > 0)
                 {
                     Playlist playlistInfo = playlistHandler.PlaylistManager.GetAt(indexOfPlaylist);
-                    ChangePlaylistSettings changePlaylistSettingsWindow = new ChangePlaylistSettings(playlistInfo.Title, playlistInfo.Description, playlistInfo.PlaylistPlaybackDelayBetweenMediaSec);
+                    ChangePlaylistSettingsWindow changePlaylistSettingsWindow = new ChangePlaylistSettingsWindow(playlistInfo.Title, playlistInfo.Description, playlistInfo.PlaylistPlaybackDelayBetweenMediaSec);
                     bool result = (bool)changePlaylistSettingsWindow.ShowDialog();
                     if (result && changePlaylistSettingsWindow.ChangesMade)
                     {
@@ -361,6 +438,12 @@ namespace MultiMediaApplication
             }
         }
 
+        /// <summary>
+        /// This is the click handler for Play playlist under playlist in the menu, it simply checks that a playlist was selected and if so, 
+        /// prepares and starts the player window, if no playlist was selected an error is displayed
+        /// </summary>
+        /// <param name="sender">The sending object, in this case a MenuItem</param>
+        /// <param name="e">Arguments related to the event</param>
         private void PlayPlaylist_Click(object sender, RoutedEventArgs e)
         {
             if (PlaylistTreeView.HasItems && playlistHandler.PlaylistManager.Count != 0)

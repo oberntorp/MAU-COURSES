@@ -24,7 +24,7 @@ namespace Utilities
         /// Get a files file extention, througth the files file name
         /// </summary>
         /// <param name="fileName">The file name</param>
-        /// <returns></returns>
+        /// <returns>the file extention as a string</returns>
         public static string GetFileExtension(string filePath)
         {
 

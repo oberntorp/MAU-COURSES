@@ -8,7 +8,7 @@
              d:DesignHeight="300" d:DesignWidth="200"
              Margin="10"
              x:Name="Window">
-    <Grid Margin="10" MouseLeftButtonUp="StackPanel_MouseLeftButtonUp">
+    <Grid Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
