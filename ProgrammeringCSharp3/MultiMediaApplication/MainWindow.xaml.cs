@@ -467,5 +467,35 @@ namespace MultiMediaApplication
                 ErrorMessageNonavigationAreaOrPlaylits();
             }
         }
+
+        /// <summary>
+        /// Loads a collection of playlists
+        /// </summary>
+        /// <param name="sender">The sending object, in this case a MenuItem</param>
+        /// <param name="e">Arguments related to the event</param>
+        private void LoadPlaylistsMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        /// <summary>
+        /// Saves playlists
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SavePlaylistsMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        /// <summary>
+        /// Click handler for Exit under File, exits the application
+        /// </summary>
+        /// <param name="sender">The sending object, in this case a MenuItem</param>
+        /// <param name="e">Arguments related to the event</param>
+        private void ExitMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

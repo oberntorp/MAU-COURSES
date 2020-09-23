@@ -11,9 +11,13 @@
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="File">
                 <MenuItem Header="Choose folders for navigation area" Click="ChoseFolderForNavigationArea_Click"/>
+                <Separator />
+                <MenuItem Header="Exit" Click="ExitMenuItem_Click" />
             </MenuItem>
             <MenuItem Header="Playlist">
-                <MenuItem Header="Create playlist" Click="CreatePlaylist_Click"/>
+                <MenuItem Header="Create playlist" Click="CreatePlaylist_Click" />
+                <MenuItem Header="Load playlists and navigation" Click="LoadPlaylistsMenuItem_Click" />
+                <MenuItem Header="Save playlists and navigation" Click="SavePlaylistsMenuItem_Click" />
                 <MenuItem Header="Import Media">
                     <MenuItem Header="Video" Click="MenuItemVideo_Click"/>
                     <MenuItem Header="Image" Click="MenuItemImage_Click"/>
