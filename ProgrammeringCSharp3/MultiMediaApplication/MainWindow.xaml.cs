@@ -210,7 +210,8 @@ namespace MultiMediaApplication
         /// <param name="treeViewStructure">Structure being saved</param>
         private void SaveTreeViewStructure(List<TreeViewNode> treeViewStructure)
         {
-            TreeViewStructure newTreeViewStructure = new TreeViewStructure(treeViewStructure);
+            TreeViewStructure newTreeViewStructure = new TreeViewStructure();
+            newTreeViewStructure.AddTreeStructure(treeViewStructure);
             treeViewStructureHandler.AddTreeViewStructure(newTreeViewStructure);
         }
 
@@ -497,7 +498,46 @@ namespace MultiMediaApplication
         /// <param name="e">Arguments related to the event</param>
         private void LoadPlaylistsMenuItem_Click(object sender, RoutedEventArgs e)
         {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "XML File | *.XML";
+            bool result = (bool)openFileDialog.ShowDialog();
 
+            if (result)
+            {
+                try
+                {
+                    treeViewStructureHandler.LoadFromXML(openFileDialog.FileName);
+                }
+                catch (Exception ex)
+                {
+                    MessageBoxes.ShowErrorMessageBox($"{ex.Message} {ex.InnerException}");
+                }
+            }
+
+            TransferNavigatiopnAndPlaylistsToProgram();
+        }
+
+        /// <summary>
+        /// Loads the data from the transfer inte its respektive classes
+        /// </summary>
+        private void TransferNavigatiopnAndPlaylistsToProgram()
+        {
+            List<TreeViewNode> treeViewNodes = treeViewStructureHandler.GetAllTreeViewNodes();
+            FillTreeViewWithNodes(treeViewNodes);
+            HideInitialExplination();
+            SaveTreeViewStructure(treeViewNodes);
+            AddPlaylists();
+        }
+
+        /// <summary>
+        /// Adds playlists from the object containing information loaded
+        /// </summary>
+        private void AddPlaylists()
+        {
+            foreach(Playlist playlist in treeViewStructureHandler.GetAllPlaylists())
+            {
+                playlistHandler.AddPlaylist(playlist);
+            }
         }
 
         /// <summary>
@@ -515,6 +555,7 @@ namespace MultiMediaApplication
             {
                 try
                 {
+                    treeViewStructureHandler.AddPlaylistsToTreeViewStructure(playlistHandler.PlaylistManager.GetAllItems());
                     treeViewStructureHandler.SaveAsXML(saveFileDialog.FileName);
                 }
                 catch(Exception ex)

@@ -1,9 +1,11 @@
 ﻿using MultiMediaClassesAndManagers.Interfaces;
 using MultiMediaClassesAndManagers.Managers;
 using MultiMediaClassesAndManagers.MediaBaseClass;
+using MultiMediaClassesAndManagers.MediaSubClasses;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Xml.Serialization;
 
 namespace MutiMediaClassesAndManagers
 {
@@ -11,21 +13,27 @@ namespace MutiMediaClassesAndManagers
     /// This class makes up how a playlist looks and what is possible to do
     /// </summary>
     [Serializable]
+    [XmlInclude(typeof(Image)), XmlInclude(typeof(Video))]
     public class Playlist
     {
         public int Id { get; set; }
-        private string playlistName = string.Empty;
-        private string playlistDescription = string.Empty;
-        private int playlistPlaybackDelayBetweenMediaSec = 0;
         private ListManager<MediaFile> playlistContent = null;
         private int mediaId = 1;
 
-        public string Title { get => playlistName; }
-        public string Description { set => playlistDescription = value;  get => playlistDescription; }
-        public int PlaylistPlaybackDelayBetweenMediaSec { set => playlistPlaybackDelayBetweenMediaSec = value; get => playlistPlaybackDelayBetweenMediaSec; }
-
+        public string Title { get; set; }
+        public string Description { set; get; }
+        public int PlaylistPlaybackDelayBetweenMediaSec { set; get; }
         public int PlayListContentCount { get => playlistContent.Count; }
 
+        // Needed for the playlists being serialized, I thought it is unnessecary to be able to serialize the ListManager
+        public List<MediaFile> PlaylistContentXML { get; set; }
+
+        /// <summary>
+        /// Default constructor, needed for serialization to work
+        /// </summary>
+        public Playlist()
+        {
+        }
         /// <summary>
         /// The Playlist constructor, initializes a playlist
         /// </summary>
@@ -35,9 +43,10 @@ namespace MutiMediaClassesAndManagers
         public Playlist(string nameOfPlayList, string descriptionOfPlaylist, int playbackDelayBetweenMediaSec = 5)
         {
             playlistContent = new ListManager<MediaFile>();
-            playlistName = nameOfPlayList;
-            playlistDescription = descriptionOfPlaylist;
-            playlistPlaybackDelayBetweenMediaSec = playbackDelayBetweenMediaSec;
+            PlaylistContentXML = new List<MediaFile>();
+            Title = nameOfPlayList;
+            Description = descriptionOfPlaylist;
+            PlaylistPlaybackDelayBetweenMediaSec = playbackDelayBetweenMediaSec;
         }
 
         /// <summary>
@@ -48,9 +57,12 @@ namespace MutiMediaClassesAndManagers
         public bool AddMediaToPlaylist(MediaFile mediaToAdd)
         {
             AddIdToMediaFile(ref mediaToAdd);
-            if(mediaToAdd != null)
+            if (mediaToAdd != null)
             {
-                return playlistContent.Add(mediaToAdd);
+                if (playlistContent.Add(mediaToAdd))
+                {
+                    PlaylistContentXML.Add(mediaToAdd);
+                }
             }
 
             return false;

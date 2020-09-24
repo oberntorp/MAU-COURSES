@@ -1,0 +1,12 @@
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp2\assignmnet4\ApusAnimalMotelv4\bin\Debug\ApusAnimalMotel.exe.config
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp2\assignmnet4\ApusAnimalMotelv4\bin\Debug\ApusAnimalMotel.exe
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp2\assignmnet4\ApusAnimalMotelv4\bin\Debug\ApusAnimalMotel.pdb
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp2\assignmnet4\ApusAnimalMotelv4\obj\Debug\ApusAnimalMotel.csprojAssemblyReference.cache
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp2\assignmnet4\ApusAnimalMotelv4\obj\Debug\ApusAnimalMotel.MainForm.resources
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp2\assignmnet4\ApusAnimalMotelv4\obj\Debug\ApusAnimalMotel.Properties.Resources.resources
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp2\assignmnet4\ApusAnimalMotelv4\obj\Debug\ApusAnimalMotel.FoodForm.resources
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp2\assignmnet4\ApusAnimalMotelv4\obj\Debug\ApusAnimalMotel.StaffForm.resources
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp2\assignmnet4\ApusAnimalMotelv4\obj\Debug\ApusAnimalMotel.csproj.GenerateResource.cache
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp2\assignmnet4\ApusAnimalMotelv4\obj\Debug\ApusAnimalMotel.csproj.CoreCompileInputs.cache
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp2\assignmnet4\ApusAnimalMotelv4\obj\Debug\ApusAnimalMotel.exe
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp2\assignmnet4\ApusAnimalMotelv4\obj\Debug\ApusAnimalMotel.pdb

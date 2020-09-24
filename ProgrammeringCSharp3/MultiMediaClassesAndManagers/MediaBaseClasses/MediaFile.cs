@@ -7,6 +7,7 @@ namespace MultiMediaClassesAndManagers.MediaBaseClass
     /// <summary>
     /// The base class of a media file, defines generic properties or methods that all subclasses share
     /// </summary>
+    [Serializable]
     public class MediaFile : IMediaFile
     {
         public int Id { get; set; }
@@ -14,6 +15,14 @@ namespace MultiMediaClassesAndManagers.MediaBaseClass
         public string SourceUrl { get; set; }
         public string PreviewUrl { get; set; }
         public string FileExtention { get; set; }
+
+        /// <summary>
+        /// Default constructor, needed for serialization to work
+        /// </summary>
+        public MediaFile()
+        {
+
+        }
 
         /// <summary>
         /// Constructor of MediaFile, initializes object of type MediaFile

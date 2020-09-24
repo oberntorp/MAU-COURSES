@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 using MultiMediaClassesAndManagers.Managers;
+using MultiMediaClassesAndManagers.TreeNode;
 using MultiMediaClassesAndManagers.TreeViewSave;
+using MutiMediaClassesAndManagers;
 
 namespace MultiMediaBussinessLogic
 {
@@ -32,6 +34,15 @@ namespace MultiMediaBussinessLogic
         }
 
         /// <summary>
+        /// Adds List of playlists to the treeViewStructure
+        /// </summary>
+        /// <param name="playlistsToAdd"></param>
+        public void AddPlaylistsToTreeViewStructure(List<Playlist> playlistsToAdd)
+        {
+            treeViewStructureManager.AddPlaylistsToTreeViewStructure(playlistsToAdd);
+        }
+
+        /// <summary>
         /// Deletes the structure in the manager
         /// </summary>
         public void DeleteStructure()
@@ -55,6 +66,24 @@ namespace MultiMediaBussinessLogic
         public void LoadFromXML(string fileName)
         {
             treeViewStructureManager.XMLDeserialize(fileName);
+        }
+
+        /// <summary>
+        /// Get all treeViewNodes representing directories
+        /// </summary>
+        /// <returns>List of treeViewNodes</returns>
+        public List<TreeViewNode> GetAllTreeViewNodes()
+        {
+            return treeViewStructureManager.GetAllItems()[0].TreeViewDirectoryNodes;
+        }
+
+        /// <summary>
+        /// Get all playlists
+        /// </summary>
+        /// <returns>List of playlists</returns>
+        public List<Playlist> GetAllPlaylists()
+        {
+            return treeViewStructureManager.GetAllItems()[0].Playlists;
         }
     }
 }

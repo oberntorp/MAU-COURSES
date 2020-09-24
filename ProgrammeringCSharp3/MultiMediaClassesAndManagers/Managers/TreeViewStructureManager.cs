@@ -1,4 +1,5 @@
 ﻿using MultiMediaClassesAndManagers.TreeViewSave;
+using MutiMediaClassesAndManagers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -37,12 +38,23 @@ namespace MultiMediaClassesAndManagers.Managers
         }
 
         /// <summary>
+        /// Adds a list of playlists to the treeViewStructure
+        /// </summary>
+        /// <param name="playlistsToAdd">List of playlists to add</param>
+        public void AddPlaylistsToTreeViewStructure(List<Playlist> playlistsToAdd)
+        {
+            TreeViewStructure treeViewStructureToChange = GetAt(0);
+            treeViewStructureToChange.AddPlaylistsToTreeViewStructure(playlistsToAdd);
+            ChangeAt(treeViewStructureToChange, 0);
+        }
+
+        /// <summary>
         /// Serialize to XML
         /// </summary>
         /// <param name="filePath">file path where to save the xmlFile</param>
         public void SerializeToXML(string filePath)
         {
-            SerializeToXML(filePath);
+            XMLSerialize(filePath);
         }
 
         /// <summary>

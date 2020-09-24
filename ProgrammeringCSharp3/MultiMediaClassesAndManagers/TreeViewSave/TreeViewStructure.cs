@@ -13,17 +13,30 @@ namespace MultiMediaClassesAndManagers.TreeViewSave
     public class TreeViewStructure
     {
         public int Id { get; set; }
+        public List<TreeViewNode> TreeViewDirectoryNodes { get; set; }
 
-        private List<TreeViewNode> treeViewDirectoryNodes = null;
         public List<Playlist> Playlists { get; set; }
 
-        /// <summary>
-        /// Initiates a TreeViewSaveStructure object, sets treeViewDirectoryNodes
-        /// </summary>
-        /// <param name="listOfTreeViewDirectoryNodes">list of treeViewNodes to set</param>
-        public TreeViewStructure(List<TreeViewNode> listOfTreeViewDirectoryNodes)
+        public TreeViewStructure()
         {
-            treeViewDirectoryNodes = listOfTreeViewDirectoryNodes;
+        }
+
+        /// <summary>
+        /// Add TreeStructure
+        /// </summary>
+        /// <param name="listOfTreeViewDirectoryNodes">TreeStructure to add</param>
+        public void AddTreeStructure(List<TreeViewNode> listOfTreeViewDirectoryNodes)
+        {
+            TreeViewDirectoryNodes = listOfTreeViewDirectoryNodes;
+        }
+
+        /// <summary>
+        /// Adds a list of playlists to the structure
+        /// </summary>
+        /// <param name="playlistsToAdd">List of playlists being added</param>
+        public void AddPlaylistsToTreeViewStructure(List<Playlist> playlistsToAdd)
+        {
+            Playlists = playlistsToAdd;
         }
     }
 }

@@ -8,10 +8,19 @@ namespace MultiMediaClassesAndManagers.MediaSubClasses
     /// <summary>
     /// This class holds the information important for an video
     /// </summary>
+    [Serializable]
     public class Video : MediaFile
     {
         public double LengthInSeconds { get; set; }
 
+        /// <summary>
+        /// Default constructor, needed for serialization to work
+        /// </summary>
+        public Video()
+        {
+
+        }
+        
         /// <summary>
         /// The Video class constructor, initializes the object of type Video (as well as passes on the name and other common ground information to the base class)
         /// </summary>
