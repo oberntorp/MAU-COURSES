@@ -10,6 +10,7 @@ namespace MutiMediaClassesAndManagers
     /// <summary>
     /// This class makes up how a playlist looks and what is possible to do
     /// </summary>
+    [Serializable]
     public class Playlist
     {
         public int Id { get; set; }

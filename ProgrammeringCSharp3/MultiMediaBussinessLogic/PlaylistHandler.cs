@@ -1,4 +1,4 @@
-﻿using MultiMediaClassesAndManagers.Implementations;
+﻿using MultiMediaClassesAndManagers.Managers;
 using MultiMediaClassesAndManagers.Interfaces;
 using MultiMediaClassesAndManagers.MediaBaseClass;
 using MultiMediaClassesAndManagers.MediaSubClasses;

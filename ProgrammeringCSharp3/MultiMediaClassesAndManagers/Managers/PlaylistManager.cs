@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace MultiMediaClassesAndManagers.Implementations
+namespace MultiMediaClassesAndManagers.Managers
 {
     /// <summary>
     /// This Class Manages the insertion/deletion of Playlists
@@ -14,9 +14,9 @@ namespace MultiMediaClassesAndManagers.Implementations
         private int playlistId = 1;
 
         /// <summary>
-        /// As an Playlist shall have an Id, this method first adds that it, then calls Add from ListManager
+        /// As an Playlist shall have an Id, this method first adds the id, then calls Add from ListManager
         /// </summary>
-        /// <param name="animalToAdd"> the animal to add</param>
+        /// <param name="playlistToAdd"> the playlist to add</param>
         /// <returns>true/false</returns>
         public bool AddPlaylist(Playlist playlistToAdd)
         {

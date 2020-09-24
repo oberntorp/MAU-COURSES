@@ -7,6 +7,7 @@ namespace MultiMediaClassesAndManagers.TreeNode
     /// <summary>
     /// Enum defining the types of a treeNode
     /// </summary>
+    [Serializable]
     public enum TreeNodeTypes
     {
         directory,

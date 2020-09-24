@@ -1,5 +1,4 @@
 ﻿using Microsoft.Win32;
-using MultiMediaClassesAndManagers.Implementations;
 using MutiMediaClassesAndManagers;
 using MultiMediaClassesAndManagers.Interfaces;
 using MultiMediaClassesAndManagers.TreeNode;
@@ -32,6 +31,7 @@ using MultiMediaApplication.UserControls;
 using MultiMediaApplication.PlaylistWindows;
 using System.Collections.ObjectModel;
 using WMPLib;
+using MultiMediaClassesAndManagers.TreeViewSave;
 
 namespace MultiMediaApplication
 {
@@ -43,6 +43,7 @@ namespace MultiMediaApplication
         PlaylistHandler playlistHandler = null;
         TreeViewNodesHandler treeViewNodesHandler = null;
         MediaHandler mediaHandler = null;
+        TreeViewStructureHandler treeViewStructureHandler = null;
         ObservableCollection<MediaFile> mediaToItemsControl = null;
         public ObservableCollection<MediaFile> MediaToItemsControl { get => mediaToItemsControl; }
 
@@ -54,6 +55,7 @@ namespace MultiMediaApplication
             playlistHandler = new PlaylistHandler();
             treeViewNodesHandler = new TreeViewNodesHandler();
             mediaHandler = new MediaHandler();
+            treeViewStructureHandler = new TreeViewStructureHandler();
             mediaToItemsControl = new ObservableCollection<MediaFile>();
 
             InitializeComponent();
@@ -181,15 +183,35 @@ namespace MultiMediaApplication
         {
             if (!PlaylistTreeView.HasItems || (PlaylistTreeView.HasItems && WantToContinueWithoutSaving()))
             {
-                playlistHandler.DeleteAllPlaylists();
-                PlaylistTreeView.Items.Clear();
+                ResetStructureAnDPlaylistBeforeNewNavigationAreaIsCreated();
                 List<TreeViewNode> treeViewNodes = GetNodesOfTreeView();
                 if (treeViewNodes.Count != 0)
                 {
                     FillTreeViewWithNodes(treeViewNodes);
                     HideInitialExplination();
+                    SaveTreeViewStructure(treeViewNodes);
                 }
             }
+        }
+
+        /// <summary>
+        /// Deletes curreent structure and playlists
+        /// </summary>
+        private void ResetStructureAnDPlaylistBeforeNewNavigationAreaIsCreated()
+        {
+            playlistHandler.DeleteAllPlaylists();
+            PlaylistTreeView.Items.Clear();
+            treeViewStructureHandler.DeleteStructure();
+        }
+
+        /// <summary>
+        /// Saves the treeViewStructure
+        /// </summary>
+        /// <param name="treeViewStructure">Structure being saved</param>
+        private void SaveTreeViewStructure(List<TreeViewNode> treeViewStructure)
+        {
+            TreeViewStructure newTreeViewStructure = new TreeViewStructure(treeViewStructure);
+            treeViewStructureHandler.AddTreeViewStructure(newTreeViewStructure);
         }
 
         /// <summary>
@@ -485,7 +507,21 @@ namespace MultiMediaApplication
         /// <param name="e"></param>
         private void SavePlaylistsMenuItem_Click(object sender, RoutedEventArgs e)
         {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "XML File | *.XML";
+            bool result = (bool)saveFileDialog.ShowDialog();
 
+            if (result)
+            {
+                try
+                {
+                    treeViewStructureHandler.SaveAsXML(saveFileDialog.FileName);
+                }
+                catch(Exception ex)
+                {
+                    MessageBoxes.ShowErrorMessageBox($"{ex.Message} {ex.InnerException}");
+                }
+            }
         }
 
         /// <summary>

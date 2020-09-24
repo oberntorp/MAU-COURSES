@@ -7,6 +7,7 @@ namespace MultiMediaClassesAndManagers.TreeNode
     /// <summary>
     /// This class is used when setting up the TreeView (holds information needed)
     /// </summary>
+    [Serializable]
     public class TreeViewNode
     {
         public TreeNodeTypes Type { get; set; }
