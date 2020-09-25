@@ -186,25 +186,27 @@ namespace MultiMediaApplication
         {
             if (!PlaylistTreeView.HasItems || (PlaylistTreeView.HasItems && WantToContinueWithoutSaving()))
             {
-                ResetStructureAnDPlaylistBeforeNewNavigationAreaIsCreated();
                 List<TreeViewNode> treeViewNodes = GetNodesOfTreeView();
                 if (treeViewNodes.Count != 0)
                 {
                     FillTreeViewWithNodes(treeViewNodes);
-                    HideInitialExplination();
                     SaveTreeViewStructure(treeViewNodes);
+                    HideInitialExplination();
                 }
             }
         }
 
         /// <summary>
-        /// Deletes curreent structure and playlists
+        /// Clears the state of the gui
         /// </summary>
-        private void ResetStructureAnDPlaylistBeforeNewNavigationAreaIsCreated()
+        private void ResetGui()
         {
             playlistHandler.DeleteAllPlaylists();
             PlaylistTreeView.Items.Clear();
             treeViewStructureHandler.DeleteStructure();
+            ShowInitialExplination();
+            mediaToItemsControl.Clear();
+            HideInformationAboutPlaylist();
         }
 
         /// <summary>
@@ -238,6 +240,7 @@ namespace MultiMediaApplication
 
             if (!string.IsNullOrWhiteSpace(folderBrowserDialog.SelectedPath))
             {
+                ResetGui();
                 List<string> folderPaths = new List<string>();
                 folderPaths.Add(folderBrowserDialog.SelectedPath);
                 folderPaths.AddRange(Directory.GetDirectories(folderBrowserDialog.SelectedPath));
@@ -261,6 +264,14 @@ namespace MultiMediaApplication
             TreeViewItem rootNode = treeViewNodesHandler.GetRootTreeViewItem(treeNodes);
             treeViewNodesHandler.AddSubNodesToParent(treeNodes[0], ref rootNode);
             PlaylistTreeView.Items.Add(rootNode);
+        }
+
+        /// <summary>
+        /// The application hints where to start, when the gui is reset, the hint is shown
+        /// </summary>
+        private void ShowInitialExplination()
+        {
+            InitialEplinationStackPanel.Visibility = Visibility.Visible;
         }
 
         /// <summary>
@@ -320,18 +331,21 @@ namespace MultiMediaApplication
         /// <param name="e">Arguments related to the event</param>
         private void PlaylistTreeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            int idOfPlayList = playlistHandler.GetPlaylistIdOfSelected(treeViewNodesHandler.NameOfSelectedTreeViewItem(PlaylistTreeView));
-            int indexOfPlaylist = idOfPlayList - 1;
-            TreeViewItem selectedNode = (TreeViewItem)(sender as TreeView).SelectedItem;
+            if(PlaylistTreeView.HasItems)
+            {
+                int idOfPlayList = playlistHandler.GetPlaylistIdOfSelected(treeViewNodesHandler.NameOfSelectedTreeViewItem(PlaylistTreeView));
+                int indexOfPlaylist = idOfPlayList - 1;
+                TreeViewItem selectedNode = (TreeViewItem)(sender as TreeView).SelectedItem;
 
-            if (selectedNode != null && indexOfPlaylist != -1)
-            {
-                ShowInformationAboutPlaylist(indexOfPlaylist);
-                InitiateViewPlaylist(indexOfPlaylist);
-            }
-            else
-            {
-                HidePlaylistInfo();
+                if (selectedNode != null && indexOfPlaylist != -1)
+                {
+                    ShowInformationAboutPlaylist(indexOfPlaylist);
+                    InitiateViewPlaylist(indexOfPlaylist);
+                }
+                else
+                {
+                    HideInformationAboutPlaylist();
+                }
             }
         }
 
@@ -379,7 +393,7 @@ namespace MultiMediaApplication
         /// <summary>
         /// Hides information about playlist if none is selected
         /// </summary>
-        private void HidePlaylistInfo()
+        private void HideInformationAboutPlaylist()
         {
             PlaylistInfoStackPanelBorder.Visibility = Visibility.Hidden;
         }
@@ -509,8 +523,10 @@ namespace MultiMediaApplication
                 {
                     try
                     {
+                        ResetGui();
                         treeViewStructureHandler.LoadFromXML(openFileDialog.FileName);
                         TransferNavigatiopnAndPlaylistsToProgram();
+                        HideInitialExplination();
                     }
                     catch (Exception ex)
                     {
