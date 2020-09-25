@@ -1,4 +1,5 @@
 ﻿using MultiMediaClassesAndManagers.TreeNode;
+using MutiMediaClassesAndManagers;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -78,6 +79,20 @@ namespace MultiMediaBussinessLogic
         }
 
         /// <summary>
+        /// Get TreeViewItem for a given playlist
+        /// </summary>
+        /// <param name="newPlaylist">Playlist getting treeViewItem</param>
+        /// <returns>TreeViewItem for a given playlist</returns>
+        public TreeViewItem GetNewPlaylistTreeViewItem(Playlist newPlaylist)
+        {
+            TreeViewNode playlistTreeViewNode = new TreeViewNode(TreeNodeTypes.playlist, newPlaylist.Title);
+
+            TreeViewItem newPlaylistTreeViewItem = new TreeViewItem();
+            newPlaylistTreeViewItem.Header = GetStackOfTreeViewNode(playlistTreeViewNode);
+            return newPlaylistTreeViewItem;
+        }
+
+        /// <summary>
         /// Creates the stackPanel with content that a TreeViewItem.Header contains
         /// </summary>
         /// <param name="treeNode">The treeNode containing the name and type of the treeViewItem being created</param>
@@ -115,13 +130,72 @@ namespace MultiMediaBussinessLogic
         }
 
         /// <summary>
-        /// Get the name of a currently selected treeViewNode
+        /// Get the name of a currently selected treeViewItem
         /// </summary>
         /// <param name="playlistTreeView">TreeView to look for currently selected name</param>
         /// <returns>The name of the currently selected node</returns>
-        public string NameOfSelectedTreeViewNode(TreeView playlistTreeView)
+        public string NameOfSelectedTreeViewItem(TreeView playlistTreeView)
         {
             return (((playlistTreeView.SelectedItem as TreeViewItem).Header as StackPanel).Children[1] as Label).Content.ToString();
+        }
+
+        public TreeViewNode GetTreeViewNodeByName(string nameOfSelectedTreeNode, TreeViewNode currentTreeViewNode)
+        {
+            foreach(TreeViewNode treeViewNode in currentTreeViewNode.SubNodes)
+            {
+                if(treeViewNode.Name == nameOfSelectedTreeNode)
+                {
+                    return treeViewNode;
+                }
+                else
+                {
+                    return GetTreeViewNodeByName(nameOfSelectedTreeNode, treeViewNode);
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="nameToLookFor"></param>
+        /// <param name="treeViewItem"></param>
+        /// <returns></returns>
+        public TreeViewItem GetTreeViewItemFromName(string nameToLookFor, TreeViewItem treeViewItem)
+        {
+            if (NameOfTreeViewItem(treeViewItem) == nameToLookFor)
+            {
+                return treeViewItem;
+            }
+            else
+            {
+                foreach(TreeViewItem item in treeViewItem.Items)
+                {
+                    return GetTreeViewItemFromName(nameToLookFor, item);
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Get the name of a given treeViewItem
+        /// </summary>
+        /// <param name="treeViewItem">TreeView to look for currently selected name</param>
+        /// <returns>The name of the currently selected node</returns>
+        public string NameOfTreeViewItem(TreeViewItem treeViewItem)
+        {
+            return ((treeViewItem.Header as StackPanel).Children[1] as Label).Content.ToString();
+        }
+
+        /// <summary>
+        /// Adds a treeViewNode to the handler, is used when data have been loaded from XML
+        /// </summary>
+        /// <param name="treeViewNodeToAdd">TreeViewNode being added</param>
+        public void AddTreeViewNode(TreeViewNode treeViewNodeToAdd)
+        {
+            treeViewNodes.Add(treeViewNodeToAdd);
         }
     }
 }

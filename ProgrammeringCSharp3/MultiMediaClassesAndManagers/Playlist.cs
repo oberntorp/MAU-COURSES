@@ -2,6 +2,7 @@
 using MultiMediaClassesAndManagers.Managers;
 using MultiMediaClassesAndManagers.MediaBaseClass;
 using MultiMediaClassesAndManagers.MediaSubClasses;
+using MultiMediaClassesAndManagers.TreeNode;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,6 +12,8 @@ namespace MutiMediaClassesAndManagers
 {
     /// <summary>
     /// This class makes up how a playlist looks and what is possible to do
+    /// XmlInclude is needed as playlistContent is playlistContent is a list of MediaFile, 
+    /// which is base of Image and Video, without XmlInclude, Image and Video will not be recognized by the serializer
     /// </summary>
     [Serializable]
     [XmlInclude(typeof(Image)), XmlInclude(typeof(Video))]
@@ -24,6 +27,7 @@ namespace MutiMediaClassesAndManagers
         public string Description { set; get; }
         public int PlaylistPlaybackDelayBetweenMediaSec { set; get; }
         public int PlayListContentCount { get => playlistContent.Count; }
+        public TreeViewNode ParentNode { get; set; }
 
         // Needed for the playlists being serialized, I thought it is unnessecary to be able to serialize the ListManager
         public List<MediaFile> PlaylistContentXML { get; set; }
@@ -38,13 +42,15 @@ namespace MutiMediaClassesAndManagers
         /// The Playlist constructor, initializes a playlist
         /// </summary>
         /// <param name="nameOfPlayList">thename of the playlist</param>
+        /// <param name="parentNode">Node information about parent, used to link loaded playlist and loaded TreeViewItem</param>
         /// <param name="descriptionOfPlaylist">the description of the playlist</param>
         /// <param name="playbackDelayBetweenMediaSec">the time between playing clips</param>
-        public Playlist(string nameOfPlayList, string descriptionOfPlaylist, int playbackDelayBetweenMediaSec = 5)
+        public Playlist(string nameOfPlayList, TreeViewNode parentNode, string descriptionOfPlaylist, int playbackDelayBetweenMediaSec = 5)
         {
             playlistContent = new ListManager<MediaFile>();
             PlaylistContentXML = new List<MediaFile>();
             Title = nameOfPlayList;
+            ParentNode = parentNode;
             Description = descriptionOfPlaylist;
             PlaylistPlaybackDelayBetweenMediaSec = playbackDelayBetweenMediaSec;
         }

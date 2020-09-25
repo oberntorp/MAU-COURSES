@@ -45,6 +45,7 @@ namespace MultiMediaApplication
         MediaHandler mediaHandler = null;
         TreeViewStructureHandler treeViewStructureHandler = null;
         ObservableCollection<MediaFile> mediaToItemsControl = null;
+        private bool dataSaved = false;
         public ObservableCollection<MediaFile> MediaToItemsControl { get => mediaToItemsControl; }
 
         /// <summary>
@@ -73,7 +74,7 @@ namespace MultiMediaApplication
 
             if (PlaylistTreeView.HasItems && playlistHandler.PlaylistManager.Count != 0)
             {
-                int idOfPlayList = playlistHandler.GetPlaylistIdOfSelected(treeViewNodesHandler.NameOfSelectedTreeViewNode(PlaylistTreeView));
+                int idOfPlayList = playlistHandler.GetPlaylistIdOfSelected(treeViewNodesHandler.NameOfSelectedTreeViewItem(PlaylistTreeView));
                 int indexOfPlaylist = 0;
                 indexOfPlaylist = idOfPlayList - 1;
                 if (PlaylistTreeView.SelectedItem != null && idOfPlayList > 0)
@@ -84,6 +85,7 @@ namespace MultiMediaApplication
                     {
                         playlistHandler.AddMediaToSelectedPlaylist(indexOfPlaylist, CreateVideoFile(openFileDialog.FileName));
                         InitiateViewPlaylist(indexOfPlaylist);
+                        ShowInformationAboutPlaylist(indexOfPlaylist);
                     }
                     else
                     {
@@ -134,7 +136,7 @@ namespace MultiMediaApplication
 
             if (PlaylistTreeView.HasItems && playlistHandler.PlaylistManager.Count != 0)
             {
-                int idOfPlayList = playlistHandler.GetPlaylistIdOfSelected(treeViewNodesHandler.NameOfSelectedTreeViewNode(PlaylistTreeView));
+                int idOfPlayList = playlistHandler.GetPlaylistIdOfSelected(treeViewNodesHandler.NameOfSelectedTreeViewItem(PlaylistTreeView));
                 int indexOfPlaylist = 0;
                 indexOfPlaylist = idOfPlayList - 1;
                 if (PlaylistTreeView.SelectedItem != null && idOfPlayList > 0)
@@ -145,6 +147,7 @@ namespace MultiMediaApplication
                     {
                         playlistHandler.AddMediaToSelectedPlaylist(indexOfPlaylist, CreateImageFile(openFileDialog.FileName));
                         InitiateViewPlaylist(indexOfPlaylist);
+                        ShowInformationAboutPlaylist(indexOfPlaylist);
                     }
                     else
                     {
@@ -285,15 +288,13 @@ namespace MultiMediaApplication
                     bool result = (bool)creationPlaylistWindow.ShowDialog();
                     if (result)
                     {
-                        Playlist newPlaylist = new Playlist(creationPlaylistWindow.TitlaOfPlaylist.Trim(), creationPlaylistWindow.DescriptionOfPlaylist.Trim(), Convert.ToInt32(creationPlaylistWindow.DurationBetweenMedia.ToString().Trim()));
+                        TreeViewNode parentOfPlaylist = treeViewNodesHandler.GetTreeViewNodeByName(treeViewNodesHandler.NameOfSelectedTreeViewItem(PlaylistTreeView), treeViewNodesHandler.TreeViewNodes[0]);
+
+                        Playlist newPlaylist = new Playlist(creationPlaylistWindow.TitleOfPlaylist.Trim(), parentOfPlaylist, creationPlaylistWindow.DescriptionOfPlaylist.Trim(), Convert.ToInt32(creationPlaylistWindow.DurationBetweenMedia.ToString().Trim()));
                         if (playlistHandler.AddPlaylist(newPlaylist))
                         {
-                            TreeViewNode playlistTreeViewNode = new TreeViewNode(TreeNodeTypes.playlist, newPlaylist.Title);
-
-                            TreeViewItem newPlaylistTreeViewItem = new TreeViewItem();
-                            newPlaylistTreeViewItem.Header = treeViewNodesHandler.GetStackOfTreeViewNode(playlistTreeViewNode);
                             (PlaylistTreeView.SelectedItem as TreeViewItem).IsExpanded = true;
-                            (PlaylistTreeView.SelectedItem as TreeViewItem).Items.Add(newPlaylistTreeViewItem);
+                            (PlaylistTreeView.SelectedItem as TreeViewItem).Items.Add(treeViewNodesHandler.GetNewPlaylistTreeViewItem(newPlaylist));
                         }
                         else
                         {
@@ -319,7 +320,7 @@ namespace MultiMediaApplication
         /// <param name="e">Arguments related to the event</param>
         private void PlaylistTreeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            int idOfPlayList = playlistHandler.GetPlaylistIdOfSelected(treeViewNodesHandler.NameOfSelectedTreeViewNode(PlaylistTreeView));
+            int idOfPlayList = playlistHandler.GetPlaylistIdOfSelected(treeViewNodesHandler.NameOfSelectedTreeViewItem(PlaylistTreeView));
             int indexOfPlaylist = idOfPlayList - 1;
             TreeViewItem selectedNode = (TreeViewItem)(sender as TreeView).SelectedItem;
 
@@ -434,7 +435,7 @@ namespace MultiMediaApplication
         {
             if (PlaylistTreeView.HasItems && playlistHandler.PlaylistManager.Count != 0)
             {
-                int idOfPlayList = playlistHandler.GetPlaylistIdOfSelected(treeViewNodesHandler.NameOfSelectedTreeViewNode(PlaylistTreeView));
+                int idOfPlayList = playlistHandler.GetPlaylistIdOfSelected(treeViewNodesHandler.NameOfSelectedTreeViewItem(PlaylistTreeView));
                 int indexOfPlaylist = idOfPlayList - 1;
                 if (PlaylistTreeView.SelectedItem != null && idOfPlayList > 0)
                 {
@@ -471,7 +472,7 @@ namespace MultiMediaApplication
         {
             if (PlaylistTreeView.HasItems && playlistHandler.PlaylistManager.Count != 0)
             {
-                int idOfPlayList = playlistHandler.GetPlaylistIdOfSelected(treeViewNodesHandler.NameOfSelectedTreeViewNode(PlaylistTreeView));
+                int idOfPlayList = playlistHandler.GetPlaylistIdOfSelected(treeViewNodesHandler.NameOfSelectedTreeViewItem(PlaylistTreeView));
                 int indexOfPlaylist = idOfPlayList - 1;
                 if (PlaylistTreeView.SelectedItem != null && idOfPlayList > 0)
                 {
@@ -498,23 +499,25 @@ namespace MultiMediaApplication
         /// <param name="e">Arguments related to the event</param>
         private void LoadPlaylistsMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "XML File | *.XML";
-            bool result = (bool)openFileDialog.ShowDialog();
-
-            if (result)
+            if (!PlaylistTreeView.HasItems || WantToContinueWithoutSaving())
             {
-                try
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.Filter = "XML File | *.XML";
+                bool result = (bool)openFileDialog.ShowDialog();
+
+                if (result)
                 {
-                    treeViewStructureHandler.LoadFromXML(openFileDialog.FileName);
-                }
-                catch (Exception ex)
-                {
-                    MessageBoxes.ShowErrorMessageBox($"{ex.Message} {ex.InnerException}");
+                    try
+                    {
+                        treeViewStructureHandler.LoadFromXML(openFileDialog.FileName);
+                        TransferNavigatiopnAndPlaylistsToProgram();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBoxes.ShowErrorMessageBox($"{ex.Message} {ex.InnerException}");
+                    }
                 }
             }
-
-            TransferNavigatiopnAndPlaylistsToProgram();
         }
 
         /// <summary>
@@ -523,10 +526,22 @@ namespace MultiMediaApplication
         private void TransferNavigatiopnAndPlaylistsToProgram()
         {
             List<TreeViewNode> treeViewNodes = treeViewStructureHandler.GetAllTreeViewNodes();
+            FillTreeViewNodesHandlerWithTreeVewNodes(treeViewNodes);
             FillTreeViewWithNodes(treeViewNodes);
             HideInitialExplination();
-            SaveTreeViewStructure(treeViewNodes);
             AddPlaylists();
+        }
+
+        /// <summary>
+        /// TreeViewNodes needs to be added
+        /// </summary>
+        /// <param name="treeViewNodes">TreeViewNodes to fill handler with</param>
+        private void FillTreeViewNodesHandlerWithTreeVewNodes(List<TreeViewNode> treeViewNodes)
+        {
+            foreach (TreeViewNode treeViewNode in treeViewNodes)
+            {
+                treeViewNodesHandler.AddTreeViewNode(treeViewNode);
+            }
         }
 
         /// <summary>
@@ -534,9 +549,59 @@ namespace MultiMediaApplication
         /// </summary>
         private void AddPlaylists()
         {
-            foreach(Playlist playlist in treeViewStructureHandler.GetAllPlaylists())
+            foreach (Playlist playlist in treeViewStructureHandler.GetAllPlaylists())
             {
-                playlistHandler.AddPlaylist(playlist);
+                playlistHandler.AddPlaylist(CreateNewPlaylisFromLoadedPlaylist(playlist));
+            }
+
+            AddPlaylistsToTreeView();
+        }
+
+        /// <summary>
+        /// Creates new playlist object from loaded playlists data
+        /// </summary>
+        /// <param name="playlist">Playlist to load data from into the new object</param>
+        /// <returns></returns>
+        private Playlist CreateNewPlaylisFromLoadedPlaylist(Playlist playlist)
+        {
+            Playlist newPlaylist = new Playlist(playlist.Title, playlist.ParentNode, playlist.Description, playlist.PlaylistPlaybackDelayBetweenMediaSec);
+            FillLoadedPlaylistWithMedia(ref newPlaylist, playlist.PlaylistContentXML);
+            return newPlaylist;
+        }
+
+        /// <summary>
+        /// Adds playlists loaded into treeView
+        /// </summary>
+        private void AddPlaylistsToTreeView()
+        {
+            foreach (Playlist item in playlistHandler.PlaylistManager.GetAllItems())
+            {
+                string nameOfParentNode = item.ParentNode.Name;
+
+                int indexStartLooking = 0;
+                TreeViewItem parent = treeViewNodesHandler.GetTreeViewItemFromName(nameOfParentNode, (TreeViewItem)PlaylistTreeView.Items[indexStartLooking]);
+                while (parent == null)
+                {
+                    indexStartLooking++;
+                    parent = treeViewNodesHandler.GetTreeViewItemFromName(nameOfParentNode, ((PlaylistTreeView.Items[0] as TreeViewItem).Items[indexStartLooking] as TreeViewItem));
+                }
+
+                parent.Items.Add(treeViewNodesHandler.GetNewPlaylistTreeViewItem(item));
+
+
+            }
+        }
+
+        /// <summary>
+        /// Fills a loaded playlist with media loaded 
+        /// </summary>
+        /// <param name="newPlaylist"></param>
+        /// <param name="playlistContentXML"></param>
+        private void FillLoadedPlaylistWithMedia(ref Playlist newPlaylist, List<MediaFile> playlistContentXML)
+        {
+            foreach (MediaFile media in playlistContentXML)
+            {
+                newPlaylist.AddMediaToPlaylist(media);
             }
         }
 
@@ -557,8 +622,9 @@ namespace MultiMediaApplication
                 {
                     treeViewStructureHandler.AddPlaylistsToTreeViewStructure(playlistHandler.PlaylistManager.GetAllItems());
                     treeViewStructureHandler.SaveAsXML(saveFileDialog.FileName);
+                    dataSaved = true;
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     MessageBoxes.ShowErrorMessageBox($"{ex.Message} {ex.InnerException}");
                 }
@@ -573,6 +639,19 @@ namespace MultiMediaApplication
         private void ExitMenuItem_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        /// <summary>
+        /// When closing, the user gets a question about continue if no data saved
+        /// </summary>
+        /// <param name="sender">The sending object, in this case a Window</param>
+        /// <param name="e">Arguments related to the event</param>
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (PlaylistTreeView.HasItems && (!dataSaved && MessageBoxes.ShowSaveWarningMessageBox("You have not saved, do you really want to close the application?") == MessageBoxResult.No))
+            {
+                e.Cancel = true;
+            }
         }
     }
 }

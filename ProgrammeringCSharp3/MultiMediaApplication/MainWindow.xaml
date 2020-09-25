@@ -6,7 +6,7 @@
         xmlns:uc="clr-namespace:MultiMediaApplication.UserControls"
         xmlns:local="clr-namespace:MultiMediaApplication"
         mc:Ignorable="d"
-        Title="MultiMediaViewer" Height="450" Width="800">
+        Title="MultiMediaViewer" Height="450" Width="800" Closing="Window_Closing">
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="File">
@@ -15,16 +15,18 @@
                 <MenuItem Header="Exit" Click="ExitMenuItem_Click" />
             </MenuItem>
             <MenuItem Header="Playlist">
+                <MenuItem Header="Load playlists" Click="LoadPlaylistsMenuItem_Click" />
                 <MenuItem Header="Create playlist" Click="CreatePlaylist_Click" />
-                <MenuItem Header="Load playlists and navigation" Click="LoadPlaylistsMenuItem_Click" />
-                <MenuItem Header="Save playlists and navigation" Click="SavePlaylistsMenuItem_Click" />
                 <MenuItem Header="Import Media">
                     <MenuItem Header="Video" Click="MenuItemVideo_Click"/>
                     <MenuItem Header="Image" Click="MenuItemImage_Click"/>
                 </MenuItem>
-                <MenuItem Header="Change Playlist settings" Click="ChangePlaylistSettings_Click" />
+                <Separator />
+                <MenuItem Header="Change playlist settings" Click="ChangePlaylistSettings_Click" />
                 <Separator/>
                 <MenuItem Header="Play playlist" Click="PlayPlaylist_Click" />
+                <Separator/>
+                <MenuItem Header="Save playlists" Click="SavePlaylistsMenuItem_Click" />
             </MenuItem>
         </Menu>
         <ScrollViewer>
@@ -40,12 +42,9 @@
                 </Grid.RowDefinitions>
                 <TreeView x:Name="PlaylistTreeView" SelectedItemChanged="PlaylistTreeView_SelectedItemChanged" VerticalAlignment="Stretch"/>
                 <StackPanel x:Name="InitialEplinationStackPanel" Orientation="Horizontal" Grid.ColumnSpan="2" Grid.Row="1" Width="550">
-                    <TextBlock Text="Hi, please add folders to the"/>
-                    <TextBlock Text=" navigation area " FontWeight="Bold" />
-                    <TextBlock Text=" by clicking " FontWeight="Bold" />
-                    <TextBlock Text="File" FontWeight="Bold" />
-                    <TextBlock Text=" -> " />
-                    <TextBlock Text="Choose folders for navigation area" FontWeight="Bold" />
+                    <TextBlock>Hi, please add folders to the navigation area by clicking <Bold>File</Bold> -> <Bold>Choose folders for navigation area</Bold>
+                    <LineBreak/>
+                    If you have saved playlists you can click <Bold>File</Bold> -> <Bold>Load playlists</Bold></TextBlock>
                 </StackPanel>
                     <ItemsControl x:Name="mediaItemsControl" Grid.Column="1">
                         <ItemsControl.ItemsPanel>

@@ -16,7 +16,7 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <Image Source="{Binding MediaPreviewSource, ElementName=Window}" MaxWidth="200" />
+        <Image Source="{Binding MediaPreviewSource, ElementName=Window}" MaxHeight="100" />
         <Label Content="{Binding MediaName, ElementName=Window}" Grid.Row="1"/>
     </Grid>
 </UserControl>
