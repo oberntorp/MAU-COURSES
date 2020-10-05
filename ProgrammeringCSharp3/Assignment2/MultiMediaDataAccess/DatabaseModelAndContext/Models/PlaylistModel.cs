@@ -12,8 +12,8 @@ namespace MultiMediaDataAccess.DatabaseModelAndContext.Models
         public string Title { get; set; }
         public string Description { get; set; }
         public int PlaylistPlaybackDelayBetweenMediaSec { set; get; }
-        public VideoModel Video { get; set; }
-        public ImageModel Image { get; set; }
+        public List<VideoModel> Video { get; set; }
+        public List<ImageModel> Image { get; set; }
         public TreeViewNodeModel ParentNode { get; set; }
 
     }

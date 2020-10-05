@@ -12,9 +12,9 @@ D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment2\MultiMediaData
 D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment2\MultiMediaDataAccess\obj\Debug\MultiMediaDataAccess.csproj.CopyComplete
 D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment2\MultiMediaDataAccess\obj\Debug\MultiMediaDataAccess.dll
 D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment2\MultiMediaDataAccess\obj\Debug\MultiMediaDataAccess.pdb
-D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment2\MultiMediaDataAccess\obj\Debug\MultiMediaDataAccess.Migrations.CreateTables.resources
-D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment2\MultiMediaDataAccess\obj\Debug\MultiMediaDataAccess.csproj.GenerateResource.cache
 D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment2\MultiMediaDataAccess\bin\Debug\MultiMediaClassesAndManagers.dll
 D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment2\MultiMediaDataAccess\bin\Debug\Utilities.dll
 D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment2\MultiMediaDataAccess\bin\Debug\MultiMediaClassesAndManagers.pdb
 D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment2\MultiMediaDataAccess\bin\Debug\Utilities.pdb
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment2\MultiMediaDataAccess\obj\Debug\MultiMediaDataAccess.Migrations.CreateTables.resources
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment2\MultiMediaDataAccess\obj\Debug\MultiMediaDataAccess.csproj.GenerateResource.cache

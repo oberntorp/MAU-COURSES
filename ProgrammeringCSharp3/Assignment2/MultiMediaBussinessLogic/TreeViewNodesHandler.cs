@@ -141,15 +141,22 @@ namespace MultiMediaBussinessLogic
 
         public TreeViewNode GetTreeViewNodeByName(string nameOfSelectedTreeNode, TreeViewNode currentTreeViewNode)
         {
-            foreach(TreeViewNode treeViewNode in currentTreeViewNode.SubNodes)
+            if (currentTreeViewNode.Name == nameOfSelectedTreeNode)
             {
-                if(treeViewNode.Name == nameOfSelectedTreeNode)
+                return currentTreeViewNode;
+            }
+            else
+            {
+                foreach (TreeViewNode treeViewNode in currentTreeViewNode.SubNodes)
                 {
-                    return treeViewNode;
-                }
-                else
-                {
-                    return GetTreeViewNodeByName(nameOfSelectedTreeNode, treeViewNode);
+                    if (treeViewNode.Name == nameOfSelectedTreeNode)
+                    {
+                        return treeViewNode;
+                    }
+                    else
+                    {
+                        return GetTreeViewNodeByName(nameOfSelectedTreeNode, treeViewNode);
+                    }
                 }
             }
 
