@@ -46,6 +46,7 @@ namespace MultiMediaApplication
         MediaHandler mediaHandler = null;
         TreeViewStructureHandler treeViewStructureHandler = null;
         ObservableCollection<MediaFile> mediaToItemsControl = null;
+        DatabaseOperations dataoperations = null;
         private bool dataSaved = false;
         public ObservableCollection<MediaFile> MediaToItemsControl { get => mediaToItemsControl; }
 
@@ -59,6 +60,7 @@ namespace MultiMediaApplication
             mediaHandler = new MediaHandler();
             treeViewStructureHandler = new TreeViewStructureHandler();
             mediaToItemsControl = new ObservableCollection<MediaFile>();
+            dataoperations = new DatabaseOperations();
 
             InitializeComponent();
         }
@@ -202,6 +204,7 @@ namespace MultiMediaApplication
         /// </summary>
         private void ResetGui()
         {
+            dataoperations.DeleteAllPLaylistFromDb();
             playlistHandler.DeleteAllPlaylists();
             PlaylistTreeView.Items.Clear();
             treeViewStructureHandler.DeleteStructure();
@@ -512,7 +515,7 @@ namespace MultiMediaApplication
         /// </summary>
         /// <param name="sender">The sending object, in this case a MenuItem</param>
         /// <param name="e">Arguments related to the event</param>
-        private void LoadPlaylistsMenuItem_Click(object sender, RoutedEventArgs e)
+        private void LoadPlaylistsFromXMLMenuItem_Click(object sender, RoutedEventArgs e)
         {
             if (!PlaylistTreeView.HasItems || WantToContinueWithoutSaving())
             {
@@ -671,13 +674,22 @@ namespace MultiMediaApplication
             }
         }
 
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        private void SaveToDbMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            DatabaseOperations dataoperations = new DatabaseOperations();
             foreach(Playlist playlist in playlistHandler.PlaylistManager.GetAllItems())
             {
                 dataoperations.InsertPLaylistToDb(playlist);
             }
+        }
+
+        private void DeleteAllPlaylistsMenuItem_Click_1(object sender, RoutedEventArgs e)
+        {
+            dataoperations.DeleteAllPLaylistFromDb();
+        }
+
+        private void LoadPlaylistsFromDbMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

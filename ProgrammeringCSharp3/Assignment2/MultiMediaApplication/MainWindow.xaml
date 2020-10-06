@@ -15,7 +15,10 @@
                 <MenuItem Header="Exit" Click="ExitMenuItem_Click" />
             </MenuItem>
             <MenuItem Header="Playlist">
-                <MenuItem Header="Load playlists" Click="LoadPlaylistsMenuItem_Click" />
+                <MenuItem Header="Load playlists">
+                    <MenuItem Header="From XML" Click="LoadPlaylistsFromXMLMenuItem_Click" />
+                    <MenuItem Header="From DataBase" Click="LoadPlaylistsFromDbMenuItem_Click"/>
+                </MenuItem>
                 <MenuItem Header="Create playlist" Click="CreatePlaylist_Click" />
                 <MenuItem Header="Import Media">
                     <MenuItem Header="Video" Click="MenuItemVideo_Click"/>
@@ -26,8 +29,10 @@
                 <Separator/>
                 <MenuItem Header="Play playlist" Click="PlayPlaylist_Click" />
                 <Separator/>
-                <MenuItem Header="Save playlists" Click="SavePlaylistsMenuItem_Click" />
-                <MenuItem Header="Save playlists to db" Click="MenuItem_Click" />
+                <MenuItem Header="Save Playlists">
+                    <MenuItem Header="To XML" Click="SavePlaylistsMenuItem_Click" />
+                    <MenuItem Header="To database" Click="SaveToDbMenuItem_Click" />
+                </MenuItem>
             </MenuItem>
         </Menu>
         <ScrollViewer>
