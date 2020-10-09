@@ -80,8 +80,11 @@
       <DependentUpon>202010051417235_Create-Tables.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="ImagesDatabaseOperationsHelper.cs" />
+    <Compile Include="VideoDatabaseOperationsHelper.cs" />
     <Compile Include="PlaylistDatabaseOperationsHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TreeViewNodeDatabaseHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

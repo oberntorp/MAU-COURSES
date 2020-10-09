@@ -204,7 +204,6 @@ namespace MultiMediaApplication
         /// </summary>
         private void ResetGui()
         {
-            dataoperations.DeleteAllPLaylistFromDb();
             playlistHandler.DeleteAllPlaylists();
             PlaylistTreeView.Items.Clear();
             treeViewStructureHandler.DeleteStructure();
@@ -678,7 +677,8 @@ namespace MultiMediaApplication
         {
             foreach(Playlist playlist in playlistHandler.PlaylistManager.GetAllItems())
             {
-                dataoperations.InsertPLaylistToDb(playlist);
+                dataoperations.DeleteAllPLaylistFromDb();
+                dataoperations.InsertPlaylistToDb(playlist);
             }
         }
 
@@ -689,6 +689,13 @@ namespace MultiMediaApplication
 
         private void LoadPlaylistsFromDbMenuItem_Click(object sender, RoutedEventArgs e)
         {
+            if (!PlaylistTreeView.HasItems || WantToContinueWithoutSaving())
+            {
+                ResetGui();
+                treeViewStructureHandler.AddTreeViewStructure(dataoperations.GetPlaylistsAndNavigationFromDb());
+                TransferNavigatiopnAndPlaylistsToProgram();
+                HideInitialExplination();
+            }
 
         }
     }
