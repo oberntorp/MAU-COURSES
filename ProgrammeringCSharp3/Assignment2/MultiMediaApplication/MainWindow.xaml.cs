@@ -32,7 +32,6 @@ using MultiMediaApplication.PlaylistWindows;
 using System.Collections.ObjectModel;
 using WMPLib;
 using MultiMediaClassesAndManagers.TreeViewSave;
-using MultiMediaDataAccess;
 
 namespace MultiMediaApplication
 {
@@ -46,7 +45,6 @@ namespace MultiMediaApplication
         MediaHandler mediaHandler = null;
         TreeViewStructureHandler treeViewStructureHandler = null;
         ObservableCollection<MediaFile> mediaToItemsControl = null;
-        DatabaseOperations dataoperations = null;
         private bool dataSaved = false;
         public ObservableCollection<MediaFile> MediaToItemsControl { get => mediaToItemsControl; }
 
@@ -60,7 +58,6 @@ namespace MultiMediaApplication
             mediaHandler = new MediaHandler();
             treeViewStructureHandler = new TreeViewStructureHandler();
             mediaToItemsControl = new ObservableCollection<MediaFile>();
-            dataoperations = new DatabaseOperations();
 
             InitializeComponent();
         }
@@ -675,16 +672,24 @@ namespace MultiMediaApplication
 
         private void SaveToDbMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            foreach(Playlist playlist in playlistHandler.PlaylistManager.GetAllItems())
+            try
             {
-                dataoperations.DeleteAllPLaylistFromDb();
-                dataoperations.InsertPlaylistToDb(playlist);
+                playlistHandler.DeleteAllPlaylistsFromDB();
+                playlistHandler.InsertPlaylistsIntoDb();
             }
+            catch(Exception exOnSave)
+            {
+                MessageBoxes.ShowErrorMessageBox($"{exOnSave.Message} with inner exception {exOnSave.InnerException}");
+            }
+
+            dataSaved = true;
+            MessageBoxes.ShowInformationMessageBox("The playlists where saved, thank you!");
+
         }
 
         private void DeleteAllPlaylistsMenuItem_Click_1(object sender, RoutedEventArgs e)
         {
-            dataoperations.DeleteAllPLaylistFromDb();
+            treeViewStructureHandler.DeleteStructureFromDataBase();
         }
 
         private void LoadPlaylistsFromDbMenuItem_Click(object sender, RoutedEventArgs e)
@@ -692,9 +697,16 @@ namespace MultiMediaApplication
             if (!PlaylistTreeView.HasItems || WantToContinueWithoutSaving())
             {
                 ResetGui();
-                treeViewStructureHandler.AddTreeViewStructure(dataoperations.GetPlaylistsAndNavigationFromDb());
-                TransferNavigatiopnAndPlaylistsToProgram();
-                HideInitialExplination();
+                try 
+                {
+                    treeViewStructureHandler.AddTreeViewStructure(treeViewStructureHandler.GetTreeViewStructureFromDb());
+                    TransferNavigatiopnAndPlaylistsToProgram();
+                    HideInitialExplination();
+                }
+                catch (Exception exOnLoad)
+                {
+                    MessageBoxes.ShowErrorMessageBox($"{exOnLoad.Message} with inner exception {exOnLoad.InnerException}");
+                }
             }
 
         }

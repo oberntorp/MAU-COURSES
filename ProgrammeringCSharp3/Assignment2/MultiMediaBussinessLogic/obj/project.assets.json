@@ -57,6 +57,18 @@
           "bin/placeholder/MultiMediaClassesAndManagers.dll": {}
         }
       },
+      "MultiMediaDataAccess/1.0.0": {
+        "type": "project",
+        "dependencies": {
+          "MultiMediaClassesAndManagers": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/MultiMediaDataAccess.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/MultiMediaDataAccess.dll": {}
+        }
+      },
       "Utilities/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
@@ -270,6 +282,11 @@
       "path": "../MultiMediaClassesAndManagers/MultiMediaClassesAndManagers.csproj",
       "msbuildProject": "../MultiMediaClassesAndManagers/MultiMediaClassesAndManagers.csproj"
     },
+    "MultiMediaDataAccess/1.0.0": {
+      "type": "project",
+      "path": "../MultiMediaDataAccess/MultiMediaDataAccess.csproj",
+      "msbuildProject": "../MultiMediaDataAccess/MultiMediaDataAccess.csproj"
+    },
     "Utilities/1.0.0": {
       "type": "project",
       "path": "../Utilities/Utilities.csproj",
@@ -279,6 +296,7 @@
   "projectFileDependencyGroups": {
     ".NETStandard,Version=v2.0": [
       "MultiMediaClassesAndManagers >= 1.0.0",
+      "MultiMediaDataAccess >= 1.0.0",
       "NETStandard.Library >= 2.0.3",
       "System.Drawing.Common >= 4.7.0",
       "WindowsBase >= 4.6.1055"
@@ -312,6 +330,9 @@
           "projectReferences": {
             "D:\\wamp64\\www\\GitHub\\MAU-COURSES\\ProgrammeringCSharp3\\Assignment2\\MultiMediaClassesAndManagers\\MultiMediaClassesAndManagers.csproj": {
               "projectPath": "D:\\wamp64\\www\\GitHub\\MAU-COURSES\\ProgrammeringCSharp3\\Assignment2\\MultiMediaClassesAndManagers\\MultiMediaClassesAndManagers.csproj"
+            },
+            "D:\\wamp64\\www\\GitHub\\MAU-COURSES\\ProgrammeringCSharp3\\Assignment2\\MultiMediaDataAccess\\MultiMediaDataAccess.csproj": {
+              "projectPath": "D:\\wamp64\\www\\GitHub\\MAU-COURSES\\ProgrammeringCSharp3\\Assignment2\\MultiMediaDataAccess\\MultiMediaDataAccess.csproj"
             }
           }
         }

@@ -23,6 +23,14 @@ namespace MultiMediaDataAccess
             return ConvertDatabaseObjectToApplicationPlaylistObject(dbContext.TreeViewNodes.ToList());
         }
 
+        public void DeleteTreeViewNodesFromDatabase()
+        {
+            foreach(TreeViewNodeModel node in dbContext.TreeViewNodes.ToList())
+            {
+                dbContext.TreeViewNodes.Remove(node);
+            }
+        }
+
         private List<TreeViewNode> ConvertDatabaseObjectToApplicationPlaylistObject(List<TreeViewNodeModel> treeViewNodesFromDatabase)
         {
             return ConvertTreeViewNodeModelToTreeViewNode(treeViewNodesFromDatabase);

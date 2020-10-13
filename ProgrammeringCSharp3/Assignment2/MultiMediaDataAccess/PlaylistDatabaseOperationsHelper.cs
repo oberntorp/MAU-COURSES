@@ -29,13 +29,16 @@ namespace MultiMediaDataAccess
             playlistModel.Title = playlistToAddToDataBase.Title;
             playlistModel.Description = playlistToAddToDataBase.Description;
             playlistModel.PlaylistPlaybackDelayBetweenMediaSec = playlistToAddToDataBase.PlaylistPlaybackDelayBetweenMediaSec;
+            playlistModel.Image = new List<ImageModel>();
+            playlistModel.Video = new List<VideoModel>();
+
             return playlistModel;
         }
 
         internal PlaylistModel AddRelatingItemsToPlaylistModel(Playlist playlistToAddToDataBase, PlaylistModel playlistModel)
         {
             AddParentNodePlaylist(playlistToAddToDataBase, playlistModel);
-            AddMeddiaToPlaylist(playlistToAddToDataBase, ref playlistModel);
+            AddMeddiaToPlaylist(playlistToAddToDataBase, playlistModel);
             return playlistModel;
         }
 
@@ -65,7 +68,7 @@ namespace MultiMediaDataAccess
             return result;
         }
 
-        private void AddMeddiaToPlaylist(Playlist playlistToAddToDataBase, ref PlaylistModel playlistModel)
+        private void AddMeddiaToPlaylist(Playlist playlistToAddToDataBase, PlaylistModel playlistModel)
         {
             foreach (IMediaFile media in playlistToAddToDataBase.GetAllMediaFromPlaylist())
             {
@@ -81,7 +84,6 @@ namespace MultiMediaDataAccess
                     newImageModel.Width = imageData.Width;
                     newImageModel.Height = imageData.Height;
 
-                    playlistModel.Image = new List<ImageModel>();
                     playlistModel.Image.Add(newImageModel);
 
                     dbContext.Images.Add(newImageModel);
@@ -97,7 +99,6 @@ namespace MultiMediaDataAccess
                     newVideoModel.FileExtention = videoData.FileExtention;
                     newVideoModel.LengthInSeconds = videoData.LengthInSeconds;
 
-                    playlistModel.Video = new List<VideoModel>();
                     playlistModel.Video.Add(newVideoModel);
                     dbContext.Videos.Add(newVideoModel);
                 }
@@ -120,14 +121,24 @@ namespace MultiMediaDataAccess
 
         internal void DeleteAllPlaylistData()
         {
-            List<PlaylistModel> playlists = dbContext.Playlists.ToList();
+            List<PlaylistModel> playlists = GetPlaylists();
 
             foreach (PlaylistModel playlist in playlists)
             {
-                dbContext.Playlists.Remove(playlist);
                 RemoveRelationsToPlaylist(playlist);
+                dbContext.Playlists.Remove(playlist);
+
+                RemoveParentTreeViewNode(playlist);
             }
             dbContext.SaveChanges();
+        }
+
+        private void RemoveParentTreeViewNode(PlaylistModel playlist)
+        {
+            if (dbContext.TreeViewNodes != null && playlist.ParentNode != null)
+            {
+                dbContext.TreeViewNodes.Remove(playlist.ParentNode);
+            }
         }
 
         private void RemoveRelationsToPlaylist(PlaylistModel playlist)
@@ -140,15 +151,11 @@ namespace MultiMediaDataAccess
             {
                 dbContext.Images.RemoveRange(playlist.Image);
             }
-            if (dbContext.TreeViewNodes != null && playlist.ParentNode != null)
-            {
-                dbContext.TreeViewNodes.Remove(playlist.ParentNode);
-            }
         }
 
         internal List<PlaylistModel> GetPlaylists()
         {
-            return dbContext.Playlists.Include("Image").Include("Image").Include("ParentNode").ToList();
+            return dbContext.Playlists.Include("Image").Include("Video").Include("ParentNode").ToList();
         }
 
         public TreeViewStructure ConvertDatabaseObjectToApplicationPlaylistObject(List<PlaylistModel> playlistsFromDatabase, List<TreeViewNode> treeViewNodes)

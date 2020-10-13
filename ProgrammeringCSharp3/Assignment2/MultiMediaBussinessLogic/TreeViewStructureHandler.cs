@@ -4,6 +4,7 @@ using System.Text;
 using MultiMediaClassesAndManagers.Managers;
 using MultiMediaClassesAndManagers.TreeNode;
 using MultiMediaClassesAndManagers.TreeViewSave;
+using MultiMediaDataAccess;
 using MutiMediaClassesAndManagers;
 
 namespace MultiMediaBussinessLogic
@@ -14,6 +15,7 @@ namespace MultiMediaBussinessLogic
     public class TreeViewStructureHandler
     {
         private TreeViewStructureManager treeViewStructureManager = null;
+        DatabaseOperations dataoperations = null;
 
         /// <summary>
         /// TreeViewStructureHandler constructor, initializes an object to treeViewStructureManager
@@ -21,6 +23,7 @@ namespace MultiMediaBussinessLogic
         public TreeViewStructureHandler()
         {
             treeViewStructureManager = new TreeViewStructureManager();
+            dataoperations = new DatabaseOperations();
         }
 
         /// <summary>
@@ -84,6 +87,16 @@ namespace MultiMediaBussinessLogic
         public List<Playlist> GetAllPlaylists()
         {
             return treeViewStructureManager.GetAllItems()[0].Playlists;
+        }
+
+        public TreeViewStructure GetTreeViewStructureFromDb()
+        {
+            return dataoperations.GetPlaylistsAndNavigationFromDb();
+        }
+
+        public void DeleteStructureFromDataBase()
+        {
+            dataoperations.DeleteNavigationStructureFromDb();
         }
     }
 }

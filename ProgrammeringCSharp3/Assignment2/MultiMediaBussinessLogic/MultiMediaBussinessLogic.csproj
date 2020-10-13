@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MultiMediaClassesAndManagers\MultiMediaClassesAndManagers.csproj" />
+    <ProjectReference Include="..\MultiMediaDataAccess\MultiMediaDataAccess.csproj" />
   </ItemGroup>
 
   <ItemGroup>

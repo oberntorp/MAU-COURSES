@@ -103,8 +103,6 @@ D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment2\MultiMediaAppl
 D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment2\MultiMediaApplication\obj\Debug\MultiMediaApplication.csproj.CopyComplete
 D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment2\MultiMediaApplication\obj\Debug\MultiMediaApplication.exe
 D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment2\MultiMediaApplication\obj\Debug\MultiMediaApplication.pdb
-D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment2\MultiMediaApplication\bin\Debug\Database1.mdf
-D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment2\MultiMediaApplication\bin\Debug\Database1_log.ldf
 D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment2\MultiMediaApplication\bin\Debug\MultiMediaDataAccess.dll
 D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment2\MultiMediaApplication\bin\Debug\EntityFramework.dll
 D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment2\MultiMediaApplication\bin\Debug\MultiMediaDataAccess.pdb

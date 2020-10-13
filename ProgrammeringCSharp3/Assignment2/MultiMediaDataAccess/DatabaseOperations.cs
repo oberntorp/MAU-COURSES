@@ -59,5 +59,10 @@ namespace MultiMediaDataAccess
             return playlistOperationsHelper.ConvertDatabaseObjectToApplicationPlaylistObject(playlists.ToList(), nodes);
             
         }
+
+        public void DeleteNavigationStructureFromDb()
+        {
+            treeViewNodeDatabaseHelper.DeleteTreeViewNodesFromDatabase();
+        }
     }
 }

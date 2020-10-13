@@ -7,6 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Documents;
+using MultiMediaDataAccess;
+using System.Data.Common;
 
 namespace MultiMediaBussinessLogic
 {
@@ -17,6 +19,8 @@ namespace MultiMediaBussinessLogic
     {
         private PlaylistManager playlistManager = null;
         private MediaHandler mediaHandler = null;
+        DatabaseOperations dataoperations = null;
+
         public PlaylistManager PlaylistManager { get => playlistManager; }
 
         /// <summary>
@@ -26,6 +30,7 @@ namespace MultiMediaBussinessLogic
         {
             playlistManager = new PlaylistManager();
             mediaHandler = new MediaHandler();
+            dataoperations = new DatabaseOperations();
         }
 
         /// <summary>
@@ -99,6 +104,19 @@ namespace MultiMediaBussinessLogic
         public List<MediaFile> GetMediaFiles(int indexOfPlaylist)
         {
             return playlistManager.GetAt(indexOfPlaylist).GetAllMediaFromPlaylist();
+        }
+
+        public void InsertPlaylistsIntoDb()
+        {
+            foreach (Playlist playlist in PlaylistManager.GetAllItems())
+            {
+                dataoperations.InsertPlaylistToDb(playlist);
+            }
+        }
+
+        public void DeleteAllPlaylistsFromDB()
+        {
+            dataoperations.DeleteAllPLaylistFromDb();
         }
     }
 }

@@ -84,3 +84,10 @@ D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment2\MultiMediaBuss
 D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment2\MultiMediaBussinessLogic\obj\Debug\netstandard2.0\MultiMediaBussinessLogic.csproj.CopyComplete
 D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment2\MultiMediaBussinessLogic\obj\Debug\netstandard2.0\MultiMediaBussinessLogic.dll
 D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment2\MultiMediaBussinessLogic\obj\Debug\netstandard2.0\MultiMediaBussinessLogic.pdb
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment2\MultiMediaBussinessLogic\bin\Debug\netstandard2.0\Database1.mdf
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment2\MultiMediaBussinessLogic\bin\Debug\netstandard2.0\Database1_log.ldf
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment2\MultiMediaBussinessLogic\bin\Debug\netstandard2.0\MultiMediaDataAccess.dll
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment2\MultiMediaBussinessLogic\bin\Debug\netstandard2.0\EntityFramework.dll
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment2\MultiMediaBussinessLogic\bin\Debug\netstandard2.0\MultiMediaDataAccess.pdb
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment2\MultiMediaBussinessLogic\bin\Debug\netstandard2.0\MultiMediaDataAccess.dll.config
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment2\MultiMediaBussinessLogic\bin\Debug\netstandard2.0\EntityFramework.xml
