@@ -118,13 +118,16 @@ namespace MultiMediaBussinessLogic
         /// </summary>
         /// <param name="currentNode">Current node to check for subnodes of</param>
         /// <param name="parentTreeViewItem">Parent TreeViewItem that will contain the subNodes</param>
-        public void AddSubNodesToParent(TreeViewNode currentNode, ref TreeViewItem parentTreeViewItem)
+        public void AddSubNodesToParent(TreeViewNode currentNode, TreeViewItem parentTreeViewItem)
         {
             foreach (TreeViewNode subNode in currentNode.SubNodes)
             {
                 TreeViewItem childTreeViewItem = new TreeViewItem();
                 childTreeViewItem.Header = GetStackOfTreeViewNode(subNode);
-                AddSubNodesToParent(subNode, ref childTreeViewItem);
+                if(subNode.SubNodes != null)
+                {
+                    AddSubNodesToParent(subNode, childTreeViewItem);
+                }
                 parentTreeViewItem.Items.Add(childTreeViewItem);
             }
         }

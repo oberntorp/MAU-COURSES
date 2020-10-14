@@ -262,7 +262,7 @@ namespace MultiMediaApplication
         private void FillTreeViewWithNodes(List<TreeViewNode> treeNodes)
         {
             TreeViewItem rootNode = treeViewNodesHandler.GetRootTreeViewItem(treeNodes);
-            treeViewNodesHandler.AddSubNodesToParent(treeNodes[0], ref rootNode);
+            treeViewNodesHandler.AddSubNodesToParent(treeNodes[0], rootNode);
             PlaylistTreeView.Items.Add(rootNode);
         }
 

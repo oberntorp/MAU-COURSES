@@ -14,23 +14,29 @@ using System.Threading.Tasks;
 
 namespace MultiMediaDataAccess
 {
+    /// <summary>
+    /// This class actsas aconteiner for the databaseoperations namely Add/Delete/Get playlists from the database (localDB)
+    /// </summary>
     public class DatabaseOperations
     {
         MultiMediaContext dbContext;
         PlaylistDatabaseOperationsHelper playlistOperationsHelper;
-        TreeViewNodeDatabaseHelper treeViewNodeDatabaseHelper;
-        VideoDatabaseOperationsHelper videoDatabaseOperationsHelper;
-        ImagesDatabaseOperationsHelper imagesDatabaseOperationsHelper;
+        TreeViewNodeOperationsDatabaseHelper treeViewNodeDatabaseHelper;
 
+        /// <summary>
+        /// The class of the constreuctor, it initializes helper classes
+        /// </summary>
         public DatabaseOperations()
         {
             dbContext = new MultiMediaContext();
-            playlistOperationsHelper = new PlaylistDatabaseOperationsHelper(ref dbContext);
-            treeViewNodeDatabaseHelper = new TreeViewNodeDatabaseHelper(ref dbContext);
-            videoDatabaseOperationsHelper = new VideoDatabaseOperationsHelper(ref dbContext);
-            treeViewNodeDatabaseHelper = new TreeViewNodeDatabaseHelper(ref dbContext);
+            playlistOperationsHelper = new PlaylistDatabaseOperationsHelper(dbContext);
+            treeViewNodeDatabaseHelper = new TreeViewNodeOperationsDatabaseHelper(dbContext);
         }
 
+        /// <summary>
+        /// Adds a given playlist to the db
+        /// </summary>
+        /// <param name="playlistToAddToDataBase">The playlist to add to the database</param>
         public void InsertPlaylistToDb(Playlist playlistToAddToDataBase)
         {
             PlaylistModel playlistModel = playlistOperationsHelper.CreatePlaylistModelWithMetaData(playlistToAddToDataBase);
@@ -41,16 +47,27 @@ namespace MultiMediaDataAccess
             dbContext.SaveChanges();
         }
 
+        /// <summary>
+        /// Daletes all playlists from the database
+        /// </summary>
         public void DeleteAllPLaylistFromDb()
         {
             playlistOperationsHelper.DeleteAllPlaylistData();
         }
 
+        /// <summary>
+        /// Get the TreeViewStructure made up  by playlists and navigation
+        /// </summary>
+        /// <returns>TreeViewStructure with playlists and navigation</returns>
         public TreeViewStructure GetPlaylistsAndNavigationFromDb()
         {
             return GetTreeViewStructure();
         }
 
+        /// <summary>
+        /// Get the playlists and the navigation from the database as a TreeViewStructure from the database
+        /// </summary>
+        /// <returns>TreeViewStructure with playlists and navigation</returns>
         private TreeViewStructure GetTreeViewStructure()
         {
             var playlists = playlistOperationsHelper.GetPlaylists();
@@ -60,6 +77,9 @@ namespace MultiMediaDataAccess
             
         }
 
+        /// <summary>
+        /// Delete NavigationStructure from the database
+        /// </summary>
         public void DeleteNavigationStructureFromDb()
         {
             treeViewNodeDatabaseHelper.DeleteTreeViewNodesFromDatabase();
