@@ -52,7 +52,7 @@ namespace MultiMediaDataAccess
         /// </summary>
         public void DeleteAllPLaylistFromDb()
         {
-            playlistOperationsHelper.DeleteAllPlaylistData();
+            playlistOperationsHelper.DeleteAllPlaylistDataFromDatabase();
         }
 
         /// <summary>

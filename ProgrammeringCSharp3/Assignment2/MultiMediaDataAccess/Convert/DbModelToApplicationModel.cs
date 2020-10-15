@@ -19,12 +19,12 @@ namespace MultiMediaDataAccess.Convert
         /// <summary>
         /// Converts database Objects of type PlaylistModel to TreeViewStructure used by the Application
         /// </summary>
-        /// <param name="playlistsFromDatabase">Playlists fromthe database to convert</param>
+        /// <param name="playlistsFromDatabaseToConvert">Playlists fromthe database to convert</param>
         /// <param name="treeViewNodes">TreeViewNodes used in the conversion</param>
         /// <returns>TreeViewStructure containing the Playlists and TreeViewNodes</returns>
-        public TreeViewStructure ConvertDatabaseObjectToApplicationPlaylistObject(List<PlaylistModel> playlistsFromDatabase, List<TreeViewNode> treeViewNodes)
+        public TreeViewStructure ConvertDatabaseObjectToApplicationPlaylistObject(List<PlaylistModel> playlistsFromDatabaseToConvert, List<TreeViewNode> treeViewNodes)
         {
-            List<Playlist> convertedPlaylists = ConvertPlaylistModelToPlaylist(playlistsFromDatabase);
+            List<Playlist> convertedPlaylists = ConvertPlaylistModelToPlaylist(playlistsFromDatabaseToConvert);
 
             TreeViewStructure newTreeViewStructure = new TreeViewStructure();
             newTreeViewStructure.AddPlaylistsToTreeViewStructure(convertedPlaylists);
@@ -35,17 +35,17 @@ namespace MultiMediaDataAccess.Convert
         /// <summary>
         /// Converts PlaylistModels to Playlist used by the application
         /// </summary>
-        /// <param name="playlistsFromDatabase">PlaylistMoels from database containing Playlist information</param>
+        /// <param name="playlistsFromDatabaseToConvert">PlaylistMoels from database containing Playlist information</param>
         /// <returns>List of Playlist</returns>
-        private List<Playlist> ConvertPlaylistModelToPlaylist(List<PlaylistModel> playlistsFromDatabase)
+        private List<Playlist> ConvertPlaylistModelToPlaylist(List<PlaylistModel> playlistsFromDatabaseToConvert)
         {
             List<Playlist> result = new List<Playlist>();
 
-            foreach (PlaylistModel model in playlistsFromDatabase)
+            foreach (PlaylistModel model in playlistsFromDatabaseToConvert)
             {
                 TreeViewNodeModel newTreeViewNodeModel = new TreeViewNodeModel();
                 newTreeViewNodeModel = ConvertTreeViewNodeModelFromTreeViewNodeModel(model.ParentNode);
-                Playlist playlist = new Playlist(model.Title, ConvertParentTreeViewNodeModelToTreeViewNode(newTreeViewNodeModel), model.Description);
+                Playlist playlist = new Playlist(model.Title, ConvertParentNodeToTreeViewNode(newTreeViewNodeModel), model.Description);
                 ConvertMediaModelsToApplicationAwareTypes(playlist, model.Video, model.Image);
                 result.Add(playlist);
             }
@@ -56,30 +56,30 @@ namespace MultiMediaDataAccess.Convert
         /// <summary>
         /// Converts the VideoModels and ImageModels to Video and Image being used by the application, then adds it to the playlist
         /// </summary>
-        /// <param name="playlist">The playlist to receive the converted media</param>
-        /// <param name="videos">List of VideoModel to convert to  List of Video</param>
-        /// <param name="images">List of ImageModel to convert to List of Image</param>
-        private void ConvertMediaModelsToApplicationAwareTypes(Playlist playlist, List<VideoModel> videos, List<ImageModel> images)
+        /// <param name="playlistToReceiveConvertedMedia">The playlist to receive the converted media</param>
+        /// <param name="videosToConvert">List of VideoModel to convert to  List of Video</param>
+        /// <param name="imagesToConvert">List of ImageModel to convert to List of Image</param>
+        private void ConvertMediaModelsToApplicationAwareTypes(Playlist playlistToReceiveConvertedMedia, List<VideoModel> videosToConvert, List<ImageModel> imagesToConvert)
         {
-            if (videos != null)
+            if (videosToConvert != null)
             {
-                playlist.PlaylistContentXML.AddRange(ConvertVideoModelToVieo(videos));
+                playlistToReceiveConvertedMedia.PlaylistContentXML.AddRange(ConvertVideoModelToVieo(videosToConvert));
             }
-            if (images != null)
+            if (imagesToConvert != null)
             {
-                playlist.PlaylistContentXML.AddRange(ConvertImageModelToImage(images));
+                playlistToReceiveConvertedMedia.PlaylistContentXML.AddRange(ConvertImageModelToImage(imagesToConvert));
             }
         }
 
         /// <summary>
         /// Converts a List of VideoModel in a PlaylistModel to a list of Video
         /// </summary>
-        /// <param name="videos">VideoModels to convert</param>
+        /// <param name="videosToConvert">VideoModels to convert</param>
         /// <returns>Converted list of Video</returns>
-        private List<Video> ConvertVideoModelToVieo(List<VideoModel> videos)
+        private List<Video> ConvertVideoModelToVieo(List<VideoModel> videosToConvert)
         {
             List<Video> result = new List<Video>();
-            foreach (VideoModel video in videos)
+            foreach (VideoModel video in videosToConvert)
             {
                 Video convertedVideo = new Video();
 
@@ -99,12 +99,12 @@ namespace MultiMediaDataAccess.Convert
         /// <summary>
         /// Converts a List of ImageModel in a PlaylistModel to a list of Video
         /// </summary>
-        /// <param name="images">ImageModels to convert</param>
+        /// <param name="imagesToConvert">ImageModels to convert</param>
         /// <returns>Converted List of Image</returns>
-        private List<Image> ConvertImageModelToImage(List<ImageModel> images)
+        private List<Image> ConvertImageModelToImage(List<ImageModel> imagesToConvert)
         {
             List<Image> result = new List<Image>();
-            foreach (ImageModel video in images)
+            foreach (ImageModel video in imagesToConvert)
             {
                 Image convertedVideo = new Image();
 
@@ -125,17 +125,17 @@ namespace MultiMediaDataAccess.Convert
         /// <summary>
         /// Extracts the TreeViewNode model of a treeViewNodeMoel used  in the conversion from PlaylistModel to Playlist
         /// </summary>
-        /// <param name="treeViewNodeToTransform">TreeViewNodeModel to transform</param>
+        /// <param name="treeViewNodeToConvert">TreeViewNodeModel to transform</param>
         /// <returns>TreeViewNode model</returns>
-        private TreeViewNodeModel ConvertTreeViewNodeModelFromTreeViewNodeModel(TreeViewNodeModel treeViewNodeToTransform)
+        private TreeViewNodeModel ConvertTreeViewNodeModelFromTreeViewNodeModel(TreeViewNodeModel treeViewNodeToConvert)
         {
             TreeViewNodeModel result = new TreeViewNodeModel();
 
-            result.Name = treeViewNodeToTransform.Name;
-            result.Type = treeViewNodeToTransform.Type;
+            result.Name = treeViewNodeToConvert.Name;
+            result.Type = treeViewNodeToConvert.Type;
             result.SubNodes = new List<TreeViewNodeModel>();
 
-            foreach (TreeViewNodeModel model in treeViewNodeToTransform.SubNodes)
+            foreach (TreeViewNodeModel model in treeViewNodeToConvert.SubNodes)
             {
                 TreeViewNodeModel newTreeViewNode = new TreeViewNodeModel();
                 newTreeViewNode.Name = model.Name;
@@ -152,7 +152,7 @@ namespace MultiMediaDataAccess.Convert
         /// </summary>
         /// <param name="parentNode"></param>
         /// <returns></returns>
-        private TreeViewNode ConvertParentTreeViewNodeModelToTreeViewNode(TreeViewNodeModel parentNode)
+        private TreeViewNode ConvertParentNodeToTreeViewNode(TreeViewNodeModel parentNode)
         {
             TreeViewNode newNode = new TreeViewNode();
             newNode.Name = parentNode.Name;
@@ -165,12 +165,12 @@ namespace MultiMediaDataAccess.Convert
         /// <summary>
         /// This method gets the subNodes out of a node from the database and converts it into a list of treeViewNodes
         /// </summary>
-        /// <param name="node">The node fromthe database</param>
+        /// <param name="nodeHoldingSubNodes">The node fromthe database</param>
         /// <returns>Converted List of TreeViewNodes</returns>
-        private List<TreeViewNode> AddSubNodes(TreeViewNodeModel node)
+        private List<TreeViewNode> AddSubNodes(TreeViewNodeModel nodeHoldingSubNodes)
         {
             List<TreeViewNode> nodes = new List<TreeViewNode>();
-            foreach (TreeViewNodeModel subNode in node.SubNodes)
+            foreach (TreeViewNodeModel subNode in nodeHoldingSubNodes.SubNodes)
             {
                 TreeViewNode newTreeViewNodeModel = new TreeViewNode();
                 newTreeViewNodeModel.SubNodes = new List<TreeViewNode>();
@@ -187,14 +187,14 @@ namespace MultiMediaDataAccess.Convert
         /// <summary>
         /// This Method is used when Converting PlaylistModel to Playlist to AddSubNodes to the model 
         /// </summary>
-        /// <param name="node">Node to get subNodes of</param>
+        /// <param name="nodeHoldingSubNodes">Node to get subNodes of</param>
         /// <returns></returns>
-        private List<TreeViewNodeModel> AddSubNodesToModel(TreeViewNodeModel node)
+        private List<TreeViewNodeModel> AddSubNodesToModel(TreeViewNodeModel nodeHoldingSubNodes)
         {
             List<TreeViewNodeModel> nodes = new List<TreeViewNodeModel>();
-            if (node.SubNodes != null)
+            if (nodeHoldingSubNodes.SubNodes != null)
             {
-                foreach (TreeViewNodeModel subNode in node.SubNodes)
+                foreach (TreeViewNodeModel subNode in nodeHoldingSubNodes.SubNodes)
                 {
                     TreeViewNodeModel newTreeViewNodeModel = new TreeViewNodeModel();
                     newTreeViewNodeModel.Name = subNode.Name;
@@ -210,13 +210,13 @@ namespace MultiMediaDataAccess.Convert
         /// <summary>
         /// Converts TreeViewNodeModel to TreeViewNode
         /// </summary>
-        /// <param name="treeViewNodesFromDatabase">Tre treeViewNodes from the database to Convert</param>
+        /// <param name="treeViewNodesFromDatabaseToConvert">Tre treeViewNodes from the database to Convert</param>
         /// <returns>List of treeViewNodes</returns>
-        public List<TreeViewNode> ConvertTreeViewNodeModelToTreeViewNode(List<TreeViewNodeModel> treeViewNodesFromDatabase)
+        public List<TreeViewNode> ConvertTreeViewNodeModelToTreeViewNode(List<TreeViewNodeModel> treeViewNodesFromDatabaseToConvert)
         {
             List<TreeViewNode> result = new List<TreeViewNode>();
 
-            foreach (TreeViewNodeModel model in treeViewNodesFromDatabase)
+            foreach (TreeViewNodeModel model in treeViewNodesFromDatabaseToConvert)
             {
                 TreeViewNode newTreeViewNode = new TreeViewNode();
                 newTreeViewNode.Name = model.Name;

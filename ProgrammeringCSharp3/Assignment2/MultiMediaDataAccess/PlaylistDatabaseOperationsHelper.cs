@@ -36,15 +36,15 @@ namespace MultiMediaDataAccess
         /// <summary>
         /// Creates a PlaylistModel to be filled with Media and inserted into the database, this method only fills the object with metadata
         /// </summary>
-        /// <param name="playlistToAddToDataBase">Containing the basic information to be used to construct the database model</param>
+        /// <param name="playlistToAddToDatabase">Containing the basic information to be used to construct the database model</param>
         /// <returns>PlaylistModel with metaData</returns>
-        internal PlaylistModel CreatePlaylistModelWithMetaData(Playlist playlistToAddToDataBase)
+        internal PlaylistModel CreatePlaylistModelWithMetaData(Playlist playlistToAddToDatabase)
         {
             PlaylistModel playlistModel = new PlaylistModel();
-            playlistModel.Id = playlistToAddToDataBase.Id;
-            playlistModel.Title = playlistToAddToDataBase.Title;
-            playlistModel.Description = playlistToAddToDataBase.Description;
-            playlistModel.PlaylistPlaybackDelayBetweenMediaSec = playlistToAddToDataBase.PlaylistPlaybackDelayBetweenMediaSec;
+            playlistModel.Id = playlistToAddToDatabase.Id;
+            playlistModel.Title = playlistToAddToDatabase.Title;
+            playlistModel.Description = playlistToAddToDatabase.Description;
+            playlistModel.PlaylistPlaybackDelayBetweenMediaSec = playlistToAddToDatabase.PlaylistPlaybackDelayBetweenMediaSec;
             playlistModel.Image = new List<ImageModel>();
             playlistModel.Video = new List<VideoModel>();
 
@@ -54,39 +54,39 @@ namespace MultiMediaDataAccess
         /// <summary>
         /// Adds the Media and ParentNode to the PlaylistModel
         /// </summary>
-        /// <param name="playlistToAddToDataBase">Containing the Media information to be used to fill the database model with ParentNode and Media</param>
-        /// <param name="playlistModel">PlaylistModel to be filled with Media and ParentNode</param>
+        /// <param name="playlistToAddToDatabase">Containing the Media information to be used to fill the database model with ParentNode and Media</param>
+        /// <param name="playlistReceivingItems">PlaylistModel to be filled with Media and ParentNode</param>
         /// <returns>PlaylistModel with Media and ParentNode</returns>
-        internal PlaylistModel AddRelatingItemsToPlaylistModel(Playlist playlistToAddToDataBase, PlaylistModel playlistModel)
+        internal PlaylistModel AddRelatingItemsToPlaylistModel(Playlist playlistToAddToDatabase, PlaylistModel playlistReceivingItems)
         {
-            AddParentNodePlaylist(playlistToAddToDataBase, playlistModel);
-            AddMeddiaToPlaylist(playlistToAddToDataBase, playlistModel);
-            return playlistModel;
+            AddParentNodePlaylist(playlistToAddToDatabase, playlistReceivingItems);
+            AddMediaToPlaylist(playlistToAddToDatabase, playlistReceivingItems);
+            return playlistReceivingItems;
         }
         /// <summary>
         /// Adds a parent node to the PlaylistModel
         /// </summary>
         /// <param name="playlistToAddToDataBase">Playlist containing the parentNode</param>
-        /// <param name="playlistModel">PlaylistModel to get it´s ParentNode</param>
-        private void AddParentNodePlaylist(Playlist playlistToAddToDataBase, PlaylistModel playlistModel)
+        /// <param name="playlistReceivingParentNode">PlaylistModel to get it´s ParentNode</param>
+        private void AddParentNodePlaylist(Playlist playlistToAddToDataBase, PlaylistModel playlistReceivingParentNode)
         {
             TreeViewNodeModel newTreeViewNodeModel = new TreeViewNodeModel();
             newTreeViewNodeModel.Name = playlistToAddToDataBase.ParentNode.Name;
 
             newTreeViewNodeModel.SubNodes = AddSubNodes(playlistToAddToDataBase.ParentNode);
-            playlistModel.ParentNode = newTreeViewNodeModel;
+            playlistReceivingParentNode.ParentNode = newTreeViewNodeModel;
             dbContext.TreeViewNodes.Add(newTreeViewNodeModel);
         }
 
         /// <summary>
         /// Adds subNodes to a node
         /// </summary>
-        /// <param name="node">Nodes to build the subNodes from</param>
+        /// <param name="nodeHoldingSubNodes">Nodes to build the subNodes from</param>
         /// <returns>List of treeViewNodeModel</returns>
-        private static List<TreeViewNodeModel> AddSubNodes(TreeViewNode node)
+        private static List<TreeViewNodeModel> AddSubNodes(TreeViewNode nodeHoldingSubNodes)
         {
             List<TreeViewNodeModel> nodes = new List<TreeViewNodeModel>();
-            foreach (TreeViewNode subNode in node.SubNodes)
+            foreach (TreeViewNode subNode in nodeHoldingSubNodes.SubNodes)
             {
                 TreeViewNodeModel newTreeViewNodeModel = new TreeViewNodeModel();
                 newTreeViewNodeModel.Name = subNode.Name;
@@ -100,11 +100,11 @@ namespace MultiMediaDataAccess
         /// <summary>
         /// Adds media to a given PlaylistModel
         /// </summary>
-        /// <param name="playlistToAddToDataBase">Playlist containing the Media</param>
-        /// <param name="playlistModel">PlaylistModel receiving media</param>
-        private void AddMeddiaToPlaylist(Playlist playlistToAddToDataBase, PlaylistModel playlistModel)
+        /// <param name="playlistToAddToDatabase">Playlist containing the Media</param>
+        /// <param name="playlistReceivingMedia">PlaylistModel receiving media</param>
+        private void AddMediaToPlaylist(Playlist playlistToAddToDatabase, PlaylistModel playlistReceivingMedia)
         {
-            foreach (IMediaFile media in playlistToAddToDataBase.GetAllMediaFromPlaylist())
+            foreach (IMediaFile media in playlistToAddToDatabase.GetAllMediaFromPlaylist())
             {
                 if (media is Image)
                 {
@@ -118,7 +118,7 @@ namespace MultiMediaDataAccess
                     newImageModel.Width = imageData.Width;
                     newImageModel.Height = imageData.Height;
 
-                    playlistModel.Image.Add(newImageModel);
+                    playlistReceivingMedia.Image.Add(newImageModel);
 
                     dbContext.Images.Add(newImageModel);
                 }
@@ -133,7 +133,7 @@ namespace MultiMediaDataAccess
                     newVideoModel.FileExtention = videoData.FileExtention;
                     newVideoModel.LengthInSeconds = videoData.LengthInSeconds;
 
-                    playlistModel.Video.Add(newVideoModel);
+                    playlistReceivingMedia.Video.Add(newVideoModel);
                     dbContext.Videos.Add(newVideoModel);
                 }
             }
@@ -142,7 +142,7 @@ namespace MultiMediaDataAccess
         /// <summary>
         /// Delete all PlaylistData in the database
         /// </summary>
-        internal void DeleteAllPlaylistData()
+        internal void DeleteAllPlaylistDataFromDatabase()
         {
             List<PlaylistModel> playlists = GetPlaylists();
 
@@ -159,40 +159,46 @@ namespace MultiMediaDataAccess
         /// <summary>
         /// Remove ParentNode of playlist from the database
         /// </summary>
-        /// <param name="playlist"></param>
-        private void RemoveParentTreeViewNode(PlaylistModel playlist)
+        /// <param name="playlistReferencingItemToRemove"></param>
+        private void RemoveParentTreeViewNode(PlaylistModel playlistReferencingItemToRemove)
         {
-            if (dbContext.TreeViewNodes != null && playlist.ParentNode != null)
+            if (dbContext.TreeViewNodes != null && playlistReferencingItemToRemove.ParentNode != null)
             {
-                dbContext.TreeViewNodes.Remove(playlist.ParentNode);
+                dbContext.TreeViewNodes.Remove(playlistReferencingItemToRemove.ParentNode);
             }
         }
 
         /// <summary>
         /// Removes Media pertaining to a givenplaylist from the database
         /// </summary>
-        /// <param name="playlist">The playlist referencing the Media to delete</param>
-        private void RemoveRelationsToPlaylist(PlaylistModel playlist)
+        /// <param name="playlistReferencingItemToRemove">The playlist referencing the Media to delete</param>
+        private void RemoveRelationsToPlaylist(PlaylistModel playlistReferencingItemToRemove)
         {
-            if (playlist.Video != null)
+            if (playlistReferencingItemToRemove.Video != null)
             {
-                dbContext.Videos.RemoveRange(playlist.Video);
+                dbContext.Videos.RemoveRange(playlistReferencingItemToRemove.Video);
             }
-            if (playlist.Image != null)
+            if (playlistReferencingItemToRemove.Image != null)
             {
-                dbContext.Images.RemoveRange(playlist.Image);
+                dbContext.Images.RemoveRange(playlistReferencingItemToRemove.Image);
             }
         }
 
         /// <summary>
         /// Get the playlist stored in the database 
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Listof PlaylistModel</returns>
         internal List<PlaylistModel> GetPlaylists()
         {
             return dbContext.Playlists.Include("Image").Include("Video").Include("ParentNode").ToList();
         }
 
+        /// <summary>
+        /// Call Methods in class resposible for convertion
+        /// </summary>
+        /// <param name="playlistsFromDatabase">Playlists from Database taking part in result</param>
+        /// <param name="treeViewNodes">treeViewNodes from Database taking part in result</param>
+        /// <returns>TreeViewNodeStructure containing Navigation and Playlists</returns>
         public TreeViewStructure ConvertDatabaseObjectToApplicationPlaylistObject(List<PlaylistModel> playlistsFromDatabase, List<TreeViewNode> treeViewNodes)
         {
             return dbModelToApplicationModel.ConvertDatabaseObjectToApplicationPlaylistObject(playlistsFromDatabase, treeViewNodes);
