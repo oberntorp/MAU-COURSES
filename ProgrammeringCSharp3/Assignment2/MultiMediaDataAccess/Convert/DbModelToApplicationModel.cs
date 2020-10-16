@@ -133,15 +133,19 @@ namespace MultiMediaDataAccess.Convert
 
             result.Name = treeViewNodeToConvert.Name;
             result.Type = treeViewNodeToConvert.Type;
-            result.SubNodes = new List<TreeViewNodeModel>();
 
-            foreach (TreeViewNodeModel model in treeViewNodeToConvert.SubNodes)
+            if (treeViewNodeToConvert.SubNodes != null)
             {
-                TreeViewNodeModel newTreeViewNode = new TreeViewNodeModel();
-                newTreeViewNode.Name = model.Name;
-                newTreeViewNode.Type = model.Type;
-                newTreeViewNode.SubNodes = AddSubNodesToModel(model);
-                result.SubNodes.Add(newTreeViewNode);
+                result.SubNodes = new List<TreeViewNodeModel>();
+
+                foreach (TreeViewNodeModel model in treeViewNodeToConvert.SubNodes)
+                {
+                    TreeViewNodeModel newTreeViewNode = new TreeViewNodeModel();
+                    newTreeViewNode.Name = model.Name;
+                    newTreeViewNode.Type = model.Type;
+                    newTreeViewNode.SubNodes = AddSubNodesToModel(model);
+                    result.SubNodes.Add(newTreeViewNode);
+                }
             }
 
             return result;
@@ -156,7 +160,7 @@ namespace MultiMediaDataAccess.Convert
         {
             TreeViewNode newNode = new TreeViewNode();
             newNode.Name = parentNode.Name;
-            newNode.SubNodes = AddSubNodes(parentNode);
+            newNode.SubNodes = (parentNode.SubNodes != null) ? AddSubNodes(parentNode) : null;
             newNode.Type = (TreeNodeTypes)parentNode.Type;
 
             return newNode;

@@ -46,6 +46,7 @@ namespace MultiMediaApplication
         TreeViewStructureHandler treeViewStructureHandler = null;
         ObservableCollection<MediaFile> mediaToItemsControl = null;
         private bool dataSaved = false;
+        private bool dataToSave = false;
         public ObservableCollection<MediaFile> MediaToItemsControl { get => mediaToItemsControl; }
 
         /// <summary>
@@ -306,6 +307,7 @@ namespace MultiMediaApplication
                         {
                             (PlaylistTreeView.SelectedItem as TreeViewItem).IsExpanded = true;
                             (PlaylistTreeView.SelectedItem as TreeViewItem).Items.Add(treeViewNodesHandler.GetNewPlaylistTreeViewItem(newPlaylist));
+                            dataToSave = true;
                         }
                         else
                         {
@@ -458,6 +460,7 @@ namespace MultiMediaApplication
                     bool result = (bool)changePlaylistSettingsWindow.ShowDialog();
                     if (result && changePlaylistSettingsWindow.ChangesMade)
                     {
+                        dataToSave = true;
                         playlistInfo.Description = changePlaylistSettingsWindow.PlaylistDescription;
                         playlistInfo.PlaylistPlaybackDelayBetweenMediaSec = changePlaylistSettingsWindow.PlaylistMediaDelay;
                         playlistHandler.PlaylistManager.ChangeAt(playlistInfo, indexOfPlaylist);
@@ -664,9 +667,10 @@ namespace MultiMediaApplication
         /// <param name="e">Arguments related to the event</param>
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (PlaylistTreeView.HasItems && (!dataSaved && MessageBoxes.ShowSaveWarningMessageBox("You have not saved, do you really want to close the application?") == MessageBoxResult.No))
+            if (dataToSave && (!dataSaved && MessageBoxes.ShowSaveWarningMessageBox("You have not saved, do you really want to close the application?") == MessageBoxResult.No))
             {
                 e.Cancel = true;
+                dataToSave = false;
             }
         }
 
@@ -708,6 +712,11 @@ namespace MultiMediaApplication
                     MessageBoxes.ShowErrorMessageBox($"{exOnLoad.Message} with inner exception {exOnLoad.InnerException}");
                 }
             }
+
+        }
+
+        private void PlayListSearchTextBox_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
+        {
 
         }
     }

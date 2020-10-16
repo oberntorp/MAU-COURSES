@@ -73,7 +73,7 @@ namespace MultiMediaDataAccess
             TreeViewNodeModel newTreeViewNodeModel = new TreeViewNodeModel();
             newTreeViewNodeModel.Name = playlistToAddToDataBase.ParentNode.Name;
 
-            newTreeViewNodeModel.SubNodes = AddSubNodes(playlistToAddToDataBase.ParentNode);
+            newTreeViewNodeModel.SubNodes = (playlistToAddToDataBase.ParentNode.SubNodes != null) ? AddSubNodes(playlistToAddToDataBase.ParentNode) : null;
             playlistReceivingParentNode.ParentNode = newTreeViewNodeModel;
             dbContext.TreeViewNodes.Add(newTreeViewNodeModel);
         }

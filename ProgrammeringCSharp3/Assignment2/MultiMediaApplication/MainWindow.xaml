@@ -17,7 +17,7 @@
             <MenuItem Header="Playlist">
                 <MenuItem Header="Load playlists">
                     <MenuItem Header="From XML" Click="LoadPlaylistsFromXMLMenuItem_Click" />
-                    <MenuItem Header="From DataBase" Click="LoadPlaylistsFromDbMenuItem_Click"/>
+                    <MenuItem Header="From Database" Click="LoadPlaylistsFromDbMenuItem_Click"/>
                 </MenuItem>
                 <MenuItem Header="Create playlist" Click="CreatePlaylist_Click" />
                 <MenuItem Header="Import Media">
@@ -39,15 +39,16 @@
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
                     <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
-                <TreeView x:Name="PlaylistTreeView" SelectedItemChanged="PlaylistTreeView_SelectedItemChanged" VerticalAlignment="Stretch"/>
-                <StackPanel x:Name="InitialEplinationStackPanel" Orientation="Horizontal" Grid.ColumnSpan="2" Grid.Row="1" Width="550">
+                <TreeView x:Name="PlaylistTreeView" SelectedItemChanged="PlaylistTreeView_SelectedItemChanged" VerticalAlignment="Stretch" Margin="0 0 5 0" BorderThickness="0"/>
+                <StackPanel x:Name="InitialEplinationStackPanel" Orientation="Horizontal" Grid.ColumnSpan="2" Grid.Column="1" Width="550">
                     <TextBlock>Hi, please add folders to the navigation area by clicking <Bold>File</Bold> -> <Bold>Choose folders for navigation area</Bold>
                     <LineBreak/>
                     If you have saved playlists you can click <Bold>File</Bold> -> <Bold>Load playlists</Bold></TextBlock>
@@ -64,7 +65,7 @@
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
-                <Border x:Name="PlaylistInfoStackPanelBorder" BorderThickness="1" BorderBrush="Black" Visibility="Hidden" Grid.Row="2">
+                <Border x:Name="PlaylistInfoStackPanelBorder" BorderThickness="1" BorderBrush="Black" Visibility="Hidden" Grid.Row="2" Margin="0 0 0 5">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto" />
@@ -73,6 +74,13 @@
                         <Label Content="Information about the selected playlist:" Grid.Row="0" />
                         <StackPanel x:Name="PlaylistInfoStackPanel" Grid.Row="1" />
                     </Grid>
+                </Border>
+                <Border x:Name="SearchPlaylistsBorder" Grid.Row="3" BorderBrush="Black" BorderThickness="1">
+                        <StackPanel>
+                        <Label Content="Search Availible Playlists" />
+                        <Label Content="SearchTearm"/>
+                        <TextBox x:Name="PlayListSearchTextBox" KeyUp="PlayListSearchTextBox_KeyUp" />
+                    </StackPanel>
                 </Border>
             </Grid>
         </ScrollViewer>
