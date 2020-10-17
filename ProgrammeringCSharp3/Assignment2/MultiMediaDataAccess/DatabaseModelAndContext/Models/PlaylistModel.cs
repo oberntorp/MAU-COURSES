@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace MultiMediaDataAccess.DatabaseModelAndContext.Models
 {
+    [Table("Playlists")]
     public class PlaylistModel
     {
         public int Id { get; set; }

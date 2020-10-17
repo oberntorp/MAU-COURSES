@@ -104,6 +104,7 @@ namespace MultiMediaDataAccess
         /// <param name="playlistReceivingMedia">PlaylistModel receiving media</param>
         private void AddMediaToPlaylist(Playlist playlistToAddToDatabase, PlaylistModel playlistReceivingMedia)
         {
+            int indexSortInPlaylist = 0; 
             foreach (IMediaFile media in playlistToAddToDatabase.GetAllMediaFromPlaylist())
             {
                 if (media is Image)
@@ -117,6 +118,7 @@ namespace MultiMediaDataAccess
                     newImageModel.FileExtention = imageData.FileExtention;
                     newImageModel.Width = imageData.Width;
                     newImageModel.Height = imageData.Height;
+                    newImageModel.SortInPlaylist = indexSortInPlaylist;
 
                     playlistReceivingMedia.Image.Add(newImageModel);
 
@@ -132,10 +134,13 @@ namespace MultiMediaDataAccess
                     newVideoModel.SourceUrl = videoData.SourceUrl;
                     newVideoModel.FileExtention = videoData.FileExtention;
                     newVideoModel.LengthInSeconds = videoData.LengthInSeconds;
+                    newVideoModel.SortInPlaylist = indexSortInPlaylist;
 
                     playlistReceivingMedia.Video.Add(newVideoModel);
                     dbContext.Videos.Add(newVideoModel);
                 }
+
+                indexSortInPlaylist++;
             }
         }
 

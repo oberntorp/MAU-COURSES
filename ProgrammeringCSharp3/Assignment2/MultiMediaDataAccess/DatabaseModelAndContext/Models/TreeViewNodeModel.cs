@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace MultiMediaDataAccess.DatabaseModelAndContext.Models
@@ -7,6 +8,7 @@ namespace MultiMediaDataAccess.DatabaseModelAndContext.Models
     /// <summary>
     /// This class is used when setting up the TreeView (holds information needed)
     /// </summary>
+    [Table("TreeViewNodes")]
     public class TreeViewNodeModel
     {
         public int Id { get; set; }

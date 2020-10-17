@@ -18,3 +18,5 @@ D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment2\MultiMediaData
 D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment2\MultiMediaDataAccess\bin\Debug\Utilities.pdb
 D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment2\MultiMediaDataAccess\obj\Debug\MultiMediaDataAccess.Migrations.CreateTables.resources
 D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment2\MultiMediaDataAccess\obj\Debug\MultiMediaDataAccess.csproj.GenerateResource.cache
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment2\MultiMediaDataAccess\obj\Debug\MultiMediaDataAccess.Migrations.CreateTables1.resources
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment2\MultiMediaDataAccess\obj\Debug\MultiMediaDataAccess.Migrations.CreateTables2.resources

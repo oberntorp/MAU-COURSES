@@ -80,6 +80,14 @@
     <Compile Include="Migrations\202010051417235_Create-Tables.designer.cs">
       <DependentUpon>202010051417235_Create-Tables.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202010171018241_CreateTables1.cs" />
+    <Compile Include="Migrations\202010171018241_CreateTables1.designer.cs">
+      <DependentUpon>202010171018241_CreateTables1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202010171041218_CreateTables2.cs" />
+    <Compile Include="Migrations\202010171041218_CreateTables2.designer.cs">
+      <DependentUpon>202010171041218_CreateTables2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PlaylistDatabaseOperationsHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -119,6 +127,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202010051417235_Create-Tables.resx">
       <DependentUpon>202010051417235_Create-Tables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010171018241_CreateTables1.resx">
+      <DependentUpon>202010171018241_CreateTables1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010171041218_CreateTables2.resx">
+      <DependentUpon>202010171041218_CreateTables2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

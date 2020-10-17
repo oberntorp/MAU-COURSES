@@ -1,4 +1,5 @@
-﻿using MultiMediaClassesAndManagers.MediaSubClasses;
+﻿using MultiMediaClassesAndManagers.MediaBaseClass;
+using MultiMediaClassesAndManagers.MediaSubClasses;
 using MultiMediaClassesAndManagers.TreeNode;
 using MultiMediaClassesAndManagers.TreeViewSave;
 using MultiMediaDataAccess.DatabaseModelAndContext.Models;
@@ -69,6 +70,8 @@ namespace MultiMediaDataAccess.Convert
             {
                 playlistToReceiveConvertedMedia.PlaylistContentXML.AddRange(ConvertImageModelToImage(imagesToConvert));
             }
+
+            playlistToReceiveConvertedMedia.PlaylistContentXML  = playlistToReceiveConvertedMedia.PlaylistContentXML.OrderBy(x => x.SortInPlaylist).ToList<MediaFile>();
         }
 
         /// <summary>
@@ -89,6 +92,7 @@ namespace MultiMediaDataAccess.Convert
                 convertedVideo.PreviewUrl = video.PreviewUrl;
                 convertedVideo.FileExtention = video.FileExtention;
                 convertedVideo.LengthInSeconds = video.LengthInSeconds;
+                convertedVideo.SortInPlaylist = video.SortInPlaylist;
 
                 result.Add(convertedVideo);
             }
@@ -104,19 +108,20 @@ namespace MultiMediaDataAccess.Convert
         private List<Image> ConvertImageModelToImage(List<ImageModel> imagesToConvert)
         {
             List<Image> result = new List<Image>();
-            foreach (ImageModel video in imagesToConvert)
+            foreach (ImageModel image in imagesToConvert)
             {
-                Image convertedVideo = new Image();
+                Image convertedImage = new Image();
 
-                convertedVideo.Id = video.Id;
-                convertedVideo.Name = video.Name;
-                convertedVideo.SourceUrl = video.SourceUrl;
-                convertedVideo.PreviewUrl = video.PreviewUrl;
-                convertedVideo.FileExtention = video.FileExtention;
-                convertedVideo.Width = video.Width;
-                convertedVideo.Height = video.Height;
+                convertedImage.Id = image.Id;
+                convertedImage.Name = image.Name;
+                convertedImage.SourceUrl = image.SourceUrl;
+                convertedImage.PreviewUrl = image.PreviewUrl;
+                convertedImage.FileExtention = image.FileExtention;
+                convertedImage.Width = image.Width;
+                convertedImage.Height = image.Height;
+                convertedImage.SortInPlaylist = image.SortInPlaylist;
 
-                result.Add(convertedVideo);
+                result.Add(convertedImage);
             }
 
             return result;

@@ -15,6 +15,7 @@ namespace MultiMediaClassesAndManagers.MediaBaseClass
         public string SourceUrl { get; set; }
         public string PreviewUrl { get; set; }
         public string FileExtention { get; set; }
+        public int SortInPlaylist { get; set; }
 
         /// <summary>
         /// Default constructor, needed for serialization to work
