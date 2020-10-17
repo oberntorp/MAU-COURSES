@@ -35,6 +35,11 @@
                 </MenuItem>
             </MenuItem>
         </Menu>
+        <StatusBar DockPanel.Dock="Bottom">
+            <StatusBarItem>
+                <ProgressBar x:Name="LoadingDbStatus" Minimum="0" Maximum="100" Height="20" Width="100"/>
+            </StatusBarItem>
+        </StatusBar>
         <ScrollViewer>
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -53,18 +58,18 @@
                     <LineBreak/>
                     If you have saved playlists you can click <Bold>File</Bold> -> <Bold>Load playlists</Bold></TextBlock>
                 </StackPanel>
-                    <ItemsControl x:Name="mediaItemsControl" Grid.Column="1">
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <UniformGrid Columns="2"/>
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <uc:MediaViewSelectionUserControl MediaId="{Binding Id, Mode=TwoWay}" MediaName="{Binding Name, Mode=TwoWay}" MediaImageSource="{Binding SourceUrl, Mode=TwoWay}" MediaPreviewSource="{Binding PreviewUrl, Mode=TwoWay}"/>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
+                <ItemsControl x:Name="mediaItemsControl" Grid.Column="1">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Columns="2"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <uc:MediaViewSelectionUserControl MediaId="{Binding Id, Mode=TwoWay}" MediaName="{Binding Name, Mode=TwoWay}" MediaImageSource="{Binding SourceUrl, Mode=TwoWay}" MediaPreviewSource="{Binding PreviewUrl, Mode=TwoWay}"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
                 <Border x:Name="PlaylistInfoStackPanelBorder" BorderThickness="1" BorderBrush="Black" Visibility="Hidden" Grid.Row="2" Margin="0 0 0 5">
                     <Grid>
                         <Grid.RowDefinitions>
@@ -75,11 +80,18 @@
                         <StackPanel x:Name="PlaylistInfoStackPanel" Grid.Row="1" />
                     </Grid>
                 </Border>
-                <Border x:Name="SearchPlaylistsBorder" Grid.Row="3" BorderBrush="Black" BorderThickness="1">
-                        <StackPanel>
+                <Border x:Name="SearchPlaylistsBorder" Grid.Row="3" BorderBrush="Black" BorderThickness="1" Visibility="Hidden">
+                    <StackPanel>
                         <Label Content="Search Availible Playlists" />
                         <Label Content="SearchTearm"/>
-                        <TextBox x:Name="PlayListSearchTextBox" KeyUp="PlayListSearchTextBox_KeyUp" />
+                        <TextBox x:Name="PlaylistSearchTextBox" KeyUp="PlaylistSearchTextBox_KeyUp" />
+                        <ListBox x:Name="SearchResults" Visibility="Hidden" SelectionChanged="SearchResults_SelectionChanged" >
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Title}"/>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
                     </StackPanel>
                 </Border>
             </Grid>

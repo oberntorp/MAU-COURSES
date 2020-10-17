@@ -6,7 +6,7 @@ using System.Text;
 namespace MultiMediaDataAccess.DatabaseModelAndContext.Models
 {
     /// <summary>
-    /// This class is used when setting up the TreeView (holds information needed)
+    /// This class is constitutes the Model for EntityFrameWork from Which it draws the database tables (In this case TreeViewNodes)
     /// </summary>
     [Table("TreeViewNodes")]
     public class TreeViewNodeModel

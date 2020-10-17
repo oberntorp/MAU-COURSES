@@ -32,6 +32,7 @@ using MultiMediaApplication.PlaylistWindows;
 using System.Collections.ObjectModel;
 using WMPLib;
 using MultiMediaClassesAndManagers.TreeViewSave;
+using System.ComponentModel;
 
 namespace MultiMediaApplication
 {
@@ -193,6 +194,7 @@ namespace MultiMediaApplication
                     FillTreeViewWithNodes(treeViewNodes);
                     SaveTreeViewStructure(treeViewNodes);
                     HideInitialExplination();
+                    SearchPlaylistsBorder.Visibility = Visibility.Hidden;
                 }
             }
         }
@@ -308,6 +310,7 @@ namespace MultiMediaApplication
                             (PlaylistTreeView.SelectedItem as TreeViewItem).IsExpanded = true;
                             (PlaylistTreeView.SelectedItem as TreeViewItem).Items.Add(treeViewNodesHandler.GetNewPlaylistTreeViewItem(newPlaylist));
                             dataToSave = true;
+                            SearchPlaylistsBorder.Visibility = Visibility.Visible;
                         }
                         else
                         {
@@ -530,6 +533,11 @@ namespace MultiMediaApplication
                         treeViewStructureHandler.LoadFromXML(openFileDialog.FileName);
                         TransferNavigatiopnAndPlaylistsToProgram();
                         HideInitialExplination();
+
+                        if(playlistHandler.PlaylistManager.Count > 0)
+                        {
+                            SearchPlaylistsBorder.Visibility = Visibility.Visible;
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -674,28 +682,64 @@ namespace MultiMediaApplication
             }
         }
 
+        /// <summary>
+        /// Click Handler for MenuItem SaveToDb
+        /// </summary>
+        /// <param name="sender">The sending object, in this case a MenuItem</param>
+        /// <param name="e">Arguments related to the event</param>
         private void SaveToDbMenuItem_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                playlistHandler.DeleteAllPlaylistsFromDB();
-                playlistHandler.InsertPlaylistsIntoDb();
+                BackgroundWorkerSaveToDbOpreparation();
             }
-            catch(Exception exOnSave)
+            catch (Exception exOnSave)
             {
                 MessageBoxes.ShowErrorMessageBox($"{exOnSave.Message} with inner exception {exOnSave.InnerException}");
             }
 
-            dataSaved = true;
-            MessageBoxes.ShowInformationMessageBox("The playlists where saved, thank you!");
-
         }
 
-        private void DeleteAllPlaylistsMenuItem_Click_1(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Since I have a progress bar, I need a way to tell when database load/save is done, then I need a progress bar and this event for the UI to be able to run the progressBar simultaneous with Db operation
+        /// </summary>
+        private void BackgroundWorkerSaveToDbOpreparation()
         {
-            treeViewStructureHandler.DeleteStructureFromDataBase();
+            LoadingDbStatus.IsIndeterminate = true;
+            BackgroundWorker saveWorker = new BackgroundWorker();
+            saveWorker.DoWork += saveWorker_SaveToDb;
+            saveWorker.RunWorkerCompleted += saveWorker_WorkCompleted;
+            saveWorker.RunWorkerAsync();
         }
 
+        /// <summary>
+        /// EvebtHandler for BackgroundWorker, starting DbSave
+        /// </summary>
+        /// <param name="sender">The sending object, in this case a BackgroundWorker</param>
+        /// <param name="e">Arguments related to the event</param>
+        private void saveWorker_SaveToDb(object sender, DoWorkEventArgs e)
+        {
+            playlistHandler.DeleteAllPlaylistsFromDB();
+            playlistHandler.InsertPlaylistsIntoDb();
+        }
+
+        /// <summary>
+        /// EvebtHandler for BackgroundWorker, fired when dbSave is done
+        /// </summary>
+        /// <param name="sender">The sending object, in this case a BackgroundWorker</param>
+        /// <param name="e">Arguments related to the event</param>
+        private void saveWorker_WorkCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            dataSaved = true;
+            LoadingDbStatus.IsIndeterminate = false;
+            MessageBoxes.ShowInformationMessageBox("The playlists where saved, thank you!");
+        }
+
+        /// <summary>
+        /// Click Handler for MenuItem Load Playlists From Database
+        /// </summary>
+        /// <param name="sender">The sending object, in this case a Window</param>
+        /// <param name="e">Arguments related to the event</param>
         private void LoadPlaylistsFromDbMenuItem_Click(object sender, RoutedEventArgs e)
         {
             if (!PlaylistTreeView.HasItems || WantToContinueWithoutSaving())
@@ -703,9 +747,7 @@ namespace MultiMediaApplication
                 ResetGui();
                 try 
                 {
-                    treeViewStructureHandler.AddTreeViewStructure(treeViewStructureHandler.GetTreeViewStructureFromDb());
-                    TransferNavigatiopnAndPlaylistsToProgram();
-                    HideInitialExplination();
+                    BackgroundWorkerLoadFromDBPreparation();
                 }
                 catch (Exception exOnLoad)
                 {
@@ -715,8 +757,81 @@ namespace MultiMediaApplication
 
         }
 
-        private void PlayListSearchTextBox_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
+        /// <summary>
+        /// Since I have a progress bar, I need a way to tell when database load/save is done, then I need a progress bar and this event for the UI to be able to run the progressBar simultaneous with Db operation
+        /// </summary>
+        private void BackgroundWorkerLoadFromDBPreparation()
         {
+            LoadingDbStatus.IsIndeterminate = true;
+            BackgroundWorker loadWorker = new BackgroundWorker();
+            loadWorker.DoWork += loadWorker_DoWork;
+            loadWorker.RunWorkerCompleted += loadWorker_WorkCompleted;
+            loadWorker.RunWorkerAsync();
+        }
+
+        /// <summary>
+        /// EvebtHandler for BackgroundWorker, starting dbLoad
+        /// </summary>
+        /// <param name="sender">The sending object, in this case a BackgroundWorker</param>
+        /// <param name="e">Arguments related to the event</param>
+        private void loadWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            treeViewStructureHandler.AddTreeViewStructure(treeViewStructureHandler.GetTreeViewStructureFromDb());
+        }
+
+        /// <summary>
+        /// EvebtHandler for BackgroundWorker, fired when dbLoad is done
+        /// </summary>
+        /// <param name="sender">The sending object, in this case a BackgroundWorker</param>
+        /// <param name="e">Arguments related to the event</param>
+        private void loadWorker_WorkCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            TransferNavigatiopnAndPlaylistsToProgram();
+            HideInitialExplination();
+            LoadingDbStatus.IsIndeterminate = false;
+        }
+
+        /// <summary>
+        /// Event Handler of Search textBox fired when a character is typed, actually active only when pressing enter
+        /// </summary>
+        /// <param name="sender">The sending object, in this case a TextBox</param>
+        /// <param name="e">Arguments related to the event</param>
+        private void PlaylistSearchTextBox_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            SearchResults.Items.Clear();
+            string searchTerm = ((System.Windows.Controls.TextBox)sender).Text;
+
+            if (!string.IsNullOrWhiteSpace(searchTerm) && e.Key == Key.Enter)
+            {
+                SearchResults.Visibility = Visibility.Hidden;
+                List<Playlist> playlistsMatchingSearch = playlistHandler.SearchPlaylists(searchTerm);
+
+                if(playlistsMatchingSearch.Count > 0)
+                {
+                    SearchResults.Visibility = Visibility.Visible;
+                    playlistsMatchingSearch.ForEach(x => SearchResults.Items.Add(x));
+                }
+                else
+                {
+                    MessageBoxes.ShowInformationMessageBox($"We could not find a Playlist with a Title or a Description of {searchTerm}");
+                }
+            }
+        }
+
+        /// <summary>
+        /// Event Handler of Search Results ListBox fired when a Selection is Changed
+        /// </summary>
+        /// <param name="sender">The sending object, in this case a ListBox</param>
+        /// <param name="e">Arguments related to the event</param>
+        private void SearchResults_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            int selectedIndex = ((System.Windows.Controls.ListBox)sender).SelectedIndex;
+
+            if(selectedIndex != -1)
+            {
+                ShowInformationAboutPlaylist(selectedIndex);
+                InitiateViewPlaylist(selectedIndex);
+            }
 
         }
     }

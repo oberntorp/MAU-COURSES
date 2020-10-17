@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace MultiMediaDataAccess.DatabaseModelAndContext.Models
 {
+    /// <summary>
+    /// This class is constitutes the Model for EntityFrameWork from Which it draws the database tables (In this case Playlists)
+    /// </summary>
     [Table("Playlists")]
     public class PlaylistModel
     {

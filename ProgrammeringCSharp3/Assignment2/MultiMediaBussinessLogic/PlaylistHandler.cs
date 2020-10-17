@@ -80,11 +80,11 @@ namespace MultiMediaBussinessLogic
         {
             if (mediaHandler.IsMediaVideo((MediaFile)mediaFileToCast))
             {
-                return (MultiMediaClassesAndManagers.MediaSubClasses.Video)mediaFileToCast;
+                return (Video)mediaFileToCast;
             }
             else
             {
-                return (MultiMediaClassesAndManagers.MediaSubClasses.Image)mediaFileToCast;
+                return (Image)mediaFileToCast;
             }
         }
 
@@ -106,6 +106,9 @@ namespace MultiMediaBussinessLogic
             return playlistManager.GetAt(indexOfPlaylist).GetAllMediaFromPlaylist();
         }
 
+        /// <summary>
+        /// Inserts Playlists in PlaylistManager into database
+        /// </summary>
         public void InsertPlaylistsIntoDb()
         {
             foreach (Playlist playlist in PlaylistManager.GetAllItems())
@@ -114,9 +117,22 @@ namespace MultiMediaBussinessLogic
             }
         }
 
+        /// <summary>
+        /// Deletes all Playlists from database
+        /// </summary>
         public void DeleteAllPlaylistsFromDB()
         {
             dataoperations.DeleteAllPLaylistFromDb();
+        }
+
+        /// <summary>
+        /// Search PlaylistCollection for a playlist with Title or Description matching search
+        /// </summary>
+        /// <param name="searchTerm">Tearm to search for</param>
+        /// <returns></returns>
+        public List<Playlist> SearchPlaylists(string searchTerm)
+        {
+            return (from playlist in PlaylistManager.GetAllItems() where playlist.Title.Contains(searchTerm) || playlist.Description.Contains(searchTerm) select playlist).ToList<Playlist>();
         }
     }
 }
