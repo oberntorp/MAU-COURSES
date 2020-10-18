@@ -204,9 +204,18 @@ namespace MultiMediaDataAccess
         /// <param name="playlistsFromDatabase">Playlists from Database taking part in result</param>
         /// <param name="treeViewNodes">treeViewNodes from Database taking part in result</param>
         /// <returns>TreeViewNodeStructure containing Navigation and Playlists</returns>
-        public TreeViewStructure ConvertDatabaseObjectToApplicationPlaylistObject(List<PlaylistModel> playlistsFromDatabase, List<TreeViewNode> treeViewNodes)
+        internal TreeViewStructure ConvertDatabaseObjectToApplicationPlaylistObject(List<PlaylistModel> playlistsFromDatabase, List<TreeViewNode> treeViewNodes)
         {
             return dbModelToApplicationModel.ConvertDatabaseObjectToApplicationPlaylistObject(playlistsFromDatabase, treeViewNodes);
+        }
+
+        /// <summary>
+        /// Returns true if there are playlists in the db
+        /// </summary>
+        /// <returns>true/false depending in if there are playlists or not in the db</returns>
+        internal bool HasPlaylists()
+        {
+            return dbContext.Playlists.Count() > 0;
         }
     }
 }

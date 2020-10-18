@@ -134,5 +134,14 @@ namespace MultiMediaBussinessLogic
         {
             return (from playlist in PlaylistManager.GetAllItems() where playlist.Title.Contains(searchTerm) || playlist.Description.Contains(searchTerm) select playlist).ToList<Playlist>();
         }
+
+        /// <summary>
+        /// Returns true if there are playlists in the db
+        /// </summary>
+        /// <returns>true/false depending in if there are playlists or not in the db</returns>
+        public bool HasDbPlaylists()
+        {
+            return dataoperations.HasPlaylists();
+        }
     }
 }

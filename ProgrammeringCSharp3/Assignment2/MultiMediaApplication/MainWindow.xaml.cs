@@ -48,6 +48,7 @@ namespace MultiMediaApplication
         ObservableCollection<MediaFile> mediaToItemsControl = null;
         private bool dataSaved = false;
         private bool dataToSave = false;
+        private bool dbHasPlaylists = false;
         public ObservableCollection<MediaFile> MediaToItemsControl { get => mediaToItemsControl; }
 
         /// <summary>
@@ -336,7 +337,7 @@ namespace MultiMediaApplication
         /// <param name="e">Arguments related to the event</param>
         private void PlaylistTreeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            if(PlaylistTreeView.HasItems)
+            if (PlaylistTreeView.HasItems)
             {
                 int idOfPlayList = playlistHandler.GetPlaylistIdOfSelected(treeViewNodesHandler.NameOfSelectedTreeViewItem(PlaylistTreeView));
                 int indexOfPlaylist = idOfPlayList - 1;
@@ -519,7 +520,7 @@ namespace MultiMediaApplication
         /// <param name="e">Arguments related to the event</param>
         private void LoadPlaylistsFromXMLMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            if (!PlaylistTreeView.HasItems || WantToContinueWithoutSaving())
+            if (playlistHandler.PlaylistManager.Count == 0 || (playlistHandler.PlaylistManager.Count > 0 && WantToContinueWithoutSaving()))
             {
                 OpenFileDialog openFileDialog = new OpenFileDialog();
                 openFileDialog.Filter = "XML File | *.XML";
@@ -534,7 +535,7 @@ namespace MultiMediaApplication
                         TransferNavigatiopnAndPlaylistsToProgram();
                         HideInitialExplination();
 
-                        if(playlistHandler.PlaylistManager.Count > 0)
+                        if (playlistHandler.PlaylistManager.Count > 0)
                         {
                             SearchPlaylistsBorder.Visibility = Visibility.Visible;
                         }
@@ -639,22 +640,29 @@ namespace MultiMediaApplication
         /// <param name="e"></param>
         private void SavePlaylistsMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "XML File | *.XML";
-            bool result = (bool)saveFileDialog.ShowDialog();
-
-            if (result)
+            if (playlistHandler.PlaylistManager.Count > 0)
             {
-                try
+                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                saveFileDialog.Filter = "XML File | *.XML";
+                bool result = (bool)saveFileDialog.ShowDialog();
+
+                if (result)
                 {
-                    treeViewStructureHandler.AddPlaylistsToTreeViewStructure(playlistHandler.PlaylistManager.GetAllItems());
-                    treeViewStructureHandler.SaveAsXML(saveFileDialog.FileName);
-                    dataSaved = true;
+                    try
+                    {
+                        treeViewStructureHandler.AddPlaylistsToTreeViewStructure(playlistHandler.PlaylistManager.GetAllItems());
+                        treeViewStructureHandler.SaveAsXML(saveFileDialog.FileName);
+                        dataSaved = true;
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBoxes.ShowErrorMessageBox($"{ex.Message} {ex.InnerException}");
+                    }
                 }
-                catch (Exception ex)
-                {
-                    MessageBoxes.ShowErrorMessageBox($"{ex.Message} {ex.InnerException}");
-                }
+            }
+            else
+            {
+                MessageBoxes.ShowInformationMessageBox("There is no Playlists to save, please create one");
             }
         }
 
@@ -689,13 +697,20 @@ namespace MultiMediaApplication
         /// <param name="e">Arguments related to the event</param>
         private void SaveToDbMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            try
+            if (playlistHandler.PlaylistManager.Count > 0)
             {
-                BackgroundWorkerSaveToDbOpreparation();
+                try
+                {
+                    BackgroundWorkerSaveToDbOpreparation();
+                }
+                catch (Exception exOnSave)
+                {
+                    MessageBoxes.ShowErrorMessageBox($"{exOnSave.Message} with inner exception {exOnSave.InnerException}");
+                }
             }
-            catch (Exception exOnSave)
+            else
             {
-                MessageBoxes.ShowErrorMessageBox($"{exOnSave.Message} with inner exception {exOnSave.InnerException}");
+                MessageBoxes.ShowInformationMessageBox("There is no Playlists to save, please create one");
             }
 
         }
@@ -742,12 +757,12 @@ namespace MultiMediaApplication
         /// <param name="e">Arguments related to the event</param>
         private void LoadPlaylistsFromDbMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            if (!PlaylistTreeView.HasItems || WantToContinueWithoutSaving())
+            if (playlistHandler.PlaylistManager.Count == 0 || (playlistHandler.PlaylistManager.Count > 0 && WantToContinueWithoutSaving()))
             {
-                ResetGui();
-                try 
+                try
                 {
-                    BackgroundWorkerLoadFromDBPreparation();
+                    BackgroundWorkerCheckIfDBHasPlaylistsPreparation();
+
                 }
                 catch (Exception exOnLoad)
                 {
@@ -755,6 +770,49 @@ namespace MultiMediaApplication
                 }
             }
 
+        }
+
+        /// <summary>
+        /// Since I have a progress bar, I need a way to tell is database has playlists or not, then I need a progress bar and this event for the UI to be able to run the progressBar simultaneous with Db operation
+        /// </summary>
+        private void BackgroundWorkerCheckIfDBHasPlaylistsPreparation()
+        {
+            LoadingDbStatus.IsIndeterminate = true;
+            BackgroundWorker checkIfPlaylistsInDbWorker = new BackgroundWorker();
+            checkIfPlaylistsInDbWorker.DoWork += checkIfPlaylistsInDbWorker_DoWork;
+            checkIfPlaylistsInDbWorker.RunWorkerCompleted += checkIfPlaylistsInDbWorker_WorkCompleted;
+            checkIfPlaylistsInDbWorker.RunWorkerAsync();
+        }
+
+        /// <summary>
+        /// EvebtHandler for BackgroundWorker, fired when check db for playlists is done
+        /// </summary>
+        /// <param name="sender">The sending object, in this case a BackgroundWorker</param>
+        /// <param name="e">Arguments related to the event</param>
+        private void checkIfPlaylistsInDbWorker_WorkCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            LoadingDbStatus.IsIndeterminate = false;
+            if (dbHasPlaylists)
+            {
+                ResetGui();
+
+                BackgroundWorkerLoadFromDBPreparation();
+
+            }
+            else
+            {
+                MessageBoxes.ShowInformationMessageBox("The database had no playlists to load, please create playlists and save them to the database first");
+            }
+        }
+
+        /// <summary>
+        /// EvebtHandler for BackgroundWorker, starting check db for playlists
+        /// </summary>
+        /// <param name="sender">The sending object, in this case a BackgroundWorker</param>
+        /// <param name="e">Arguments related to the event</param>
+        private void checkIfPlaylistsInDbWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            dbHasPlaylists = playlistHandler.HasDbPlaylists();
         }
 
         /// <summary>
@@ -806,7 +864,7 @@ namespace MultiMediaApplication
                 SearchResults.Visibility = Visibility.Hidden;
                 List<Playlist> playlistsMatchingSearch = playlistHandler.SearchPlaylists(searchTerm);
 
-                if(playlistsMatchingSearch.Count > 0)
+                if (playlistsMatchingSearch.Count > 0)
                 {
                     SearchResults.Visibility = Visibility.Visible;
                     playlistsMatchingSearch.ForEach(x => SearchResults.Items.Add(x));
@@ -827,7 +885,7 @@ namespace MultiMediaApplication
         {
             int selectedIndex = ((System.Windows.Controls.ListBox)sender).SelectedIndex;
 
-            if(selectedIndex != -1)
+            if (selectedIndex != -1)
             {
                 ShowInformationAboutPlaylist(selectedIndex);
                 InitiateViewPlaylist(selectedIndex);

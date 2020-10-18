@@ -84,5 +84,14 @@ namespace MultiMediaDataAccess
         {
             treeViewNodeDatabaseHelper.DeleteTreeViewNodesFromDatabase();
         }
+
+        /// <summary>
+        /// Returns true if there are playlists in the db
+        /// </summary>
+        /// <returns>true/false depending in if there are playlists or not in the db</returns>
+        public bool HasPlaylists()
+        {
+            return playlistOperationsHelper.HasPlaylists();
+        }
     }
 }
