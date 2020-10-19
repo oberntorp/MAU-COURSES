@@ -753,8 +753,10 @@ namespace MultiMediaApplication
             {
                 MessageBoxes.ShowErrorMessageBox($"{e.Error.Message} with inner exception {e.Error.InnerException}");
             }
-
-            MessageBoxes.ShowInformationMessageBox("The playlists where saved, thank you!");
+            else
+            {
+                MessageBoxes.ShowInformationMessageBox("The playlists where saved, thank you!");
+            }
         }
 
         /// <summary>
@@ -795,9 +797,9 @@ namespace MultiMediaApplication
             {
                 dbHasPlaylists = playlistHandler.HasDbPlaylists();
             }
-            catch (Exception exOnLoad)
+            catch (Exception exOnPreLoad)
             {
-                throw exOnLoad;
+                throw exOnPreLoad;
             }
         }
 
@@ -814,15 +816,17 @@ namespace MultiMediaApplication
             {
                 MessageBoxes.ShowErrorMessageBox($"{e.Error.Message} with inner exception {e.Error.InnerException}");
             }
-
-            if (dbHasPlaylists)
-            {
-                ResetGui();
-                BackgroundWorkerLoadFromDBPreparation();
-            }
             else
             {
-                MessageBoxes.ShowInformationMessageBox("The database had no playlists to load, please create playlists and save them to the database first");
+                if (dbHasPlaylists)
+                {
+                    ResetGui();
+                    BackgroundWorkerLoadFromDBPreparation();
+                }
+                else
+                {
+                    MessageBoxes.ShowInformationMessageBox("The database had no playlists to load, please create playlists and save them to the database first");
+                }
             }
         }
 
@@ -846,7 +850,14 @@ namespace MultiMediaApplication
         /// <param name="e">Arguments related to the event</param>
         private void loadWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            treeViewStructureHandler.AddTreeViewStructure(treeViewStructureHandler.GetTreeViewStructureFromDb());
+            try
+            {
+                treeViewStructureHandler.AddTreeViewStructure(treeViewStructureHandler.GetTreeViewStructureFromDb());
+            }
+            catch(Exception exceptionOnLoad)
+            {
+                throw exceptionOnLoad;
+            }
         }
 
         /// <summary>
@@ -856,10 +867,17 @@ namespace MultiMediaApplication
         /// <param name="e">Arguments related to the event</param>
         private void loadWorker_WorkCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            TransferNavigatiopnAndPlaylistsToProgram();
-            HideInitialExplination();
-            LoadingDbStatus.IsIndeterminate = false;
-            LoadingDbStatusExplination.Content = "Ready";
+            if (e.Error != null)
+            {
+                MessageBoxes.ShowErrorMessageBox($"{e.Error.Message} with inner exception {e.Error.InnerException}");
+            }
+            else
+            {
+                TransferNavigatiopnAndPlaylistsToProgram();
+                HideInitialExplination();
+                LoadingDbStatus.IsIndeterminate = false;
+                LoadingDbStatusExplination.Content = "Ready";
+            }
 
         }
 
