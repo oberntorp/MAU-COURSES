@@ -11,9 +11,15 @@ namespace MultiMediaDataAccess.DatabaseModelAndContext
 {
     public class MultiMediaContext: DbContext
     {
+        /// <summary>
+        /// DbContext constructor, creates database
+        /// </summary>
         public MultiMediaContext(): base("name=Database")
         {
-
+            if (!Database.Exists())
+            {
+                Database.Create();
+            }
         }
 
         public DbSet<PlaylistModel> Playlists { get; set; }

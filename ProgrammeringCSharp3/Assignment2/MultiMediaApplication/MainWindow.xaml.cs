@@ -699,14 +699,7 @@ namespace MultiMediaApplication
         {
             if (playlistHandler.PlaylistManager.Count > 0)
             {
-                try
-                {
-                    BackgroundWorkerSaveToDbOpreparation();
-                }
-                catch (Exception exOnSave)
-                {
-                    MessageBoxes.ShowErrorMessageBox($"{exOnSave.Message} with inner exception {exOnSave.InnerException}");
-                }
+                BackgroundWorkerSaveToDbOpreparation();
             }
             else
             {
@@ -735,8 +728,15 @@ namespace MultiMediaApplication
         /// <param name="e">Arguments related to the event</param>
         private void saveWorker_SaveToDb(object sender, DoWorkEventArgs e)
         {
-            playlistHandler.DeleteAllPlaylistsFromDB();
-            playlistHandler.InsertPlaylistsIntoDb();
+            try
+            {
+                playlistHandler.DeleteAllPlaylistsFromDB();
+                playlistHandler.InsertPlaylistsIntoDb();
+            }
+            catch (Exception exOnSave)
+            {
+                throw exOnSave;
+            }
         }
 
         /// <summary>
@@ -749,6 +749,11 @@ namespace MultiMediaApplication
             dataSaved = true;
             LoadingDbStatus.IsIndeterminate = false;
             LoadingDbStatusExplination.Content = "Ready";
+            if (e.Error != null)
+            {
+                MessageBoxes.ShowErrorMessageBox($"{e.Error.Message} with inner exception {e.Error.InnerException}");
+            }
+
             MessageBoxes.ShowInformationMessageBox("The playlists where saved, thank you!");
         }
 
@@ -761,14 +766,7 @@ namespace MultiMediaApplication
         {
             if (playlistHandler.PlaylistManager.Count == 0 || (playlistHandler.PlaylistManager.Count > 0 && WantToContinueWithoutSaving()))
             {
-                try
-                {
-                    BackgroundWorkerCheckIfDBHasPlaylistsPreparation();
-                }
-                catch (Exception exOnLoad)
-                {
-                    MessageBoxes.ShowErrorMessageBox($"{exOnLoad.Message} with inner exception {exOnLoad.InnerException}");
-                }
+                BackgroundWorkerCheckIfDBHasPlaylistsPreparation();
             }
 
         }
@@ -793,7 +791,14 @@ namespace MultiMediaApplication
         /// <param name="e">Arguments related to the event</param>
         private void CheckIfPlaylistsInDbWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            dbHasPlaylists = playlistHandler.HasDbPlaylists();
+            try
+            {
+                dbHasPlaylists = playlistHandler.HasDbPlaylists();
+            }
+            catch (Exception exOnLoad)
+            {
+                throw exOnLoad;
+            }
         }
 
         /// <summary>
@@ -805,6 +810,11 @@ namespace MultiMediaApplication
         {
             LoadingDbStatus.IsIndeterminate = false;
             LoadingDbStatusExplination.Content = "Ready";
+            if (e.Error != null)
+            {
+                MessageBoxes.ShowErrorMessageBox($"{e.Error.Message} with inner exception {e.Error.InnerException}");
+            }
+
             if (dbHasPlaylists)
             {
                 ResetGui();
