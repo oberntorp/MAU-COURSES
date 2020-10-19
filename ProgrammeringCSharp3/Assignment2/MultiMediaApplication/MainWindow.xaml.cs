@@ -735,7 +735,7 @@ namespace MultiMediaApplication
             }
             catch (Exception exOnSave)
             {
-                throw exOnSave;
+                throw;
             }
         }
 
@@ -799,7 +799,7 @@ namespace MultiMediaApplication
             }
             catch (Exception exOnPreLoad)
             {
-                throw exOnPreLoad;
+                throw;
             }
         }
 
@@ -856,7 +856,7 @@ namespace MultiMediaApplication
             }
             catch(Exception exceptionOnLoad)
             {
-                throw exceptionOnLoad;
+                throw;
             }
         }
 
