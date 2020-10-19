@@ -31,11 +31,15 @@
                 <Separator/>
                 <MenuItem Header="Save Playlists">
                     <MenuItem Header="To XML" Click="SavePlaylistsMenuItem_Click" />
-                    <MenuItem Header="To database" Click="SaveToDbMenuItem_Click" />
+                    <MenuItem Header="To Database" Click="SaveToDbMenuItem_Click" />
                 </MenuItem>
             </MenuItem>
         </Menu>
         <StatusBar DockPanel.Dock="Bottom">
+            <StatusBarItem>
+                <Label x:Name="LoadingDbStatusExplination" Content="Ready"/>
+            </StatusBarItem>
+            <Separator />
             <StatusBarItem>
                 <ProgressBar x:Name="LoadingDbStatus" Minimum="0" Maximum="100" Height="20" Width="100"/>
             </StatusBarItem>

@@ -721,6 +721,7 @@ namespace MultiMediaApplication
         private void BackgroundWorkerSaveToDbOpreparation()
         {
             LoadingDbStatus.IsIndeterminate = true;
+            LoadingDbStatusExplination.Content = "Saving to database...";
             BackgroundWorker saveWorker = new BackgroundWorker();
             saveWorker.DoWork += saveWorker_SaveToDb;
             saveWorker.RunWorkerCompleted += saveWorker_WorkCompleted;
@@ -747,6 +748,7 @@ namespace MultiMediaApplication
         {
             dataSaved = true;
             LoadingDbStatus.IsIndeterminate = false;
+            LoadingDbStatusExplination.Content = "Ready";
             MessageBoxes.ShowInformationMessageBox("The playlists where saved, thank you!");
         }
 
@@ -762,7 +764,6 @@ namespace MultiMediaApplication
                 try
                 {
                     BackgroundWorkerCheckIfDBHasPlaylistsPreparation();
-
                 }
                 catch (Exception exOnLoad)
                 {
@@ -778,10 +779,21 @@ namespace MultiMediaApplication
         private void BackgroundWorkerCheckIfDBHasPlaylistsPreparation()
         {
             LoadingDbStatus.IsIndeterminate = true;
+            LoadingDbStatusExplination.Content = "Checking playlists in database...";
             BackgroundWorker checkIfPlaylistsInDbWorker = new BackgroundWorker();
-            checkIfPlaylistsInDbWorker.DoWork += checkIfPlaylistsInDbWorker_DoWork;
-            checkIfPlaylistsInDbWorker.RunWorkerCompleted += checkIfPlaylistsInDbWorker_WorkCompleted;
+            checkIfPlaylistsInDbWorker.DoWork += CheckIfPlaylistsInDbWorker_DoWork;
+            checkIfPlaylistsInDbWorker.RunWorkerCompleted += CheckIfPlaylistsInDbWorker_WorkCompleted;
             checkIfPlaylistsInDbWorker.RunWorkerAsync();
+        }
+
+        /// <summary>
+        /// EvebtHandler for BackgroundWorker, starting check db for playlists
+        /// </summary>
+        /// <param name="sender">The sending object, in this case a BackgroundWorker</param>
+        /// <param name="e">Arguments related to the event</param>
+        private void CheckIfPlaylistsInDbWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            dbHasPlaylists = playlistHandler.HasDbPlaylists();
         }
 
         /// <summary>
@@ -789,15 +801,14 @@ namespace MultiMediaApplication
         /// </summary>
         /// <param name="sender">The sending object, in this case a BackgroundWorker</param>
         /// <param name="e">Arguments related to the event</param>
-        private void checkIfPlaylistsInDbWorker_WorkCompleted(object sender, RunWorkerCompletedEventArgs e)
+        private void CheckIfPlaylistsInDbWorker_WorkCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             LoadingDbStatus.IsIndeterminate = false;
+            LoadingDbStatusExplination.Content = "Ready";
             if (dbHasPlaylists)
             {
                 ResetGui();
-
                 BackgroundWorkerLoadFromDBPreparation();
-
             }
             else
             {
@@ -806,21 +817,12 @@ namespace MultiMediaApplication
         }
 
         /// <summary>
-        /// EvebtHandler for BackgroundWorker, starting check db for playlists
-        /// </summary>
-        /// <param name="sender">The sending object, in this case a BackgroundWorker</param>
-        /// <param name="e">Arguments related to the event</param>
-        private void checkIfPlaylistsInDbWorker_DoWork(object sender, DoWorkEventArgs e)
-        {
-            dbHasPlaylists = playlistHandler.HasDbPlaylists();
-        }
-
-        /// <summary>
         /// Since I have a progress bar, I need a way to tell when database load/save is done, then I need a progress bar and this event for the UI to be able to run the progressBar simultaneous with Db operation
         /// </summary>
         private void BackgroundWorkerLoadFromDBPreparation()
         {
             LoadingDbStatus.IsIndeterminate = true;
+            LoadingDbStatusExplination.Content = "Loading from database...";
             BackgroundWorker loadWorker = new BackgroundWorker();
             loadWorker.DoWork += loadWorker_DoWork;
             loadWorker.RunWorkerCompleted += loadWorker_WorkCompleted;
@@ -847,6 +849,8 @@ namespace MultiMediaApplication
             TransferNavigatiopnAndPlaylistsToProgram();
             HideInitialExplination();
             LoadingDbStatus.IsIndeterminate = false;
+            LoadingDbStatusExplination.Content = "Ready";
+
         }
 
         /// <summary>
