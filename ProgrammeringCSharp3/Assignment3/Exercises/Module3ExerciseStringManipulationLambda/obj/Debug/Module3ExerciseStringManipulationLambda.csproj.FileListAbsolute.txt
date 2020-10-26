@@ -1,0 +1,7 @@
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment3\Exercises\Module3ExerciseStringManipulationLambda\bin\Debug\Module3ExerciseStringManipulationLambda.exe.config
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment3\Exercises\Module3ExerciseStringManipulationLambda\bin\Debug\Module3ExerciseStringManipulationLambda.exe
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment3\Exercises\Module3ExerciseStringManipulationLambda\bin\Debug\Module3ExerciseStringManipulationLambda.pdb
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment3\Exercises\Module3ExerciseStringManipulationLambda\obj\Debug\Module3ExerciseStringManipulationLambda.csprojAssemblyReference.cache
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment3\Exercises\Module3ExerciseStringManipulationLambda\obj\Debug\Module3ExerciseStringManipulationLambda.csproj.CoreCompileInputs.cache
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment3\Exercises\Module3ExerciseStringManipulationLambda\obj\Debug\Module3ExerciseStringManipulationLambda.exe
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment3\Exercises\Module3ExerciseStringManipulationLambda\obj\Debug\Module3ExerciseStringManipulationLambda.pdb
