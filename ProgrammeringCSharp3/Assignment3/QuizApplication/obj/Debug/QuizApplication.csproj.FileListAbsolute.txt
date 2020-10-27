@@ -1,0 +1,15 @@
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment3\QuizApplication\bin\Debug\QuizApplication.exe.config
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment3\QuizApplication\bin\Debug\QuizApplication.exe
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment3\QuizApplication\bin\Debug\QuizApplication.pdb
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment3\QuizApplication\obj\Debug\QuizApplication.csprojAssemblyReference.cache
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment3\QuizApplication\obj\Debug\MainWindow.g.cs
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment3\QuizApplication\obj\Debug\App.g.cs
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment3\QuizApplication\obj\Debug\QuizApplication_MarkupCompile.cache
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment3\QuizApplication\obj\Debug\QuizApplication_MarkupCompile.lref
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment3\QuizApplication\obj\Debug\MainWindow.baml
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment3\QuizApplication\obj\Debug\QuizApplication.g.resources
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment3\QuizApplication\obj\Debug\QuizApplication.Properties.Resources.resources
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment3\QuizApplication\obj\Debug\QuizApplication.csproj.GenerateResource.cache
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment3\QuizApplication\obj\Debug\QuizApplication.csproj.CoreCompileInputs.cache
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment3\QuizApplication\obj\Debug\QuizApplication.exe
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment3\QuizApplication\obj\Debug\QuizApplication.pdb
