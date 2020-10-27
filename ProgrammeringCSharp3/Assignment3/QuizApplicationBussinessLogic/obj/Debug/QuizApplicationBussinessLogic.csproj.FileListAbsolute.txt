@@ -1,2 +1,9 @@
 D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment3\QuizApplicationBussinessLogic\obj\Debug\QuizApplicationBussinessLogic.csprojAssemblyReference.cache
 D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment3\QuizApplicationBussinessLogic\obj\Debug\QuizApplicationBussinessLogic.csproj.CoreCompileInputs.cache
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment3\QuizApplicationBussinessLogic\bin\Debug\QuizApplicationBussinessLogic.dll
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment3\QuizApplicationBussinessLogic\bin\Debug\QuizApplicationBussinessLogic.pdb
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment3\QuizApplicationBussinessLogic\bin\Debug\Utilities.dll
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment3\QuizApplicationBussinessLogic\bin\Debug\Utilities.pdb
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment3\QuizApplicationBussinessLogic\obj\Debug\QuizApplicationBussinessLogic.csproj.CopyComplete
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment3\QuizApplicationBussinessLogic\obj\Debug\QuizApplicationBussinessLogic.dll
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment3\QuizApplicationBussinessLogic\obj\Debug\QuizApplicationBussinessLogic.pdb

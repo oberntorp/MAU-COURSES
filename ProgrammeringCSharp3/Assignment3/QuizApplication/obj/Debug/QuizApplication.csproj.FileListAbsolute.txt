@@ -13,3 +13,8 @@ D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment3\QuizApplicatio
 D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment3\QuizApplication\obj\Debug\QuizApplication.csproj.CoreCompileInputs.cache
 D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment3\QuizApplication\obj\Debug\QuizApplication.exe
 D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment3\QuizApplication\obj\Debug\QuizApplication.pdb
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment3\QuizApplication\bin\Debug\QuizApplicationBussinessLogic.dll
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment3\QuizApplication\bin\Debug\Utilities.dll
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment3\QuizApplication\bin\Debug\QuizApplicationBussinessLogic.pdb
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment3\QuizApplication\bin\Debug\Utilities.pdb
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment3\QuizApplication\obj\Debug\QuizApplication.csproj.CopyComplete

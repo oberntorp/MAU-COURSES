@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace QuizApplicationBussinessLogic.QuizClasses
 {
-    class Question
+    public class Question
     {
         public Question()
         {

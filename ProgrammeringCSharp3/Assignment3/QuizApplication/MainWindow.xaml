@@ -6,7 +6,70 @@
         xmlns:local="clr-namespace:QuizApplication"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        <Style TargetType="Label">
+            <Setter Property="Width" Value="130"/>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="Width" Value="200"/>
+        </Style>
+        <Style TargetType="WrapPanel">
+            <Setter Property="Margin" Value="0 0 0 15"/>
+        </Style>
+    </Window.Resources>
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="20"/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0">
+                <WrapPanel>
+                    <Label Content="QuizName"/>
+                    <TextBox x:Name="QuizNameTextBox"/>
+                </WrapPanel>
+                <WrapPanel>
+                    <Label Content="QuizDescription"/>
+                    <TextBox x:Name="QuizDescriptionTextBox"/>
+                </WrapPanel>
+            </StackPanel>
+            <Button x:Name="CreateQuizButton" Content="Create Quiz" Click="CreateQuizButton_Click" Grid.Row="1" Width="100"/>
+        </Grid>
+        <Border x:Name="ListQuizBorder" Grid.Row="1">
+            <ListView x:Name="QuizesListView">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="QuizName" DisplayMemberBinding="{Binding Title}" Width="190" />
+                        <GridViewColumn Header="QuizDescription" DisplayMemberBinding="{Binding Description}" Width="190" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Border>
+        <TabControl Grid.Column="1" IsEnabled="False" Grid.RowSpan="2">
+            <TabItem Header="Questions">
+                <StackPanel>
+                    <WrapPanel Margin="0 0 0 10">
+                        <Button Content="Add Question" Margin="0 0 5 0"/>
+                        <Button Content="Delete Question"/>
+                    </WrapPanel>
+                    <ListView ItemsSource="{Binding QuestionsOfSelectedQuiz}">
+                        <TextBlock Text="{Binding Content}"/>
+                    </ListView>
+                </StackPanel>
+            </TabItem>
+            <TabItem Header="Answers">
+                <ListView ItemsSource="{Binding AnswersOfSelectedQuestion}">
+                    <TextBlock Text="{Binding Content}"/>
+                </ListView>
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>

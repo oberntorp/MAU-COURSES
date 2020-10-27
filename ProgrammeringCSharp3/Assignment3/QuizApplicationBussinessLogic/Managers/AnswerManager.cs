@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace QuizApplicationBussinessLogic.Managers
 {
-    class AnswerManager: ListManager<Answer>
+    public class AnswerManager: ListManager<Answer>
     {
     }
 }

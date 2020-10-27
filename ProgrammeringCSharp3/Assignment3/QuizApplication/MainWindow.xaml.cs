@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using QuizApplicationBussinessLogic.Handlers;
+using QuizApplicationBussinessLogic.QuizClasses;
 
 namespace QuizApplication
 {
@@ -20,9 +22,25 @@ namespace QuizApplication
     /// </summary>
     public partial class MainWindow : Window
     {
+        QuizHandler quizHandler;
+        List<QuizItem> quizes;
+        List<Answer> AnswersOfSelectedQuestion;
+        List<Question> QuestionsOfSelectedQuiz;
         public MainWindow()
         {
             InitializeComponent();
+            quizHandler = new QuizHandler();
+            quizes = new List<QuizItem>();
+        }
+
+        private void CreateQuizButton_Click(object sender, RoutedEventArgs e)
+        {
+            QuizItem newQuiz = quizHandler.CreateQuiz(QuizNameTextBox.Text, QuizDescriptionTextBox.Text);
+            if(quizHandler.AddQuiz(newQuiz))
+            {
+                MessageBox.Show("QuizAdded");
+                QuizesListView.ItemsSource = quizHandler.quizManager.GetAllItems();
+            }
         }
     }
 }

@@ -94,5 +94,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\QuizApplicationBussinessLogic\QuizApplicationBussinessLogic.csproj">
+      <Project>{f8219530-9318-478c-8f45-3cfb23f0a27a}</Project>
+      <Name>QuizApplicationBussinessLogic</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
