@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QuizApplicationBussinessLogic.Managers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,9 +9,23 @@ namespace QuizApplicationBussinessLogic.QuizClasses
 {
     public class Question
     {
-        public Question()
+        public int Id { get; set; }
+        public string Title { get; set; }
+        public AnswerManager Answers { get; set; }
+        public Question(string title)
         {
+            Title = title;
+            Answers = new AnswerManager();
+        }
 
+        public bool AddAnswer(Answer answerToAdd)
+        {
+            return Answers.Add(answerToAdd);
+        }
+
+        public bool RemoveAnswer(int indexOfAnswerToRemove)
+        {
+            return Answers.RemoveAnswer(indexOfAnswerToRemove);
         }
     }
 }

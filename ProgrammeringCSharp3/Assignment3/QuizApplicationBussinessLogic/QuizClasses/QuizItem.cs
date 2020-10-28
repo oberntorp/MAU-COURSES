@@ -17,6 +17,17 @@ namespace QuizApplicationBussinessLogic.QuizClasses
         {
             Title = title;
             Description = description;
+            Questions = new QuestionManager();
+        }
+
+        public bool AddQuestion(Question questionToAdd)
+        {
+            return Questions.Add(questionToAdd);
+        }
+
+        public bool RemoveQuestion(int indexOfQuestionToRemove)
+        {
+            return Questions.RemoveQuestion(indexOfQuestionToRemove);
         }
     }
 }

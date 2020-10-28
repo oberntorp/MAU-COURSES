@@ -16,12 +16,6 @@ namespace QuizApplicationBussinessLogic.Managers
             return Add(quizToAdd);
         }
 
-        public bool RemoveQuiz(int indexOfQuizToRemove)
-        {
-            quizId--;
-            return DeleteAt(indexOfQuizToRemove);
-        }
-
         private void AddIdToQuiz(ref QuizItem QuizToAddAnId)
         {
             if (Count == 0)
@@ -32,6 +26,17 @@ namespace QuizApplicationBussinessLogic.Managers
             {
                 QuizToAddAnId.Id = Count + 1;
             }
+        }
+
+        public bool ChangeQuiz(QuizItem changedQuiz, int indexToChangeAt)
+        {
+            return ChangeAt(changedQuiz, indexToChangeAt);
+        }
+
+        public bool RemoveQuiz(int indexOfQuizToRemove)
+        {
+            quizId--;
+            return DeleteAt(indexOfQuizToRemove);
         }
     }
 }

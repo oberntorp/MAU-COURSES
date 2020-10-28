@@ -44,7 +44,7 @@
             <Button x:Name="CreateQuizButton" Content="Create Quiz" Click="CreateQuizButton_Click" Grid.Row="1" Width="100"/>
         </Grid>
         <Border x:Name="ListQuizBorder" Grid.Row="1">
-            <ListView x:Name="QuizesListView">
+            <ListView x:Name="QuizesListView" SelectionChanged="QuizesListView_SelectionChanged">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="QuizName" DisplayMemberBinding="{Binding Title}" Width="190" />
@@ -53,15 +53,19 @@
                 </ListView.View>
             </ListView>
         </Border>
-        <TabControl Grid.Column="1" IsEnabled="False" Grid.RowSpan="2">
+        <TabControl x:Name="QuestionsAnswersTabControl" Grid.Column="1" IsEnabled="False" Grid.RowSpan="2">
             <TabItem Header="Questions">
                 <StackPanel>
                     <WrapPanel Margin="0 0 0 10">
-                        <Button Content="Add Question" Margin="0 0 5 0"/>
-                        <Button Content="Delete Question"/>
+                        <Button Content="Add Question" Margin="0 0 5 0" Click="AddQuestion_Click"/>
+                        <Button Content="Delete Question" Click="DeleteQuestion_Click"/>
                     </WrapPanel>
-                    <ListView ItemsSource="{Binding QuestionsOfSelectedQuiz}">
-                        <TextBlock Text="{Binding Content}"/>
+                    <ListView x:Name="QuestionsOfSelectedQuizListView">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Title}"/>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
                     </ListView>
                 </StackPanel>
             </TabItem>

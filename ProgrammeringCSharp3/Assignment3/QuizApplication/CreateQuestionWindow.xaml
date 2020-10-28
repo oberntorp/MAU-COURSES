@@ -1,0 +1,32 @@
+﻿<Window x:Class="QuizApplication.CreateQuestionWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:QuizApplication"
+        mc:Ignorable="d"
+        Title="CreateQuestionWindow" Height="500" Width="800">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel>
+            <Label Content="Question Title"/>
+            <TextBox x:Name="QuestionTitleTextBox"/>
+        </StackPanel>
+        <StackPanel Grid.Row="1">
+            <Label Content="Click Add answer row and fill the row above with the answer"/>
+                <DataGrid x:Name="AnswersDataGrid" AutoGenerateColumns="False">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Answer" Binding="{Binding Title}"/>
+                        <DataGridCheckBoxColumn Header="Is Right Answer" Binding="{Binding RightAnswer}" />
+                    </DataGrid.Columns>
+                </DataGrid>
+                <Button x:Name="AddAnswerButton" Content="Add Answer Row" Click="AddAnswerButton_Click" Margin="0 0 0 5" Width="100"/>
+                <Button x:Name="SaveCloseButton" Content="Create Question" Click="SaveCloseButton_Click" Width="200"/>
+        </StackPanel>
+    </Grid>
+    </ScrollViewer>
+</Window>

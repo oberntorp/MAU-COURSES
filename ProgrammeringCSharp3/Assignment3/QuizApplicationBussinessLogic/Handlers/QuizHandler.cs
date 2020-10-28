@@ -26,10 +26,19 @@ namespace QuizApplicationBussinessLogic.Handlers
             return quizManager.Add(quizToAdd);
         }
 
-
         public bool RemoveQuiz(int indexOfQuizToRemove)
         {
             return quizManager.RemoveQuiz(indexOfQuizToRemove);
+        }
+
+        public void SerializeToXML(string filePath)
+        {
+            quizManager.XMLSerialize(filePath);
+        }
+
+        public void DeserializeFromXML(string filePath)
+        {
+            quizManager.XMLDeserialize(filePath);
         }
     }
 }
