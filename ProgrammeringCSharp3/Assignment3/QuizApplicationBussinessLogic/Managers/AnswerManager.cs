@@ -16,7 +16,7 @@ namespace QuizApplicationBussinessLogic.Managers
 
         }
 
-        public bool AddQuestion(Answer answerToAdd)
+        public bool AddAnswer(Answer answerToAdd)
         {
             AddIdToAnswer(ref answerToAdd);
             return Add(answerToAdd);

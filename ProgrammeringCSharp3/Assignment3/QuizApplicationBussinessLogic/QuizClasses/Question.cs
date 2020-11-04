@@ -7,11 +7,18 @@ using System.Threading.Tasks;
 
 namespace QuizApplicationBussinessLogic.QuizClasses
 {
+    [Serializable]
     public class Question
     {
         public int Id { get; set; }
         public string Title { get; set; }
         public AnswerManager Answers { get; set; }
+
+        public Question()
+        {
+              
+        }
+
         public Question(string title)
         {
             Title = title;

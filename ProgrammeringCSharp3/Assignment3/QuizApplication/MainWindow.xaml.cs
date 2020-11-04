@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Microsoft.Win32;
 using QuizApplicationBussinessLogic.Handlers;
 using QuizApplicationBussinessLogic.QuizClasses;
 
@@ -25,14 +26,13 @@ namespace QuizApplication
     {
         QuizHandler quizHandler;
         List<QuizItem> quizes;
-        List<Answer> AnswersOfSelectedQuestion;
+        ObservableCollection<Answer> AnswersOfSelectedQuestion;
         ObservableCollection<Question> QuestionsOfSelectedQuiz;
         public MainWindow()
         {
             InitializeComponent();
             quizHandler = new QuizHandler();
             quizes = new List<QuizItem>();
-            AnswersOfSelectedQuestion = new List<Answer>();
         }
 
         private void CreateQuizButton_Click(object sender, RoutedEventArgs e)
@@ -48,6 +48,7 @@ namespace QuizApplication
         private void QuizesListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             QuestionsAnswersTabControl.IsEnabled = true;
+            AnswersTabItem.IsEnabled = false;
             int indexOfSelectedQuiz = QuizesListView.SelectedIndex;
 
             QuestionsOfSelectedQuiz = new ObservableCollection<Question>(quizHandler.quizManager.GetAt(indexOfSelectedQuiz).Questions.GetAllItems());
@@ -63,9 +64,10 @@ namespace QuizApplication
                 Question newQuestion = new Question(createQuestionWindow.QuestionTitle);
                 AddAnswersToQuestion(createQuestionWindow.Answers.ToList(), newQuestion);
 
-                if (quizHandler.quizManager.GetAt(QuizesListView.SelectedIndex).AddQuestion(newQuestion))
+                if (quizHandler.quizManager.GetAt(QuizesListView.SelectedIndex).Questions.AddQuestion(newQuestion))
                 {
-                    QuestionsOfSelectedQuiz.Add(newQuestion);
+                    QuestionsOfSelectedQuiz = new ObservableCollection<Question>(quizHandler.quizManager.GetAt(QuizesListView.SelectedIndex).Questions.GetAllItems());
+                    QuestionsOfSelectedQuizListView.ItemsSource = QuestionsOfSelectedQuiz;
                 }
             }
         }
@@ -89,8 +91,59 @@ namespace QuizApplication
         {
             answers.ForEach(x =>
             {
-                newQuestion.Answers.Add(x);
+                newQuestion.Answers.AddAnswer(x);
             });
+        }
+
+        private void LoadFromXMLMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "XML File | *.XML";
+            bool opened = (bool)openFileDialog.ShowDialog();
+
+            if(opened)
+            {
+                try
+                {
+                    quizHandler.quizManager.XMLDeserialize(openFileDialog.FileName);
+                    QuizesListView.ItemsSource = quizHandler.quizManager.GetAllItems();
+                    MessageBoxes.ShowInformationMessageBox("The Created Questions where saved!");
+                }
+                catch (Exception exOpen)
+                {
+                    MessageBoxes.ShowErrorMessageBox($"{exOpen.Message} {exOpen.InnerException}");
+                }
+            }
+        }
+
+        private void SaveToXMLMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "XML File | *.XML";
+            bool saved = (bool)saveFileDialog.ShowDialog();
+
+            if (saved)
+            {
+                try
+                {
+                    quizHandler.quizManager.XMLSerialize(saveFileDialog.FileName);
+                    MessageBoxes.ShowInformationMessageBox("The Questions where loaded");
+                }
+                catch (Exception exSave)
+                {
+                    MessageBoxes.ShowErrorMessageBox($"{exSave.Message} {exSave.InnerException}");
+                }
+            }
+        }
+
+        private void QuestionsOfSelectedQuizListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            int indexOfSelectedQuestion = QuestionsOfSelectedQuizListView.SelectedIndex;
+
+            AnswersOfSelectedQuestion = new ObservableCollection<Answer>(QuestionsOfSelectedQuiz.Where(x => x.Id == indexOfSelectedQuestion+1).FirstOrDefault().Answers.GetAllItems());
+            AnswersOfSelectedQuestionListView.ItemsSource = AnswersOfSelectedQuestion;
+            AnswersTabItem.IsEnabled = true;
+            AnswersTabItem.IsSelected = true;
         }
     }
 }

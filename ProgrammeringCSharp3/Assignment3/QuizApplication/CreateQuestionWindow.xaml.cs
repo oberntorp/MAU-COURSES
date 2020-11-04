@@ -62,6 +62,7 @@ namespace QuizApplication
 
         private void AddAnswerButton_Click(object sender, RoutedEventArgs e)
         {
+            AnswersDataGrid.IsReadOnly = false;
             Answers.Add(new Answer("Write your answer here"));
         }
     }

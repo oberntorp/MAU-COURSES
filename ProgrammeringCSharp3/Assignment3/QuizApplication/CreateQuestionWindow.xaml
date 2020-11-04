@@ -17,14 +17,14 @@
             <TextBox x:Name="QuestionTitleTextBox"/>
         </StackPanel>
         <StackPanel Grid.Row="1">
-            <Label Content="Click Add answer row and fill the row above with the answer"/>
-                <DataGrid x:Name="AnswersDataGrid" AutoGenerateColumns="False">
+                <Label Content="Click Add answer row and fill the row above with the answer"/>
+                <Button x:Name="AddAnswerButton" Content="Add Answer Row" Click="AddAnswerButton_Click" Margin="0 0 0 5" Width="100"/>
+                <DataGrid x:Name="AnswersDataGrid" IsReadOnly="True" AutoGenerateColumns="False">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Answer" Binding="{Binding Title}"/>
                         <DataGridCheckBoxColumn Header="Is Right Answer" Binding="{Binding RightAnswer}" />
                     </DataGrid.Columns>
                 </DataGrid>
-                <Button x:Name="AddAnswerButton" Content="Add Answer Row" Click="AddAnswerButton_Click" Margin="0 0 0 5" Width="100"/>
                 <Button x:Name="SaveCloseButton" Content="Create Question" Click="SaveCloseButton_Click" Width="200"/>
         </StackPanel>
     </Grid>

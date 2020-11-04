@@ -7,22 +7,24 @@ using System.Threading.Tasks;
 
 namespace QuizApplicationBussinessLogic.QuizClasses
 {
+    [Serializable]
     public class QuizItem
     {
         public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public QuestionManager Questions { get; set; }
+
+        public QuizItem()
+        {
+
+        }
+
         public QuizItem(string title, string description)
         {
             Title = title;
             Description = description;
             Questions = new QuestionManager();
-        }
-
-        public bool AddQuestion(Question questionToAdd)
-        {
-            return Questions.Add(questionToAdd);
         }
 
         public bool RemoveQuestion(int indexOfQuestionToRemove)

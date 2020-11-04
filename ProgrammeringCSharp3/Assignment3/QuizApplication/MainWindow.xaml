@@ -17,63 +17,75 @@
             <Setter Property="Margin" Value="0 0 0 15"/>
         </Style>
     </Window.Resources>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="File">
+                <MenuItem x:Name="LoadFromXMLMenuItem" Header="Load from xml" Click="LoadFromXMLMenuItem_Click"/>
+                <MenuItem x:Name="SaveToXMLMenuItem" Header="Save to xml" Click="SaveToXMLMenuItem_Click"/>
+            </MenuItem>
+        </Menu>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="20"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <StackPanel Grid.Row="0">
-                <WrapPanel>
-                    <Label Content="QuizName"/>
-                    <TextBox x:Name="QuizNameTextBox"/>
-                </WrapPanel>
-                <WrapPanel>
-                    <Label Content="QuizDescription"/>
-                    <TextBox x:Name="QuizDescriptionTextBox"/>
-                </WrapPanel>
-            </StackPanel>
-            <Button x:Name="CreateQuizButton" Content="Create Quiz" Click="CreateQuizButton_Click" Grid.Row="1" Width="100"/>
-        </Grid>
-        <Border x:Name="ListQuizBorder" Grid.Row="1">
-            <ListView x:Name="QuizesListView" SelectionChanged="QuizesListView_SelectionChanged">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn Header="QuizName" DisplayMemberBinding="{Binding Title}" Width="190" />
-                        <GridViewColumn Header="QuizDescription" DisplayMemberBinding="{Binding Description}" Width="190" />
-                    </GridView>
-                </ListView.View>
-            </ListView>
-        </Border>
-        <TabControl x:Name="QuestionsAnswersTabControl" Grid.Column="1" IsEnabled="False" Grid.RowSpan="2">
-            <TabItem Header="Questions">
-                <StackPanel>
-                    <WrapPanel Margin="0 0 0 10">
-                        <Button Content="Add Question" Margin="0 0 5 0" Click="AddQuestion_Click"/>
-                        <Button Content="Delete Question" Click="DeleteQuestion_Click"/>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="20"/>
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0">
+                    <WrapPanel>
+                        <Label Content="QuizName"/>
+                        <TextBox x:Name="QuizNameTextBox"/>
                     </WrapPanel>
-                    <ListView x:Name="QuestionsOfSelectedQuizListView">
+                    <WrapPanel>
+                        <Label Content="QuizDescription"/>
+                        <TextBox x:Name="QuizDescriptionTextBox"/>
+                    </WrapPanel>
+                </StackPanel>
+                <Button x:Name="CreateQuizButton" Content="Create Quiz" Click="CreateQuizButton_Click" Grid.Row="1" Width="100"/>
+            </Grid>
+            <Border x:Name="ListQuizBorder" Grid.Row="1">
+                <ListView x:Name="QuizesListView" SelectionChanged="QuizesListView_SelectionChanged">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="QuizName" DisplayMemberBinding="{Binding Title}" Width="190" />
+                            <GridViewColumn Header="QuizDescription" DisplayMemberBinding="{Binding Description}" Width="190" />
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </Border>
+            <TabControl x:Name="QuestionsAnswersTabControl" Grid.Column="1" IsEnabled="False" Grid.RowSpan="2">
+                <TabItem x:Name="QuestionsTabItem" Header="Questions">
+                    <StackPanel>
+                        <WrapPanel Margin="0 0 0 10">
+                            <Button Content="Add Question" Margin="0 0 5 0" Click="AddQuestion_Click"/>
+                            <Button Content="Delete Question" Click="DeleteQuestion_Click"/>
+                        </WrapPanel>
+                        <ListView x:Name="QuestionsOfSelectedQuizListView" SelectionChanged="QuestionsOfSelectedQuizListView_SelectionChanged">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Title}"/>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </StackPanel>
+                </TabItem>
+                <TabItem x:Name="AnswersTabItem" Header="Answers">
+                    <ListView x:Name="AnswersOfSelectedQuestionListView">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding Title}"/>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
-                </StackPanel>
-            </TabItem>
-            <TabItem Header="Answers">
-                <ListView ItemsSource="{Binding AnswersOfSelectedQuestion}">
-                    <TextBlock Text="{Binding Content}"/>
-                </ListView>
-            </TabItem>
-        </TabControl>
-    </Grid>
+                </TabItem>
+            </TabControl>
+        </Grid>
+    </DockPanel>
 </Window>
