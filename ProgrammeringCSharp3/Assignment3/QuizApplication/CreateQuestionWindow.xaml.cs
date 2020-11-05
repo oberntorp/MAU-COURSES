@@ -1,4 +1,5 @@
-﻿using QuizApplicationBussinessLogic.QuizClasses;
+﻿using QuizApplicationBussinessLogic.Managers;
+using QuizApplicationBussinessLogic.QuizClasses;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -23,11 +24,13 @@ namespace QuizApplication
     {
         public string QuestionTitle { get; set; }
         public ObservableCollection<Answer> Answers { get; set; }
+        AnswerManager answerManager { get; set; }
 
         public CreateQuestionWindow()
         {
             InitializeComponent();
             Answers = new ObservableCollection<Answer>();
+            answerManager = new AnswerManager();
             AnswersDataGrid.ItemsSource = Answers;
         }
 
@@ -37,7 +40,6 @@ namespace QuizApplication
             {
                 QuestionTitle = QuestionTitleTextBox.Text;
                 int dataGridCount = AnswersDataGrid.Items.Count;
-                PopulateAnswers(dataGridCount);
                 this.DialogResult = true;
                 this.Close();
             }
@@ -52,18 +54,11 @@ namespace QuizApplication
             return QuestionTitleTextBox.Text != "" && AnswersDataGrid.Items.Count > 0;
         }
 
-        private void PopulateAnswers(int dataGridCount)
-        {
-            for (int i = 0; i < dataGridCount; i++)
-            {
-                Answers.Add((Answer)AnswersDataGrid.Items.GetItemAt(i));
-            }
-        }
-
         private void AddAnswerButton_Click(object sender, RoutedEventArgs e)
         {
             AnswersDataGrid.IsReadOnly = false;
-            Answers.Add(new Answer("Write your answer here"));
+            answerManager.AddAnswer(new Answer("Write your answer here"));
+            Answers.Add(answerManager.GetAt(answerManager.Count - 1));
         }
     }
 }

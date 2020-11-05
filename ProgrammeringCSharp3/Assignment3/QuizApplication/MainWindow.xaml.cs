@@ -107,6 +107,7 @@ namespace QuizApplication
                 {
                     quizHandler.quizManager.XMLDeserialize(openFileDialog.FileName);
                     QuizesListView.ItemsSource = quizHandler.quizManager.GetAllItems();
+                    TransferQuestionsAndANswersToProgram();
                     MessageBoxes.ShowInformationMessageBox("The Created Questions where saved!");
                 }
                 catch (Exception exOpen)
@@ -114,6 +115,19 @@ namespace QuizApplication
                     MessageBoxes.ShowErrorMessageBox($"{exOpen.Message} {exOpen.InnerException}");
                 }
             }
+        }
+
+        private void TransferQuestionsAndANswersToProgram()
+        {
+            quizHandler.quizManager.GetAllItems().ForEach((x) =>
+            {
+                x.Questions.QuestionsXML.ForEach(q => quizHandler.quizManager.GetAt(x.Id - 1).Questions.AddQuestionAfterLoad(q));
+                quizHandler.quizManager.GetAt(x.Id - 1).Questions.GetAllItems().ForEach(q =>
+                {
+                    x.Questions.GetAllItems().ForEach(qFromParameter => qFromParameter.Answers.GetAllItems().ForEach(a => q.Answers.AddAnswer(a)));
+                });
+
+            });
         }
 
         private void SaveToXMLMenuItem_Click(object sender, RoutedEventArgs e)
@@ -140,10 +154,13 @@ namespace QuizApplication
         {
             int indexOfSelectedQuestion = QuestionsOfSelectedQuizListView.SelectedIndex;
 
-            AnswersOfSelectedQuestion = new ObservableCollection<Answer>(QuestionsOfSelectedQuiz.Where(x => x.Id == indexOfSelectedQuestion+1).FirstOrDefault().Answers.GetAllItems());
-            AnswersOfSelectedQuestionListView.ItemsSource = AnswersOfSelectedQuestion;
-            AnswersTabItem.IsEnabled = true;
-            AnswersTabItem.IsSelected = true;
+            if(QuestionsOfSelectedQuiz.Count > 0)
+            {
+                AnswersOfSelectedQuestion = new ObservableCollection<Answer>(QuestionsOfSelectedQuiz.Where(x => x.Id == indexOfSelectedQuestion + 1).FirstOrDefault().Answers.GetAllItems());
+                AnswersOfSelectedQuestionListView.ItemsSource = AnswersOfSelectedQuestion;
+                AnswersTabItem.IsEnabled = true;
+                AnswersTabItem.IsSelected = true;
+            }
         }
     }
 }

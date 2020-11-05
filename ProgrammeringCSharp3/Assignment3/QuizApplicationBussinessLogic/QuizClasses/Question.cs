@@ -24,15 +24,5 @@ namespace QuizApplicationBussinessLogic.QuizClasses
             Title = title;
             Answers = new AnswerManager();
         }
-
-        public bool AddAnswer(Answer answerToAdd)
-        {
-            return Answers.Add(answerToAdd);
-        }
-
-        public bool RemoveAnswer(int indexOfAnswerToRemove)
-        {
-            return Answers.RemoveAnswer(indexOfAnswerToRemove);
-        }
     }
 }

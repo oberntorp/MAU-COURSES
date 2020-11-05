@@ -7,19 +7,28 @@ using System.Threading.Tasks;
 
 namespace QuizApplicationBussinessLogic.Managers
 {
+    [Serializable]
     public class AnswerManager: ListManager<Answer>
     {
         private int answerId = 1;
+        public List<Answer> AnswersXML { get; set; }
 
         public AnswerManager()
         {
-
+            AnswersXML = new List<Answer>();
         }
 
         public bool AddAnswer(Answer answerToAdd)
         {
             AddIdToAnswer(ref answerToAdd);
-            return Add(answerToAdd);
+
+            if(Add(answerToAdd))
+            {
+                AnswersXML.Add(answerToAdd);
+                return true;
+            }
+
+            return false;
         }
 
         private void AddIdToAnswer(ref Answer answerToAddAnId)
@@ -43,6 +52,12 @@ namespace QuizApplicationBussinessLogic.Managers
         {
             answerId--;
             return DeleteAt(indexOfAnswerToRemove);
+        }
+
+        public bool AddAnswerAfterLoad(Answer answerToAdd)
+        {
+            AddIdToAnswer(ref answerToAdd);
+            return Add(answerToAdd);
         }
     }
 }

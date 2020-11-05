@@ -7,16 +7,31 @@ using System.Threading.Tasks;
 
 namespace QuizApplicationBussinessLogic.Managers
 {
+    [Serializable]
     public class QuestionManager : ListManager<Question>
     {
         private int questionId = 1;
 
+        public List<Question> QuestionsXML { get; set; }
+
         public QuestionManager()
         {
-
+            QuestionsXML = new List<Question>();
         }
 
         public bool AddQuestion(Question questionToAdd)
+        {
+            AddIdToQuestion(ref questionToAdd);
+            if(Add(questionToAdd))
+            {
+                QuestionsXML.Add(questionToAdd);
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool AddQuestionAfterLoad(Question questionToAdd)
         {
             AddIdToQuestion(ref questionToAdd);
             return Add(questionToAdd);
