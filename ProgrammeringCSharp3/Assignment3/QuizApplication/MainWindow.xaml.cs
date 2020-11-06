@@ -76,7 +76,7 @@ namespace QuizApplication
         {
             if (QuestionsOfSelectedQuizListView.SelectedIndex >= 0)
             {
-                if(quizHandler.quizManager.GetAt(QuizesListView.SelectedIndex).RemoveQuestion(QuestionsOfSelectedQuizListView.SelectedIndex))
+                if (quizHandler.quizManager.GetAt(QuizesListView.SelectedIndex).RemoveQuestion(QuestionsOfSelectedQuizListView.SelectedIndex))
                 {
                     QuestionsOfSelectedQuiz.RemoveAt(QuestionsOfSelectedQuizListView.SelectedIndex);
                 }
@@ -101,7 +101,7 @@ namespace QuizApplication
             openFileDialog.Filter = "XML File | *.XML";
             bool opened = (bool)openFileDialog.ShowDialog();
 
-            if(opened)
+            if (opened)
             {
                 try
                 {
@@ -121,12 +121,26 @@ namespace QuizApplication
         {
             quizHandler.quizManager.GetAllItems().ForEach((x) =>
             {
-                x.Questions.QuestionsXML.ForEach(q => quizHandler.quizManager.GetAt(x.Id - 1).Questions.AddQuestionAfterLoad(q));
+                x.Questions.QuestionsXML.ForEach(q =>
+                {
+                    quizHandler.quizManager.GetAt(x.Id - 1).Questions.AddQuestionAfterLoad(q);
+                });
                 quizHandler.quizManager.GetAt(x.Id - 1).Questions.GetAllItems().ForEach(q =>
                 {
-                    x.Questions.GetAllItems().ForEach(qFromParameter => qFromParameter.Answers.GetAllItems().ForEach(a => q.Answers.AddAnswer(a)));
+                    x.Questions.GetAllItems().Where(lq => lq.Id == q.Id).First().Answers.AnswersXML.ForEach(a => q.Answers.AddAnswerAfterLoad(a));
                 });
 
+                ClearXMLListsAfterTransfer(x);
+            });
+        }
+
+        private void ClearXMLListsAfterTransfer(QuizItem x)
+        {
+            x.Questions.QuestionsXML.Clear();
+
+            quizHandler.quizManager.GetAt(x.Id - 1).Questions.GetAllItems().ForEach(q =>
+            {
+                x.Questions.GetAllItems().Where(lq => lq.Id == q.Id).First().Answers.AnswersXML.Clear();
             });
         }
 
@@ -154,7 +168,7 @@ namespace QuizApplication
         {
             int indexOfSelectedQuestion = QuestionsOfSelectedQuizListView.SelectedIndex;
 
-            if(QuestionsOfSelectedQuiz.Count > 0)
+            if (QuestionsOfSelectedQuiz.Count > 0)
             {
                 AnswersOfSelectedQuestion = new ObservableCollection<Answer>(QuestionsOfSelectedQuiz.Where(x => x.Id == indexOfSelectedQuestion + 1).FirstOrDefault().Answers.GetAllItems());
                 AnswersOfSelectedQuestionListView.ItemsSource = AnswersOfSelectedQuestion;
