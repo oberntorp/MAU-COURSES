@@ -20,3 +20,5 @@ D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment3\QuizApplicatio
 D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment3\QuizApplication\obj\Debug\QuizApplication.csproj.CopyComplete
 D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment3\QuizApplication\obj\Debug\CreateQuestionWindow.g.cs
 D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment3\QuizApplication\obj\Debug\CreateQuestionWindow.baml
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment3\QuizApplication\obj\Debug\GenericChangePopupUserControl.g.cs
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment3\QuizApplication\obj\Debug\GenericChangePopupUserControl.baml

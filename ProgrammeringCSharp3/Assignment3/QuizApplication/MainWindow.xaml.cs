@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Microsoft.Win32;
+using QuizApplication.EventArgs;
 using QuizApplicationBussinessLogic.Handlers;
 using QuizApplicationBussinessLogic.QuizClasses;
 
@@ -25,14 +26,13 @@ namespace QuizApplication
     public partial class MainWindow : Window
     {
         QuizHandler quizHandler;
-        List<QuizItem> quizes;
+        ObservableCollection<QuizItem> quizes;
         ObservableCollection<Answer> AnswersOfSelectedQuestion;
         ObservableCollection<Question> QuestionsOfSelectedQuiz;
         public MainWindow()
         {
             InitializeComponent();
             quizHandler = new QuizHandler();
-            quizes = new List<QuizItem>();
         }
 
         private void CreateQuizButton_Click(object sender, RoutedEventArgs e)
@@ -40,19 +40,23 @@ namespace QuizApplication
             QuizItem newQuiz = quizHandler.CreateQuiz(QuizNameTextBox.Text, QuizDescriptionTextBox.Text);
             if (quizHandler.AddQuiz(newQuiz))
             {
-                QuizesListView.ItemsSource = quizHandler.quizManager.GetAllItems();
+                quizes = new ObservableCollection<QuizItem>(quizHandler.quizManager.GetAllItems());
+                QuizesListView.ItemsSource = quizes;
                 MessageBoxes.ShowInformationMessageBox("Quiz Added");
             }
         }
 
         private void QuizesListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            QuestionsAnswersTabControl.IsEnabled = true;
-            AnswersTabItem.IsEnabled = false;
-            int indexOfSelectedQuiz = QuizesListView.SelectedIndex;
+            if (quizHandler.quizManager.Count > 0)
+            {
+                QuestionsAnswersTabControl.IsEnabled = true;
+                AnswersTabItem.IsEnabled = false;
+                int indexOfSelectedQuiz = QuizesListView.SelectedIndex;
 
-            QuestionsOfSelectedQuiz = new ObservableCollection<Question>(quizHandler.quizManager.GetAt(indexOfSelectedQuiz).Questions.GetAllItems());
-            QuestionsOfSelectedQuizListView.ItemsSource = QuestionsOfSelectedQuiz;
+                QuestionsOfSelectedQuiz = new ObservableCollection<Question>(quizHandler.quizManager.GetAt(indexOfSelectedQuiz).Questions.GetAllItems());
+                QuestionsOfSelectedQuizListView.ItemsSource = QuestionsOfSelectedQuiz;
+            }
         }
 
         private void AddQuestion_Click(object sender, RoutedEventArgs e)
@@ -106,7 +110,8 @@ namespace QuizApplication
                 try
                 {
                     quizHandler.quizManager.XMLDeserialize(openFileDialog.FileName);
-                    QuizesListView.ItemsSource = quizHandler.quizManager.GetAllItems();
+                    quizes = new ObservableCollection<QuizItem>(quizHandler.quizManager.GetAllItems());
+                    QuizesListView.ItemsSource = quizes;
                     TransferQuestionsAndANswersToProgram();
                     MessageBoxes.ShowInformationMessageBox("The Created Questions where saved!");
                 }
@@ -175,6 +180,54 @@ namespace QuizApplication
                 AnswersTabItem.IsEnabled = true;
                 AnswersTabItem.IsSelected = true;
             }
+        }
+
+        private void DeleteQuiz_Click(object sender, RoutedEventArgs e)
+        {
+            if (QuizesListView.SelectedIndex >= 0)
+            {
+                if (quizHandler.RemoveQuiz(QuizesListView.SelectedIndex))
+                {
+                    quizes.RemoveAt(QuizesListView.SelectedIndex);
+                    QuestionsOfSelectedQuiz.Clear();
+                    QuestionsAnswersTabControl.IsEnabled = false;
+                }
+            }
+            else
+            {
+                MessageBoxes.ShowInformationMessageBox("Please select a quiz to remove");
+            }
+        }
+
+        private void ChangeQuiz_Click(object sender, RoutedEventArgs e)
+        {
+            GenericChangePopupUserControl popupCtrl = new GenericChangePopupUserControl();
+            popupCtrl.TypeOfItemToChange = "Quiz";
+            popupCtrl.HasItemDescription = true;
+            popupCtrl.OldTitle = quizHandler.quizManager.GetAt(QuizesListView.SelectedIndex).Title;
+            popupCtrl.OldDescription = quizHandler.quizManager.GetAt(QuizesListView.SelectedIndex).Description;
+            popupCtrl.IsSaved += PopupCtrl_IsSaved;
+            UcContainer.Children.Add(popupCtrl);
+
+        }
+
+        private void PopupCtrl_IsSaved(object sender, IsSavedEventArgs e)
+        {
+            ChangeQuizInformation(QuizesListView.SelectedIndex, e.NewTitle, e.NewDescription);
+            UcContainer.Children.Remove(e.UserControl);
+        }
+
+        private void ChangeQuizInformation(int selectedIndex, string newTitle, string newDescription)
+        {
+            QuizItem changedQuiz = quizes.ElementAt(selectedIndex);
+            changedQuiz.Title = newTitle;
+            changedQuiz.Description = newDescription;
+
+            quizHandler.ChangeQuiz(changedQuiz, selectedIndex);
+
+            quizes = new ObservableCollection<QuizItem>(quizHandler.quizManager.GetAllItems());
+
+            QuizesListView.ItemsSource = quizes;
         }
     }
 }

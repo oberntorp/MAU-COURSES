@@ -59,6 +59,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="GenericChangePopupUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -69,6 +73,10 @@
     </Compile>
     <Compile Include="CreateQuestionWindow.xaml.cs">
       <DependentUpon>CreateQuestionWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EventArgs\IsSavedEventArgs.cs" />
+    <Compile Include="GenericChangePopupUserControl.xaml.cs">
+      <DependentUpon>GenericChangePopupUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

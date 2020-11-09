@@ -26,6 +26,11 @@ namespace QuizApplicationBussinessLogic.Handlers
             return quizManager.Add(quizToAdd);
         }
 
+        public bool ChangeQuiz(QuizItem quizToAdd, int indexToChangeAt)
+        {
+            return quizManager.ChangeAt(quizToAdd, indexToChangeAt);
+        }
+
         public bool RemoveQuiz(int indexOfQuizToRemove)
         {
             return quizManager.RemoveQuiz(indexOfQuizToRemove);

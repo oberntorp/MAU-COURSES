@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:QuizApplication"
+        xmlns:Popup="QuizApplication.GenericChangePopupUserControl"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Window.Resources>
@@ -51,16 +52,22 @@
                 <Button x:Name="CreateQuizButton" Content="Create Quiz" Click="CreateQuizButton_Click" Grid.Row="1" Width="100"/>
             </Grid>
             <Border x:Name="ListQuizBorder" Grid.Row="1">
-                <ListView x:Name="QuizesListView" SelectionChanged="QuizesListView_SelectionChanged">
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn Header="QuizName" DisplayMemberBinding="{Binding Title}" Width="190" />
-                            <GridViewColumn Header="QuizDescription" DisplayMemberBinding="{Binding Description}" Width="190" />
-                        </GridView>
-                    </ListView.View>
-                </ListView>
+                <StackPanel>
+                    <DockPanel>
+                        <Button x:Name="ChangeQuiz" Content="Change quiz" DockPanel.Dock="Left" Width="100" Click="ChangeQuiz_Click"/>
+                        <Button x:Name="DeleteQuiz" Content="Delete quiz" Click="DeleteQuiz_Click" DockPanel.Dock="Right" Width="100"/>
+                    </DockPanel>
+                    <ListView x:Name="QuizesListView" SelectionChanged="QuizesListView_SelectionChanged">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="QuizName" DisplayMemberBinding="{Binding Title}" Width="190" />
+                                <GridViewColumn Header="QuizDescription" DisplayMemberBinding="{Binding Description}" Width="190" />
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </StackPanel>
             </Border>
-            <TabControl x:Name="QuestionsAnswersTabControl" Grid.Column="1" IsEnabled="False" Grid.RowSpan="2">
+            <TabControl x:Name="QuestionsAnswersTabControl" Grid.Column="1" IsEnabled="False">
                 <TabItem x:Name="QuestionsTabItem" Header="Questions">
                     <StackPanel>
                         <WrapPanel Margin="0 0 0 10">
@@ -86,6 +93,7 @@
                     </ListView>
                 </TabItem>
             </TabControl>
+            <StackPanel x:Name="UcContainer" Grid.Row="1" Grid.Column="1"></StackPanel>
         </Grid>
     </DockPanel>
 </Window>

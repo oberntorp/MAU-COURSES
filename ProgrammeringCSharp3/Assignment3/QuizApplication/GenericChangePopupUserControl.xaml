@@ -1,0 +1,23 @@
+﻿<UserControl x:Class="QuizApplication.GenericChangePopupUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:QuizApplication"
+             mc:Ignorable="d" 
+             d:DesignHeight="180" d:DesignWidth="100">
+    <Grid>
+        <StackPanel>
+            <StackPanel>
+                <TextBlock Text="{Binding TypeOfItemToChange}"/>
+                <Label Content="New Name"/>
+                <TextBox x:Name="ChangedItemNameTextBox" Text="{Binding OldTitle}"/>
+
+                <Label Content="New Description"/>
+                <TextBox x:Name="ChangedItemDescriptionTextBox" Text="{Binding OldDescription}" />
+                <Label Content="Please fill in all values" x:Name="WarningLabel" Visibility="Hidden" Foreground="Red"/>
+                <Button x:Name="SaveButton" Margin="0 5 0 0" Content="Save" Click="SaveButton_Click"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>
