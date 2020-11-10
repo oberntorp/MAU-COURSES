@@ -59,7 +59,7 @@ namespace QuizApplication
             }
         }
 
-        private void AddQuestion_Click(object sender, RoutedEventArgs e)
+        private void AddQuestionButton_Click(object sender, RoutedEventArgs e)
         {
             CreateQuestionWindow createQuestionWindow = new CreateQuestionWindow();
             bool result = (bool)createQuestionWindow.ShowDialog();
@@ -76,7 +76,7 @@ namespace QuizApplication
             }
         }
 
-        private void DeleteQuestion_Click(object sender, RoutedEventArgs e)
+        private void DeleteQuestionButton_Click(object sender, RoutedEventArgs e)
         {
             if (QuestionsOfSelectedQuizListView.SelectedIndex >= 0)
             {
@@ -173,7 +173,7 @@ namespace QuizApplication
         {
             int indexOfSelectedQuestion = QuestionsOfSelectedQuizListView.SelectedIndex;
 
-            if (QuestionsOfSelectedQuiz.Count > 0)
+            if (indexOfSelectedQuestion >= 0)
             {
                 AnswersOfSelectedQuestion = new ObservableCollection<Answer>(QuestionsOfSelectedQuiz.Where(x => x.Id == indexOfSelectedQuestion + 1).FirstOrDefault().Answers.GetAllItems());
                 AnswersOfSelectedQuestionListView.ItemsSource = AnswersOfSelectedQuestion;
@@ -182,7 +182,7 @@ namespace QuizApplication
             }
         }
 
-        private void DeleteQuiz_Click(object sender, RoutedEventArgs e)
+        private void DeleteQuizButton_Click(object sender, RoutedEventArgs e)
         {
             if (QuizesListView.SelectedIndex >= 0)
             {
@@ -199,19 +199,22 @@ namespace QuizApplication
             }
         }
 
-        private void ChangeQuiz_Click(object sender, RoutedEventArgs e)
+        private void ChangeQuizButton_Click(object sender, RoutedEventArgs e)
         {
-            GenericChangePopupUserControl popupCtrl = new GenericChangePopupUserControl();
-            popupCtrl.TypeOfItemToChange = "Quiz";
-            popupCtrl.HasItemDescription = true;
-            popupCtrl.OldTitle = quizHandler.quizManager.GetAt(QuizesListView.SelectedIndex).Title;
-            popupCtrl.OldDescription = quizHandler.quizManager.GetAt(QuizesListView.SelectedIndex).Description;
-            popupCtrl.IsSaved += PopupCtrl_IsSaved;
-            UcContainer.Children.Add(popupCtrl);
+            if (QuizesListView.SelectedIndex >= 0)
+            {
+                GenericChangePopupUserControl popupCtrl = new GenericChangePopupUserControl();
+                popupCtrl.TypeOfItemToChange = "Quiz";
+                popupCtrl.HasItemDescription = true;
+                popupCtrl.OldTitle = quizHandler.quizManager.GetAt(QuizesListView.SelectedIndex).Title;
+                popupCtrl.OldDescription = quizHandler.quizManager.GetAt(QuizesListView.SelectedIndex).Description;
+                popupCtrl.IsSaved += PopupCtrl_IsSavedQuizHandler;
+                UcContainer.Children.Add(popupCtrl);
+            }
 
         }
 
-        private void PopupCtrl_IsSaved(object sender, IsSavedEventArgs e)
+        private void PopupCtrl_IsSavedQuizHandler(object sender, IsSavedEventArgs e)
         {
             ChangeQuizInformation(QuizesListView.SelectedIndex, e.NewTitle, e.NewDescription);
             UcContainer.Children.Remove(e.UserControl);
@@ -226,8 +229,37 @@ namespace QuizApplication
             quizHandler.ChangeQuiz(changedQuiz, selectedIndex);
 
             quizes = new ObservableCollection<QuizItem>(quizHandler.quizManager.GetAllItems());
-
             QuizesListView.ItemsSource = quizes;
+        }
+
+        private void EditQuestionButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (QuizesListView.SelectedIndex >= 0)
+            {
+                GenericChangePopupUserControl popupCtrl = new GenericChangePopupUserControl();
+                popupCtrl.TypeOfItemToChange = "Question";
+                popupCtrl.HasItemDescription = false;
+                popupCtrl.OldTitle = QuestionsOfSelectedQuiz.Where(x => x.Id == QuestionsOfSelectedQuizListView.SelectedIndex+1).FirstOrDefault().Title;
+                popupCtrl.IsSaved += PopupCtrl_IsSavedQuestionHandler;
+                UcContainer.Children.Add(popupCtrl);
+            }
+        }
+
+        private void PopupCtrl_IsSavedQuestionHandler(object sender, IsSavedEventArgs e)
+        {
+            ChangeQuestionInformation(QuestionsOfSelectedQuizListView.SelectedIndex, e.NewTitle);
+            UcContainer.Children.Remove(e.UserControl);
+        }
+
+        private void ChangeQuestionInformation(int selectedIndexQuestion, string newQuestion)
+        {
+            Question changedQuestion = QuestionsOfSelectedQuiz.ElementAt(selectedIndexQuestion);
+            changedQuestion.Title = newQuestion;
+
+            quizHandler.quizManager.GetAt(QuizesListView.SelectedIndex).Questions.ChangeAt(changedQuestion, selectedIndexQuestion);
+
+            QuestionsOfSelectedQuiz = new ObservableCollection<Question>(quizHandler.quizManager.GetAt(QuizesListView.SelectedIndex).Questions.GetAllItems());
+            QuestionsOfSelectedQuizListView.ItemsSource = QuestionsOfSelectedQuiz;
         }
     }
 }

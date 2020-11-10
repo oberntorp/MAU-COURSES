@@ -54,8 +54,8 @@
             <Border x:Name="ListQuizBorder" Grid.Row="1">
                 <StackPanel>
                     <DockPanel>
-                        <Button x:Name="ChangeQuiz" Content="Change quiz" DockPanel.Dock="Left" Width="100" Click="ChangeQuiz_Click"/>
-                        <Button x:Name="DeleteQuiz" Content="Delete quiz" Click="DeleteQuiz_Click" DockPanel.Dock="Right" Width="100"/>
+                        <Button x:Name="ChangeQuiz" Content="Change quiz" DockPanel.Dock="Left" Width="100" Click="ChangeQuizButton_Click"/>
+                        <Button x:Name="DeleteQuiz" Content="Delete quiz" Click="DeleteQuizButton_Click" DockPanel.Dock="Right" Width="100"/>
                     </DockPanel>
                     <ListView x:Name="QuizesListView" SelectionChanged="QuizesListView_SelectionChanged">
                         <ListView.View>
@@ -71,8 +71,9 @@
                 <TabItem x:Name="QuestionsTabItem" Header="Questions">
                     <StackPanel>
                         <WrapPanel Margin="0 0 0 10">
-                            <Button Content="Add Question" Margin="0 0 5 0" Click="AddQuestion_Click"/>
-                            <Button Content="Delete Question" Click="DeleteQuestion_Click"/>
+                            <Button Content="Add Question" Margin="0 0 5 0" Click="AddQuestionButton_Click"/>
+                            <Button Content="Edit question" Click="EditQuestionButton_Click"/>
+                            <Button Content="Delete Question" Margin="5 0 0 0" Click="DeleteQuestionButton_Click"/>
                         </WrapPanel>
                         <ListView x:Name="QuestionsOfSelectedQuizListView" SelectionChanged="QuestionsOfSelectedQuizListView_SelectionChanged">
                             <ListView.ItemTemplate>
@@ -84,16 +85,23 @@
                     </StackPanel>
                 </TabItem>
                 <TabItem x:Name="AnswersTabItem" Header="Answers">
-                    <ListView x:Name="AnswersOfSelectedQuestionListView">
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Title}"/>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
+                    <StackPanel>
+                        <WrapPanel Margin="0 0 0 10">
+                            <Button Content="Add answer" Margin="0 0 5 0"/>
+                            <Button Content="Edit answer"/>
+                            <Button Content="Delete answer" Margin="5 0 0 0"/>
+                        </WrapPanel>
+                        <ListView x:Name="AnswersOfSelectedQuestionListView">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Title}"/>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </StackPanel>
                 </TabItem>
             </TabControl>
-            <StackPanel x:Name="UcContainer" Grid.Row="1" Grid.Column="1"></StackPanel>
+            <StackPanel x:Name="UcContainer" Grid.Row="1" Grid.Column="1" Margin="10 0"></StackPanel>
         </Grid>
     </DockPanel>
 </Window>

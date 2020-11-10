@@ -8,16 +8,18 @@
              d:DesignHeight="180" d:DesignWidth="100">
     <Grid>
         <StackPanel>
-            <StackPanel>
-                <TextBlock Text="{Binding TypeOfItemToChange}"/>
-                <Label Content="New Name"/>
-                <TextBox x:Name="ChangedItemNameTextBox" Text="{Binding OldTitle}"/>
+            <WrapPanel>
+                <TextBlock Text="Change a " FontSize="20"/>
+                <TextBlock Text="{Binding TypeOfItemToChange}" FontSize="20"/>
+            </WrapPanel>
+            <Label Content="New Name"/>
+            <TextBox x:Name="ChangedItemNameTextBox" Text="{Binding OldTitle}"/>
 
-                <Label Content="New Description"/>
-                <TextBox x:Name="ChangedItemDescriptionTextBox" Text="{Binding OldDescription}" />
-                <Label Content="Please fill in all values" x:Name="WarningLabel" Visibility="Hidden" Foreground="Red"/>
-                <Button x:Name="SaveButton" Margin="0 5 0 0" Content="Save" Click="SaveButton_Click"/>
-            </StackPanel>
+            <Label x:Name="ChangedItemDescriptionLabel" Content="New Description"/>
+            <TextBox x:Name="ChangedItemDescriptionTextBox" Text="{Binding OldDescription}" />
+            
+            <Label Content="Please fill in all values" x:Name="WarningLabel" Visibility="Hidden" Foreground="Red"/>
+            <Button x:Name="SaveButton" Margin="0 5 0 0" Content="Save" Click="SaveButton_Click"/>
         </StackPanel>
     </Grid>
 </UserControl>

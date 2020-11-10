@@ -60,13 +60,19 @@ namespace QuizApplication
         {
             InitializeComponent();
             this.DataContext = this;
+
+            if(!HasItemDescription)
+            {
+                ChangedItemDescriptionLabel.Visibility = Visibility.Collapsed;
+                ChangedItemDescriptionTextBox.Visibility = Visibility.Collapsed;
+            }
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             WarningLabel.Visibility = Visibility.Hidden;
             IsSavedEventArgs eventArgs = new IsSavedEventArgs();
-            if (TextFilledIn())
+            if (IsTextFilledIn())
             {
                 eventArgs.NewTitle = ChangedItemNameTextBox.Text;
                 if (HasItemDescription)
@@ -87,9 +93,16 @@ namespace QuizApplication
             IsSaved?.Invoke(this, eventArgs);
         }
 
-        private bool TextFilledIn()
+        private bool IsTextFilledIn()
         {
-            return ChangedItemNameTextBox.Text != "" && ChangedItemDescriptionTextBox.Text != "";
+            if (HasItemDescription)
+            {
+                return ChangedItemNameTextBox.Text != "" && ChangedItemDescriptionTextBox.Text != "";
+            }
+            else
+            {
+                return ChangedItemNameTextBox.Text != "";
+            }
         }
     }
     }
