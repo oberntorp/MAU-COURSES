@@ -10,6 +10,7 @@ namespace QuizApplication.EventArgs
     {
         public string NewTitle { get; set; }
         public string NewDescription { get; set; }
+        public bool IsRightAnswer { get; set; }
 
         public GenericChangePopupUserControl UserControl { get; set; }
     }

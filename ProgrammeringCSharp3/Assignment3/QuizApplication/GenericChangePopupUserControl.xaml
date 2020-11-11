@@ -9,15 +9,18 @@
     <Grid>
         <StackPanel>
             <WrapPanel>
-                <TextBlock Text="Change a " FontSize="20"/>
-                <TextBlock Text="{Binding TypeOfItemToChange}" FontSize="20"/>
+                <TextBlock Text="{Binding TextActionLabel}" FontSize="20"/>
+                <TextBlock Text="{Binding ItemTypeBeingChanged}" FontSize="20"/>
             </WrapPanel>
             <Label Content="New Name"/>
             <TextBox x:Name="ChangedItemNameTextBox" Text="{Binding OldTitle}"/>
 
             <Label x:Name="ChangedItemDescriptionLabel" Content="New Description"/>
             <TextBox x:Name="ChangedItemDescriptionTextBox" Text="{Binding OldDescription}" />
-            
+
+            <Label x:Name="ChangedItemRightAnswerLabel" Content="Right Answer: " Visibility="Collapsed"/>
+            <CheckBox x:Name="ChangedItemRightAnswerCheckBox" IsChecked="{Binding OldIsRightAnswer}" Visibility="Collapsed"/>
+
             <Label Content="Please fill in all values" x:Name="WarningLabel" Visibility="Hidden" Foreground="Red"/>
             <Button x:Name="SaveButton" Margin="0 5 0 0" Content="Save" Click="SaveButton_Click"/>
         </StackPanel>

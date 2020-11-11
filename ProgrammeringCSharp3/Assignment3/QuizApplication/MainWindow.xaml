@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:QuizApplication"
         xmlns:Popup="QuizApplication.GenericChangePopupUserControl"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800"
+        Closing="Window_Closing">
     <Window.Resources>
         <Style TargetType="Label">
             <Setter Property="Width" Value="130"/>
@@ -54,7 +55,7 @@
             <Border x:Name="ListQuizBorder" Grid.Row="1">
                 <StackPanel>
                     <DockPanel>
-                        <Button x:Name="ChangeQuiz" Content="Change quiz" DockPanel.Dock="Left" Width="100" Click="ChangeQuizButton_Click"/>
+                        <Button x:Name="ChangeQuiz" Content="Edit quiz" DockPanel.Dock="Left" Width="100" Click="ChangeQuizButton_Click"/>
                         <Button x:Name="DeleteQuiz" Content="Delete quiz" Click="DeleteQuizButton_Click" DockPanel.Dock="Right" Width="100"/>
                     </DockPanel>
                     <ListView x:Name="QuizesListView" SelectionChanged="QuizesListView_SelectionChanged">
@@ -87,9 +88,9 @@
                 <TabItem x:Name="AnswersTabItem" Header="Answers">
                     <StackPanel>
                         <WrapPanel Margin="0 0 0 10">
-                            <Button Content="Add answer" Margin="0 0 5 0"/>
-                            <Button Content="Edit answer"/>
-                            <Button Content="Delete answer" Margin="5 0 0 0"/>
+                            <Button Content="Add answer" Click="AddAnswerButton_Click" Margin="0 0 5 0"/>
+                            <Button Content="Edit answer" Click="EditAnswerButton_Click"/>
+                            <Button Content="Delete answer" Click="DeleteAnswerButton_Click" Margin="5 0 0 0"/>
                         </WrapPanel>
                         <ListView x:Name="AnswersOfSelectedQuestionListView">
                             <ListView.ItemTemplate>

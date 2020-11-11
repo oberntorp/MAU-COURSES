@@ -1,4 +1,5 @@
-﻿using QuizApplication.EventArgs;
+﻿using QuizApplication.Enums;
+using QuizApplication.EventArgs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,14 +23,37 @@ namespace QuizApplication
     public partial class GenericChangePopupUserControl : UserControl
     {
 
-        public event EventHandler<IsSavedEventArgs> IsSaved;
-        public bool HasItemDescription
+
+
+
+
+        public string TextActionLabel
         {
-            get;
-            set;
+            get { return (string)GetValue(TextActionLabelProperty); }
+            set { SetValue(TextActionLabelProperty, value); }
         }
 
-        public string TypeOfItemToChange
+        // Using a DependencyProperty as the backing store for TextActionLabel.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty TextActionLabelProperty =
+            DependencyProperty.Register("TextActionLabel", typeof(string), typeof(GenericChangePopupUserControl), new PropertyMetadata(""));
+
+
+
+
+        public string ItemTypeBeingChanged
+        {
+            get { return (string)GetValue(ItemTypeBeingChangedProperty); }
+            set { SetValue(ItemTypeBeingChangedProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for ItemTypeBeingChanged.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ItemTypeBeingChangedProperty =
+            DependencyProperty.Register("ItemTypeBeingChanged", typeof(string), typeof(GenericChangePopupUserControl), new PropertyMetadata("Quiz"));
+
+        public event EventHandler<IsSavedEventArgs> IsSaved;
+
+        public TypeOfAction TypeOfAction { get; set; }
+        public TypeOfItemToChange TypeOfItemToHandle
         {
             get;
             set;
@@ -55,16 +79,36 @@ namespace QuizApplication
         public static readonly DependencyProperty OldDescriptionProperty =
             DependencyProperty.Register("OldDescription", typeof(string), typeof(GenericChangePopupUserControl), new PropertyMetadata(""));
 
+        public bool OldIsRightAnswer
+        {
+            get { return (bool)GetValue(OldIsRightAnswerProperty); }
+            set { SetValue(OldIsRightAnswerProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for OldIsRightAnswer.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty OldIsRightAnswerProperty =
+            DependencyProperty.Register("OldIsRightAnswer", typeof(bool), typeof(GenericChangePopupUserControl), new PropertyMetadata(false));
 
         public GenericChangePopupUserControl()
         {
             InitializeComponent();
             this.DataContext = this;
+        }
 
-            if(!HasItemDescription)
+        public void InitializeGui()
+        {
+            TextActionLabel = (TypeOfAction == TypeOfAction.Add) ? "Add new " : "Edit a ";
+            if (TypeOfItemToHandle != TypeOfItemToChange.Quiz)
             {
+                ItemTypeBeingChanged = (TypeOfItemToHandle == TypeOfItemToChange.Question) ? "Question" : "Answer";
                 ChangedItemDescriptionLabel.Visibility = Visibility.Collapsed;
                 ChangedItemDescriptionTextBox.Visibility = Visibility.Collapsed;
+
+                if (TypeOfItemToHandle == TypeOfItemToChange.Answer)
+                {
+                    ChangedItemRightAnswerLabel.Visibility = Visibility.Visible;
+                    ChangedItemRightAnswerCheckBox.Visibility = Visibility.Visible;
+                }
             }
         }
 
@@ -75,7 +119,7 @@ namespace QuizApplication
             if (IsTextFilledIn())
             {
                 eventArgs.NewTitle = ChangedItemNameTextBox.Text;
-                if (HasItemDescription)
+                if (TypeOfItemToHandle == TypeOfItemToChange.Quiz)
                 {
                     eventArgs.NewDescription = ChangedItemDescriptionTextBox.Text;
                 }
@@ -95,7 +139,7 @@ namespace QuizApplication
 
         private bool IsTextFilledIn()
         {
-            if (HasItemDescription)
+            if (TypeOfItemToHandle == TypeOfItemToChange.Quiz)
             {
                 return ChangedItemNameTextBox.Text != "" && ChangedItemDescriptionTextBox.Text != "";
             }
@@ -105,4 +149,4 @@ namespace QuizApplication
             }
         }
     }
-    }
+}

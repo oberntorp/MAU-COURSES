@@ -29,6 +29,7 @@ namespace QuizApplication
         ObservableCollection<QuizItem> quizes;
         ObservableCollection<Answer> AnswersOfSelectedQuestion;
         ObservableCollection<Question> QuestionsOfSelectedQuiz;
+        bool dataSaved = false;
         public MainWindow()
         {
             InitializeComponent();
@@ -101,25 +102,37 @@ namespace QuizApplication
 
         private void LoadFromXMLMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "XML File | *.XML";
-            bool opened = (bool)openFileDialog.ShowDialog();
-
-            if (opened)
+            if (quizHandler.quizManager.Count == 0 || (quizHandler.quizManager.Count > 0 && WantToContinueWithoutSaving()))
             {
-                try
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.Filter = "XML File | *.XML";
+                bool opened = (bool)openFileDialog.ShowDialog();
+
+                if (opened)
                 {
-                    quizHandler.quizManager.XMLDeserialize(openFileDialog.FileName);
-                    quizes = new ObservableCollection<QuizItem>(quizHandler.quizManager.GetAllItems());
-                    QuizesListView.ItemsSource = quizes;
-                    TransferQuestionsAndANswersToProgram();
-                    MessageBoxes.ShowInformationMessageBox("The Created Questions where saved!");
-                }
-                catch (Exception exOpen)
-                {
-                    MessageBoxes.ShowErrorMessageBox($"{exOpen.Message} {exOpen.InnerException}");
+                    try
+                    {
+                        quizHandler.quizManager.XMLDeserialize(openFileDialog.FileName);
+                        quizes = new ObservableCollection<QuizItem>(quizHandler.quizManager.GetAllItems());
+                        QuizesListView.ItemsSource = quizes;
+                        TransferQuestionsAndANswersToProgram();
+                        MessageBoxes.ShowInformationMessageBox("The Created questions where saved!");
+                    }
+                    catch (Exception exOpen)
+                    {
+                        MessageBoxes.ShowErrorMessageBox($"{exOpen.Message} {exOpen.InnerException}");
+                    }
                 }
             }
+        }
+
+        /// <summary>
+        /// Asks theuser if they want to continue without saving
+        /// </summary>
+        /// <returns>true/false</returns>
+        private static bool WantToContinueWithoutSaving()
+        {
+            return (MessageBoxes.ShowSaveWarningMessageBox("Your current work will be lost, please save them first. Do you want to continue?") == MessageBoxResult.Yes);
         }
 
         private void TransferQuestionsAndANswersToProgram()
@@ -134,38 +147,34 @@ namespace QuizApplication
                 {
                     x.Questions.GetAllItems().Where(lq => lq.Id == q.Id).First().Answers.AnswersXML.ForEach(a => q.Answers.AddAnswerAfterLoad(a));
                 });
-
-                ClearXMLListsAfterTransfer(x);
-            });
-        }
-
-        private void ClearXMLListsAfterTransfer(QuizItem x)
-        {
-            x.Questions.QuestionsXML.Clear();
-
-            quizHandler.quizManager.GetAt(x.Id - 1).Questions.GetAllItems().ForEach(q =>
-            {
-                x.Questions.GetAllItems().Where(lq => lq.Id == q.Id).First().Answers.AnswersXML.Clear();
             });
         }
 
         private void SaveToXMLMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "XML File | *.XML";
-            bool saved = (bool)saveFileDialog.ShowDialog();
-
-            if (saved)
+            if (quizHandler.quizManager.Count > 0)
             {
-                try
+                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                saveFileDialog.Filter = "XML File | *.XML";
+                bool saved = (bool)saveFileDialog.ShowDialog();
+
+                if (saved)
                 {
-                    quizHandler.quizManager.XMLSerialize(saveFileDialog.FileName);
-                    MessageBoxes.ShowInformationMessageBox("The Questions where loaded");
+                    try
+                    {
+                        quizHandler.quizManager.XMLSerialize(saveFileDialog.FileName);
+                        dataSaved = true;
+                        MessageBoxes.ShowInformationMessageBox("The Questions where saved");
+                    }
+                    catch (Exception exSave)
+                    {
+                        MessageBoxes.ShowErrorMessageBox($"{exSave.Message} {exSave.InnerException}");
+                    }
                 }
-                catch (Exception exSave)
-                {
-                    MessageBoxes.ShowErrorMessageBox($"{exSave.Message} {exSave.InnerException}");
-                }
+            }
+            else
+            {
+                MessageBoxes.ShowInformationMessageBox("There is nothing to save yet, create some quizes");
             }
         }
 
@@ -204,11 +213,12 @@ namespace QuizApplication
             if (QuizesListView.SelectedIndex >= 0)
             {
                 GenericChangePopupUserControl popupCtrl = new GenericChangePopupUserControl();
-                popupCtrl.TypeOfItemToChange = "Quiz";
-                popupCtrl.HasItemDescription = true;
+                popupCtrl.TypeOfAction = Enums.TypeOfAction.Edit;
+                popupCtrl.TypeOfItemToHandle = Enums.TypeOfItemToChange.Quiz;
                 popupCtrl.OldTitle = quizHandler.quizManager.GetAt(QuizesListView.SelectedIndex).Title;
                 popupCtrl.OldDescription = quizHandler.quizManager.GetAt(QuizesListView.SelectedIndex).Description;
                 popupCtrl.IsSaved += PopupCtrl_IsSavedQuizHandler;
+                popupCtrl.InitializeGui();
                 UcContainer.Children.Add(popupCtrl);
             }
 
@@ -234,14 +244,19 @@ namespace QuizApplication
 
         private void EditQuestionButton_Click(object sender, RoutedEventArgs e)
         {
-            if (QuizesListView.SelectedIndex >= 0)
+            if (QuestionsOfSelectedQuizListView.SelectedIndex >= 0)
             {
                 GenericChangePopupUserControl popupCtrl = new GenericChangePopupUserControl();
-                popupCtrl.TypeOfItemToChange = "Question";
-                popupCtrl.HasItemDescription = false;
-                popupCtrl.OldTitle = QuestionsOfSelectedQuiz.Where(x => x.Id == QuestionsOfSelectedQuizListView.SelectedIndex+1).FirstOrDefault().Title;
+                popupCtrl.TypeOfAction = Enums.TypeOfAction.Edit;
+                popupCtrl.TypeOfItemToHandle = Enums.TypeOfItemToChange.Question;
+                popupCtrl.OldTitle = QuestionsOfSelectedQuiz.Where(x => x.Id == QuestionsOfSelectedQuizListView.SelectedIndex + 1).FirstOrDefault().Title;
                 popupCtrl.IsSaved += PopupCtrl_IsSavedQuestionHandler;
+                popupCtrl.InitializeGui();
                 UcContainer.Children.Add(popupCtrl);
+            }
+            else
+            {
+                MessageBoxes.ShowInformationMessageBox("Please select an question to edit");
             }
         }
 
@@ -260,6 +275,94 @@ namespace QuizApplication
 
             QuestionsOfSelectedQuiz = new ObservableCollection<Question>(quizHandler.quizManager.GetAt(QuizesListView.SelectedIndex).Questions.GetAllItems());
             QuestionsOfSelectedQuizListView.ItemsSource = QuestionsOfSelectedQuiz;
+        }
+
+        private void AddAnswerButton_Click(object sender, RoutedEventArgs e)
+        {
+            GenericChangePopupUserControl popupCtrl = new GenericChangePopupUserControl();
+            popupCtrl.TypeOfAction = Enums.TypeOfAction.Add;
+            popupCtrl.TypeOfItemToHandle = Enums.TypeOfItemToChange.Answer;
+            popupCtrl.IsSaved += PopupCtrl_IsSavedAnswerHandler;
+            popupCtrl.InitializeGui();
+            UcContainer.Children.Add(popupCtrl);
+        }
+
+        private void PopupCtrl_IsSavedAnswerHandler(object sender, IsSavedEventArgs e)
+        {
+            CreateNewAnswer(e.NewTitle, e.IsRightAnswer);
+            AnswersOfSelectedQuestion = new ObservableCollection<Answer>(quizHandler.quizManager.GetAt(QuizesListView.SelectedIndex).Questions.GetAt(QuestionsOfSelectedQuizListView.SelectedIndex).Answers.GetAllItems());
+            AnswersOfSelectedQuestionListView.ItemsSource = AnswersOfSelectedQuestion;
+            UcContainer.Children.Remove(e.UserControl);
+        }
+
+        private void CreateNewAnswer(string newTitle, bool newIsRightAnswer)
+        {
+            Answer newAnswer = new Answer(newTitle, newIsRightAnswer);
+            quizHandler.quizManager.GetAt(QuizesListView.SelectedIndex).Questions.GetAt(QuestionsOfSelectedQuizListView.SelectedIndex).Answers.AddAnswer(newAnswer);
+        }
+
+        private void EditAnswerButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (AnswersOfSelectedQuestionListView.SelectedIndex >= 0)
+            {
+                GenericChangePopupUserControl popupCtrl = new GenericChangePopupUserControl();
+                popupCtrl.TypeOfAction = Enums.TypeOfAction.Edit;
+                popupCtrl.TypeOfItemToHandle = Enums.TypeOfItemToChange.Answer;
+                popupCtrl.OldTitle = quizHandler.quizManager.GetAt(QuizesListView.SelectedIndex).Questions.GetAt(QuestionsOfSelectedQuizListView.SelectedIndex).Answers.GetAt(AnswersOfSelectedQuestionListView.SelectedIndex).Title;
+                popupCtrl.OldIsRightAnswer = quizHandler.quizManager.GetAt(QuizesListView.SelectedIndex).Questions.GetAt(QuestionsOfSelectedQuizListView.SelectedIndex).Answers.GetAt(AnswersOfSelectedQuestionListView.SelectedIndex).RightAnswer;
+                popupCtrl.IsSaved += PopupCtrl_IsEditAnswerSaved;
+                popupCtrl.InitializeGui();
+                UcContainer.Children.Add(popupCtrl);
+            }
+            else
+            {
+                MessageBoxes.ShowInformationMessageBox("Please select an answer to edit");
+            }
+        }
+
+        private void PopupCtrl_IsEditAnswerSaved(object sender, IsSavedEventArgs e)
+        {
+            ChangeAnswerInformation(AnswersOfSelectedQuestionListView.SelectedIndex, e.NewTitle);
+            UcContainer.Children.Remove(e.UserControl);
+        }
+
+        private void ChangeAnswerInformation(int selectedIndexAnswer, string newAnswer)
+        {
+            Answer changedAnswer = AnswersOfSelectedQuestion.ElementAt(selectedIndexAnswer);
+            changedAnswer.Title = newAnswer;
+
+            quizHandler.quizManager.GetAt(QuizesListView.SelectedIndex).Questions.GetAt(QuestionsOfSelectedQuizListView.SelectedIndex).Answers.ChangeAt(changedAnswer, selectedIndexAnswer);
+
+            AnswersOfSelectedQuestion = new ObservableCollection<Answer>(quizHandler.quizManager.GetAt(QuizesListView.SelectedIndex).Questions.GetAt(QuestionsOfSelectedQuizListView.SelectedIndex).Answers.GetAllItems());
+            AnswersOfSelectedQuestionListView.ItemsSource = AnswersOfSelectedQuestion;
+        }
+
+        private void DeleteAnswerButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (QuizesListView.SelectedIndex >= 0)
+            {
+                if (quizHandler.quizManager.GetAt(QuizesListView.SelectedIndex).Questions.GetAt(QuestionsOfSelectedQuizListView.SelectedIndex).Answers.RemoveAnswer(AnswersOfSelectedQuestionListView.SelectedIndex))
+                {
+                    AnswersOfSelectedQuestion.RemoveAt(AnswersOfSelectedQuestionListView.SelectedIndex);
+                }
+            }
+            else
+            {
+                MessageBoxes.ShowInformationMessageBox("Please select an answer to remove");
+            }
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (DataToSave() && (!dataSaved && MessageBoxes.ShowSaveWarningMessageBox("You have not saved, do you really want to close the application?") == MessageBoxResult.No))
+            {
+                e.Cancel = true;
+            }
+        }
+
+        private bool DataToSave()
+        {
+            return quizHandler.quizManager.Count > 0;
         }
     }
 }

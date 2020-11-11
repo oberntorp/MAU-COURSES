@@ -74,6 +74,8 @@
     <Compile Include="CreateQuestionWindow.xaml.cs">
       <DependentUpon>CreateQuestionWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Enums\TypeOfAction.cs" />
+    <Compile Include="Enums\TypeOfItemToChange.cs" />
     <Compile Include="EventArgs\IsSavedEventArgs.cs" />
     <Compile Include="GenericChangePopupUserControl.xaml.cs">
       <DependentUpon>GenericChangePopupUserControl.xaml</DependentUpon>
