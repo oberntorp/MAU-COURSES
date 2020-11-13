@@ -34,6 +34,7 @@ namespace QuizApplication
         {
             InitializeComponent();
             quizHandler = new QuizHandler();
+            DataContext = this;
         }
 
         private void CreateQuizButton_Click(object sender, RoutedEventArgs e)
@@ -363,6 +364,17 @@ namespace QuizApplication
         private bool DataToSave()
         {
             return quizHandler.quizManager.Count > 0;
+        }
+
+        private void ShowSearchFieldButton_Click(object sender, RoutedEventArgs e)
+        {
+            SearchTermTextBox.Visibility = Visibility.Visible;
+            PerformSearch();
+        }
+
+        private void PerformSearch()
+        {
+            quizHandler.SearchQuizes(SearchTermTextBox.Text);
         }
     }
 }

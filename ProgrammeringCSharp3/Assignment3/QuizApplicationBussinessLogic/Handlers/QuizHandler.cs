@@ -45,5 +45,10 @@ namespace QuizApplicationBussinessLogic.Handlers
         {
             quizManager.XMLDeserialize(filePath);
         }
+
+        public void SearchQuizes(string text)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
