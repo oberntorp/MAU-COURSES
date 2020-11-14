@@ -69,7 +69,7 @@
                     <WrapPanel HorizontalAlignment="Right" Width="396">
                         <Button x:Name="ShowSearchFieldButton" Click="ShowSearchFieldButton_Click" Background="White"  BorderThickness="0 0 1 0">
                             <Button.Content>
-                                <Image Source="https://img.icons8.com/pastel-glyph/64/000000/search--v2.png" Height="32" Width="32" DockPanel.Dock="Left"/>
+                                <Image Source="/QuizApplication;component/Icons/icons8_search.png" Height="32" Width="32" DockPanel.Dock="Left"/>
                             </Button.Content>
                         </Button>
                         <TextBox x:Name="SearchTermTextBox" Width="300" Height="32" Visibility="Hidden"/>
