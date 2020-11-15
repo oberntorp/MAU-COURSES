@@ -376,5 +376,10 @@ namespace QuizApplication
         {
             quizHandler.SearchQuizes(SearchTermTextBox.Text);
         }
+
+        private void SearchTermTextBox_KeyUp(object sender, KeyEventArgs e)
+        {
+
+        }
     }
 }
