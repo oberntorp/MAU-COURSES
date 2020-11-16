@@ -17,6 +17,7 @@ using Microsoft.Win32;
 using QuizApplication.EventArgs;
 using QuizApplicationBussinessLogic.Handlers;
 using QuizApplicationBussinessLogic.QuizClasses;
+using Utilities.Enums;
 
 namespace QuizApplication
 {
@@ -214,8 +215,8 @@ namespace QuizApplication
             if (QuizesListView.SelectedIndex >= 0)
             {
                 GenericChangePopupUserControl popupCtrl = new GenericChangePopupUserControl();
-                popupCtrl.TypeOfAction = Enums.TypeOfAction.Edit;
-                popupCtrl.TypeOfItemToHandle = Enums.TypeOfItemToChange.Quiz;
+                popupCtrl.TypeOfAction = TypeOfAction.Edit;
+                popupCtrl.TypeOfItemToHandle = TypeOfItemToChange.Quiz;
                 popupCtrl.OldTitle = quizHandler.quizManager.GetAt(QuizesListView.SelectedIndex).Title;
                 popupCtrl.OldDescription = quizHandler.quizManager.GetAt(QuizesListView.SelectedIndex).Description;
                 popupCtrl.IsSaved += PopupCtrl_IsSavedQuizHandler;
@@ -248,8 +249,8 @@ namespace QuizApplication
             if (QuestionsOfSelectedQuizListView.SelectedIndex >= 0)
             {
                 GenericChangePopupUserControl popupCtrl = new GenericChangePopupUserControl();
-                popupCtrl.TypeOfAction = Enums.TypeOfAction.Edit;
-                popupCtrl.TypeOfItemToHandle = Enums.TypeOfItemToChange.Question;
+                popupCtrl.TypeOfAction = TypeOfAction.Edit;
+                popupCtrl.TypeOfItemToHandle = TypeOfItemToChange.Question;
                 popupCtrl.OldTitle = QuestionsOfSelectedQuiz.Where(x => x.Id == QuestionsOfSelectedQuizListView.SelectedIndex + 1).FirstOrDefault().Title;
                 popupCtrl.IsSaved += PopupCtrl_IsSavedQuestionHandler;
                 popupCtrl.InitializeGui();
@@ -281,8 +282,8 @@ namespace QuizApplication
         private void AddAnswerButton_Click(object sender, RoutedEventArgs e)
         {
             GenericChangePopupUserControl popupCtrl = new GenericChangePopupUserControl();
-            popupCtrl.TypeOfAction = Enums.TypeOfAction.Add;
-            popupCtrl.TypeOfItemToHandle = Enums.TypeOfItemToChange.Answer;
+            popupCtrl.TypeOfAction = TypeOfAction.Add;
+            popupCtrl.TypeOfItemToHandle = TypeOfItemToChange.Answer;
             popupCtrl.IsSaved += PopupCtrl_IsSavedAnswerHandler;
             popupCtrl.InitializeGui();
             UcContainer.Children.Add(popupCtrl);
@@ -307,8 +308,8 @@ namespace QuizApplication
             if (AnswersOfSelectedQuestionListView.SelectedIndex >= 0)
             {
                 GenericChangePopupUserControl popupCtrl = new GenericChangePopupUserControl();
-                popupCtrl.TypeOfAction = Enums.TypeOfAction.Edit;
-                popupCtrl.TypeOfItemToHandle = Enums.TypeOfItemToChange.Answer;
+                popupCtrl.TypeOfAction = TypeOfAction.Edit;
+                popupCtrl.TypeOfItemToHandle = TypeOfItemToChange.Answer;
                 popupCtrl.OldTitle = quizHandler.quizManager.GetAt(QuizesListView.SelectedIndex).Questions.GetAt(QuestionsOfSelectedQuizListView.SelectedIndex).Answers.GetAt(AnswersOfSelectedQuestionListView.SelectedIndex).Title;
                 popupCtrl.OldIsRightAnswer = quizHandler.quizManager.GetAt(QuizesListView.SelectedIndex).Questions.GetAt(QuestionsOfSelectedQuizListView.SelectedIndex).Answers.GetAt(AnswersOfSelectedQuestionListView.SelectedIndex).RightAnswer;
                 popupCtrl.IsSaved += PopupCtrl_IsEditAnswerSaved;
@@ -369,17 +370,32 @@ namespace QuizApplication
         private void ShowSearchFieldButton_Click(object sender, RoutedEventArgs e)
         {
             SearchTermTextBox.Visibility = Visibility.Visible;
-            PerformSearch();
-        }
-
-        private void PerformSearch()
-        {
-            quizHandler.SearchQuizes(SearchTermTextBox.Text);
         }
 
         private void SearchTermTextBox_KeyUp(object sender, KeyEventArgs e)
         {
+            PerformSearch(GetTypeOfSearchFromRadioButtons());
+        }
 
+        private BaseSearchOn GetTypeOfSearchFromRadioButtons()
+        {
+            if (SearchInQuizNameRaidoButton.IsChecked == true)
+            {
+                return BaseSearchOn.QuizName;
+            }
+            else if (SearchInQuestions.IsChecked == true)
+            {
+                return BaseSearchOn.Questions;
+            }
+            else
+            {
+                return BaseSearchOn.Answers;
+            }
+        }
+
+        private void PerformSearch(BaseSearchOn searchIn)
+        {
+            quizHandler.SearchQuizes(SearchTermTextBox.Text, searchIn);
         }
     }
 }

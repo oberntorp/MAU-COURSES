@@ -74,8 +74,6 @@
     <Compile Include="CreateQuestionWindow.xaml.cs">
       <DependentUpon>CreateQuestionWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Enums\TypeOfAction.cs" />
-    <Compile Include="Enums\TypeOfItemToChange.cs" />
     <Compile Include="EventArgs\IsSavedEventArgs.cs" />
     <Compile Include="GenericChangePopupUserControl.xaml.cs">
       <DependentUpon>GenericChangePopupUserControl.xaml</DependentUpon>
@@ -113,6 +111,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Assignment2\Utilities\Utilities.csproj">
+      <Project>{646ac35d-16a6-43b1-baec-e2e40cd4b971}</Project>
+      <Name>Utilities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\QuizApplicationBussinessLogic\QuizApplicationBussinessLogic.csproj">
       <Project>{f8219530-9318-478c-8f45-3cfb23f0a27a}</Project>
       <Name>QuizApplicationBussinessLogic</Name>

@@ -73,6 +73,12 @@
                             </Button.Content>
                         </Button>
                         <TextBox x:Name="SearchTermTextBox" KeyUp="SearchTermTextBox_KeyUp" Width="300" Height="32" Visibility="Hidden"/>
+                        <WrapPanel>
+                            <Label Content="Base Search On: "/>
+                            <RadioButton x:Name="SearchInQuizNameRaidoButton" IsChecked="True">Quiz Name</RadioButton>
+                            <RadioButton x:Name="SearchInAnswers">Answers</RadioButton>
+                            <RadioButton x:Name="SearchInQuestions">Questions</RadioButton>
+                        </WrapPanel>
                     </WrapPanel>
                     <ListBox x:Name="SearchResults" Visibility="Hidden">
                         <ListBox.ItemTemplate>

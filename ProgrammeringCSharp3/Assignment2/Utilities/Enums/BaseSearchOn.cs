@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QuizApplication.Enums
+namespace Utilities.Enums
 {
-    public enum TypeOfItemToChange
+    public enum BaseSearchOn
     {
-        Quiz,
-        Question,
-        Answer
+        QuizName,
+        Answers,
+        Questions
     }
 }

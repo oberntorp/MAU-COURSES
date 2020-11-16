@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QuizApplication.Enums
+namespace Utilities.Enums
 {
-    public enum TypeOfAction
+    public enum TypeOfItemToChange
     {
-        Edit,
-        Add
+        Quiz,
+        Question,
+        Answer
     }
 }

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Utilities.Enums;
 
 namespace QuizApplicationBussinessLogic.Handlers
 {
@@ -46,9 +47,34 @@ namespace QuizApplicationBussinessLogic.Handlers
             quizManager.XMLDeserialize(filePath);
         }
 
-        public void SearchQuizes(string text)
+        public object SearchQuizes(string text, BaseSearchOn baseSearchOn)
         {
-            throw new NotImplementedException();
+            switch(baseSearchOn)
+            {
+                case BaseSearchOn.QuizName:
+                    return SearchQuizesBasedOnQuizName(text);
+                case BaseSearchOn.Questions:
+                    return SearchQuizesBasedOnQuestions(text);
+                default:
+                    return SearchQuizesBasedOnAnswers(text);
+            }
+        }
+
+        private List<QuizItem> SearchQuizesBasedOnQuizName(string searchTerm)
+        {
+            return (from quiz in quizManager.GetAllItems() where quiz.Title.Contains(searchTerm) select quiz).ToList();
+        }
+
+        private List<Question> SearchQuizesBasedOnQuestions(string searchTerm)
+        {
+            var questions = (from quiz in quizManager.GetAllItems() select new { questions = from question in quiz.Questions.GetAllItems() where question.Title.Contains(searchTerm) select question });
+            return questions.SelectMany(q => q.questions.Where(x => x.Title.Contains(searchTerm))).ToList();
+        }
+
+        private List<Answer> SearchQuizesBasedOnAnswers(string searchTerm)
+        {
+            var questions = (from quiz in quizManager.GetAllItems() select new { questions = from question in quiz.Questions.GetAllItems() select question }).ToList();
+            return questions.SelectMany(q1 => q1.questions.SelectMany(q2 => q2.Answers.GetAllItems().Where(a => a.Title.Contains(searchTerm)))).ToList();
         }
     }
 }
