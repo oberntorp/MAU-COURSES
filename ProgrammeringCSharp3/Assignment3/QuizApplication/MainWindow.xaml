@@ -18,6 +18,9 @@
         <Style TargetType="WrapPanel">
             <Setter Property="Margin" Value="0 0 0 15"/>
         </Style>
+        <Style TargetType="RadioButton">
+            <Setter Property="Margin" Value="0 0 5 0"/>
+        </Style>
     </Window.Resources>
     <DockPanel>
         <Menu DockPanel.Dock="Top">
@@ -74,7 +77,7 @@
                         </Button>
                         <TextBox x:Name="SearchTermTextBox" KeyUp="SearchTermTextBox_KeyUp" Width="300" Height="32" Visibility="Hidden"/>
                         <WrapPanel>
-                            <Label Content="Base Search On: "/>
+                            <Label Content="Base Search On: " Padding="0"/>
                             <RadioButton x:Name="SearchInQuizNameRaidoButton" IsChecked="True">Quiz Name</RadioButton>
                             <RadioButton x:Name="SearchInAnswers">Answers</RadioButton>
                             <RadioButton x:Name="SearchInQuestions">Questions</RadioButton>

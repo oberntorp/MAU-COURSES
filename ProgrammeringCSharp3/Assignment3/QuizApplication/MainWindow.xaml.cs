@@ -219,17 +219,15 @@ namespace QuizApplication
                 popupCtrl.TypeOfItemToHandle = TypeOfItemToChange.Quiz;
                 popupCtrl.OldTitle = quizHandler.quizManager.GetAt(QuizesListView.SelectedIndex).Title;
                 popupCtrl.OldDescription = quizHandler.quizManager.GetAt(QuizesListView.SelectedIndex).Description;
-                popupCtrl.IsSaved += PopupCtrl_IsSavedQuizHandler;
+                popupCtrl.IsSaved += (senderIsSaved, eIsSaved) =>
+                {
+                    ChangeQuizInformation(QuizesListView.SelectedIndex, eIsSaved.NewTitle, eIsSaved.NewDescription);
+                    UcContainer.Children.Remove(eIsSaved.UserControl);
+                };
                 popupCtrl.InitializeGui();
                 UcContainer.Children.Add(popupCtrl);
             }
 
-        }
-
-        private void PopupCtrl_IsSavedQuizHandler(object sender, IsSavedEventArgs e)
-        {
-            ChangeQuizInformation(QuizesListView.SelectedIndex, e.NewTitle, e.NewDescription);
-            UcContainer.Children.Remove(e.UserControl);
         }
 
         private void ChangeQuizInformation(int selectedIndex, string newTitle, string newDescription)
@@ -252,7 +250,11 @@ namespace QuizApplication
                 popupCtrl.TypeOfAction = TypeOfAction.Edit;
                 popupCtrl.TypeOfItemToHandle = TypeOfItemToChange.Question;
                 popupCtrl.OldTitle = QuestionsOfSelectedQuiz.Where(x => x.Id == QuestionsOfSelectedQuizListView.SelectedIndex + 1).FirstOrDefault().Title;
-                popupCtrl.IsSaved += PopupCtrl_IsSavedQuestionHandler;
+                popupCtrl.IsSaved += (senderIsSaved, eIsSaved) =>
+                {
+                    ChangeQuestionInformation(QuestionsOfSelectedQuizListView.SelectedIndex, eIsSaved.NewTitle);
+                    UcContainer.Children.Remove(eIsSaved.UserControl);
+                };
                 popupCtrl.InitializeGui();
                 UcContainer.Children.Add(popupCtrl);
             }
@@ -260,12 +262,6 @@ namespace QuizApplication
             {
                 MessageBoxes.ShowInformationMessageBox("Please select an question to edit");
             }
-        }
-
-        private void PopupCtrl_IsSavedQuestionHandler(object sender, IsSavedEventArgs e)
-        {
-            ChangeQuestionInformation(QuestionsOfSelectedQuizListView.SelectedIndex, e.NewTitle);
-            UcContainer.Children.Remove(e.UserControl);
         }
 
         private void ChangeQuestionInformation(int selectedIndexQuestion, string newQuestion)
@@ -284,17 +280,15 @@ namespace QuizApplication
             GenericChangePopupUserControl popupCtrl = new GenericChangePopupUserControl();
             popupCtrl.TypeOfAction = TypeOfAction.Add;
             popupCtrl.TypeOfItemToHandle = TypeOfItemToChange.Answer;
-            popupCtrl.IsSaved += PopupCtrl_IsSavedAnswerHandler;
+            popupCtrl.IsSaved += (senderIsSaved, eIsSaved) =>
+            {
+                CreateNewAnswer(eIsSaved.NewTitle, eIsSaved.IsRightAnswer);
+                AnswersOfSelectedQuestion = new ObservableCollection<Answer>(quizHandler.quizManager.GetAt(QuizesListView.SelectedIndex).Questions.GetAt(QuestionsOfSelectedQuizListView.SelectedIndex).Answers.GetAllItems());
+                AnswersOfSelectedQuestionListView.ItemsSource = AnswersOfSelectedQuestion;
+                UcContainer.Children.Remove(eIsSaved.UserControl);
+            };
             popupCtrl.InitializeGui();
             UcContainer.Children.Add(popupCtrl);
-        }
-
-        private void PopupCtrl_IsSavedAnswerHandler(object sender, IsSavedEventArgs e)
-        {
-            CreateNewAnswer(e.NewTitle, e.IsRightAnswer);
-            AnswersOfSelectedQuestion = new ObservableCollection<Answer>(quizHandler.quizManager.GetAt(QuizesListView.SelectedIndex).Questions.GetAt(QuestionsOfSelectedQuizListView.SelectedIndex).Answers.GetAllItems());
-            AnswersOfSelectedQuestionListView.ItemsSource = AnswersOfSelectedQuestion;
-            UcContainer.Children.Remove(e.UserControl);
         }
 
         private void CreateNewAnswer(string newTitle, bool newIsRightAnswer)
@@ -312,7 +306,11 @@ namespace QuizApplication
                 popupCtrl.TypeOfItemToHandle = TypeOfItemToChange.Answer;
                 popupCtrl.OldTitle = quizHandler.quizManager.GetAt(QuizesListView.SelectedIndex).Questions.GetAt(QuestionsOfSelectedQuizListView.SelectedIndex).Answers.GetAt(AnswersOfSelectedQuestionListView.SelectedIndex).Title;
                 popupCtrl.OldIsRightAnswer = quizHandler.quizManager.GetAt(QuizesListView.SelectedIndex).Questions.GetAt(QuestionsOfSelectedQuizListView.SelectedIndex).Answers.GetAt(AnswersOfSelectedQuestionListView.SelectedIndex).RightAnswer;
-                popupCtrl.IsSaved += PopupCtrl_IsEditAnswerSaved;
+                popupCtrl.IsSaved += (senderIsSaved, eIsSaved) =>
+                {
+                    ChangeAnswerInformation(AnswersOfSelectedQuestionListView.SelectedIndex, eIsSaved.NewTitle);
+                    UcContainer.Children.Remove(eIsSaved.UserControl);
+                };
                 popupCtrl.InitializeGui();
                 UcContainer.Children.Add(popupCtrl);
             }
@@ -320,12 +318,6 @@ namespace QuizApplication
             {
                 MessageBoxes.ShowInformationMessageBox("Please select an answer to edit");
             }
-        }
-
-        private void PopupCtrl_IsEditAnswerSaved(object sender, IsSavedEventArgs e)
-        {
-            ChangeAnswerInformation(AnswersOfSelectedQuestionListView.SelectedIndex, e.NewTitle);
-            UcContainer.Children.Remove(e.UserControl);
         }
 
         private void ChangeAnswerInformation(int selectedIndexAnswer, string newAnswer)

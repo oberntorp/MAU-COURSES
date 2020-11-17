@@ -23,10 +23,6 @@ namespace QuizApplication
     public partial class GenericChangePopupUserControl : UserControl
     {
 
-
-
-
-
         public string TextActionLabel
         {
             get { return (string)GetValue(TextActionLabelProperty); }
@@ -36,9 +32,6 @@ namespace QuizApplication
         // Using a DependencyProperty as the backing store for TextActionLabel.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty TextActionLabelProperty =
             DependencyProperty.Register("TextActionLabel", typeof(string), typeof(GenericChangePopupUserControl), new PropertyMetadata(""));
-
-
-
 
         public string ItemTypeBeingChanged
         {
@@ -53,11 +46,7 @@ namespace QuizApplication
         public event EventHandler<IsSavedEventArgs> IsSaved;
 
         public TypeOfAction TypeOfAction { get; set; }
-        public TypeOfItemToChange TypeOfItemToHandle
-        {
-            get;
-            set;
-        }
+        public TypeOfItemToChange TypeOfItemToHandle { get; set; }
 
         public string OldTitle
         {
@@ -79,11 +68,7 @@ namespace QuizApplication
         public static readonly DependencyProperty OldDescriptionProperty =
             DependencyProperty.Register("OldDescription", typeof(string), typeof(GenericChangePopupUserControl), new PropertyMetadata(""));
 
-        public bool OldIsRightAnswer
-        {
-            get { return (bool)GetValue(OldIsRightAnswerProperty); }
-            set { SetValue(OldIsRightAnswerProperty, value); }
-        }
+        public bool OldIsRightAnswer { get { return (bool)GetValue(OldIsRightAnswerProperty); } set { SetValue(OldIsRightAnswerProperty, value); } }
 
         // Using a DependencyProperty as the backing store for OldIsRightAnswer.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty OldIsRightAnswerProperty =
@@ -124,7 +109,8 @@ namespace QuizApplication
                     eventArgs.NewDescription = ChangedItemDescriptionTextBox.Text;
                 }
                 eventArgs.UserControl = this;
-                OnIsSavedEvebt(eventArgs);
+                Action<IsSavedEventArgs> FireEvent = OnIsSavedEvebt;
+                FireEvent(eventArgs);
             }
             else
             {
