@@ -83,7 +83,7 @@ namespace QuizApplication
         {
             if (QuestionsOfSelectedQuizListView.SelectedIndex >= 0)
             {
-                if (quizHandler.quizManager.GetAt(QuizesListView.SelectedIndex).RemoveQuestion(QuestionsOfSelectedQuizListView.SelectedIndex))
+                if (quizHandler.quizManager.GetAt(QuizesListView.SelectedIndex).Questions.RemoveQuestion(QuestionsOfSelectedQuizListView.SelectedIndex))
                 {
                     QuestionsOfSelectedQuiz.RemoveAt(QuestionsOfSelectedQuizListView.SelectedIndex);
                 }
@@ -215,11 +215,11 @@ namespace QuizApplication
             if (QuizesListView.SelectedIndex >= 0)
             {
                 GenericChangePopupUserControl popupCtrl = new GenericChangePopupUserControl();
-                popupCtrl.TypeOfAction = TypeOfAction.Edit;
+                popupCtrl.TypeOfAction = Mode.Edit;
                 popupCtrl.TypeOfItemToHandle = TypeOfItemToChange.Quiz;
                 popupCtrl.OldTitle = quizHandler.quizManager.GetAt(QuizesListView.SelectedIndex).Title;
                 popupCtrl.OldDescription = quizHandler.quizManager.GetAt(QuizesListView.SelectedIndex).Description;
-                popupCtrl.IsSaved += (senderIsSaved, eIsSaved) =>
+                popupCtrl.IsSavedEvent += (senderIsSaved, eIsSaved) =>
                 {
                     ChangeQuizInformation(QuizesListView.SelectedIndex, eIsSaved.NewTitle, eIsSaved.NewDescription);
                     UcContainer.Children.Remove(eIsSaved.UserControl);
@@ -247,10 +247,10 @@ namespace QuizApplication
             if (QuestionsOfSelectedQuizListView.SelectedIndex >= 0)
             {
                 GenericChangePopupUserControl popupCtrl = new GenericChangePopupUserControl();
-                popupCtrl.TypeOfAction = TypeOfAction.Edit;
+                popupCtrl.TypeOfAction = Mode.Edit;
                 popupCtrl.TypeOfItemToHandle = TypeOfItemToChange.Question;
                 popupCtrl.OldTitle = QuestionsOfSelectedQuiz.Where(x => x.Id == QuestionsOfSelectedQuizListView.SelectedIndex + 1).FirstOrDefault().Title;
-                popupCtrl.IsSaved += (senderIsSaved, eIsSaved) =>
+                popupCtrl.IsSavedEvent += (senderIsSaved, eIsSaved) =>
                 {
                     ChangeQuestionInformation(QuestionsOfSelectedQuizListView.SelectedIndex, eIsSaved.NewTitle);
                     UcContainer.Children.Remove(eIsSaved.UserControl);
@@ -278,9 +278,9 @@ namespace QuizApplication
         private void AddAnswerButton_Click(object sender, RoutedEventArgs e)
         {
             GenericChangePopupUserControl popupCtrl = new GenericChangePopupUserControl();
-            popupCtrl.TypeOfAction = TypeOfAction.Add;
+            popupCtrl.TypeOfAction = Mode.Add;
             popupCtrl.TypeOfItemToHandle = TypeOfItemToChange.Answer;
-            popupCtrl.IsSaved += (senderIsSaved, eIsSaved) =>
+            popupCtrl.IsSavedEvent += (senderIsSaved, eIsSaved) =>
             {
                 CreateNewAnswer(eIsSaved.NewTitle, eIsSaved.IsRightAnswer);
                 AnswersOfSelectedQuestion = new ObservableCollection<Answer>(quizHandler.quizManager.GetAt(QuizesListView.SelectedIndex).Questions.GetAt(QuestionsOfSelectedQuizListView.SelectedIndex).Answers.GetAllItems());
@@ -302,11 +302,11 @@ namespace QuizApplication
             if (AnswersOfSelectedQuestionListView.SelectedIndex >= 0)
             {
                 GenericChangePopupUserControl popupCtrl = new GenericChangePopupUserControl();
-                popupCtrl.TypeOfAction = TypeOfAction.Edit;
+                popupCtrl.TypeOfAction = Mode.Edit;
                 popupCtrl.TypeOfItemToHandle = TypeOfItemToChange.Answer;
                 popupCtrl.OldTitle = quizHandler.quizManager.GetAt(QuizesListView.SelectedIndex).Questions.GetAt(QuestionsOfSelectedQuizListView.SelectedIndex).Answers.GetAt(AnswersOfSelectedQuestionListView.SelectedIndex).Title;
                 popupCtrl.OldIsRightAnswer = quizHandler.quizManager.GetAt(QuizesListView.SelectedIndex).Questions.GetAt(QuestionsOfSelectedQuizListView.SelectedIndex).Answers.GetAt(AnswersOfSelectedQuestionListView.SelectedIndex).RightAnswer;
-                popupCtrl.IsSaved += (senderIsSaved, eIsSaved) =>
+                popupCtrl.IsSavedEvent += (senderIsSaved, eIsSaved) =>
                 {
                     ChangeAnswerInformation(AnswersOfSelectedQuestionListView.SelectedIndex, eIsSaved.NewTitle);
                     UcContainer.Children.Remove(eIsSaved.UserControl);

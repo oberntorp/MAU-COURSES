@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace Utilities.Enums
 {
-    public enum TypeOfAction
+    /// <summary>
+    /// This enum is used in conjunction with the user control used for Adding/Editing
+    /// </summary>
+    public enum Mode
     {
         Edit,
         Add

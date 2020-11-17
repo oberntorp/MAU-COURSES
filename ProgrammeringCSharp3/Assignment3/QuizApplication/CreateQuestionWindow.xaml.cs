@@ -24,22 +24,29 @@ namespace QuizApplication
     {
         public string QuestionTitle { get; set; }
         public ObservableCollection<Answer> Answers { get; set; }
-        AnswerManager answerManager { get; set; }
+        AnswerManager AnswerManager { get; set; }
 
+        /// <summary>
+        /// Constructor, initializing Lists as well as setting the ItemsSource for the dataGrid
+        /// </summary>
         public CreateQuestionWindow()
         {
             InitializeComponent();
             Answers = new ObservableCollection<Answer>();
-            answerManager = new AnswerManager();
+            AnswerManager = new AnswerManager();
             AnswersDataGrid.ItemsSource = Answers;
         }
 
+        /// <summary>
+        /// Event handler for the save button, checks if all necessary data was entered, iy yes, the window is closed
+        /// </summary>
+        /// <param name="sender">the object sending the request, in this case a button</param>
+        /// <param name="e">The arguments associated with the event</param>
         private void SaveCloseButton_Click(object sender, RoutedEventArgs e)
         {
             if (AllInfoEntered())
             {
                 QuestionTitle = QuestionTitleTextBox.Text;
-                int dataGridCount = AnswersDataGrid.Items.Count;
                 this.DialogResult = true;
                 this.Close();
             }
@@ -49,16 +56,25 @@ namespace QuizApplication
             }
         }
 
+        /// <summary>
+        /// Checks that all information was entered
+        /// </summary>
+        /// <returns></returns>
         private bool AllInfoEntered()
         {
             return QuestionTitleTextBox.Text != "" && AnswersDataGrid.Items.Count > 0;
         }
 
+        /// <summary>
+        /// Event handler for the button "Add Answer", it adds a new row to the DataGrid
+        /// </summary>
+        /// <param name="sender">The object sending the response, in this case a button</param>
+        /// <param name="e">Event arbuments</param>
         private void AddAnswerButton_Click(object sender, RoutedEventArgs e)
         {
             AnswersDataGrid.IsReadOnly = false;
-            answerManager.AddAnswer(new Answer("Write your answer here"));
-            Answers.Add(answerManager.GetAt(answerManager.Count - 1));
+            AnswerManager.AddAnswer(new Answer("Write your answer here"));
+            Answers.Add(AnswerManager.GetAt(AnswerManager.Count - 1));
         }
     }
 }

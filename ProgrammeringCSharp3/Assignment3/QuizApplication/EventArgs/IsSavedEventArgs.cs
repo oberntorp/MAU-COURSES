@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace QuizApplication.EventArgs
 {
+    /// <summary>
+    /// Class for event arguments pertaining to "GenericChangePopupUserControl"
+    /// </summary>
     public class IsSavedEventArgs: System.EventArgs
     {
         public string NewTitle { get; set; }

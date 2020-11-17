@@ -43,9 +43,9 @@ namespace QuizApplication
         public static readonly DependencyProperty ItemTypeBeingChangedProperty =
             DependencyProperty.Register("ItemTypeBeingChanged", typeof(string), typeof(GenericChangePopupUserControl), new PropertyMetadata("Quiz"));
 
-        public event EventHandler<IsSavedEventArgs> IsSaved;
+        public event EventHandler<IsSavedEventArgs> IsSavedEvent;
 
-        public TypeOfAction TypeOfAction { get; set; }
+        public Mode TypeOfAction { get; set; }
         public TypeOfItemToChange TypeOfItemToHandle { get; set; }
 
         public string OldTitle
@@ -74,15 +74,21 @@ namespace QuizApplication
         public static readonly DependencyProperty OldIsRightAnswerProperty =
             DependencyProperty.Register("OldIsRightAnswer", typeof(bool), typeof(GenericChangePopupUserControl), new PropertyMetadata(false));
 
+        /// <summary>
+        /// Constructor, initializes the component, sets the dataContect, necessary for the dependency properties to fully work
+        /// </summary>
         public GenericChangePopupUserControl()
         {
             InitializeComponent();
             this.DataContext = this;
         }
 
+        /// <summary>
+        /// This method initializes labels on the gui, and depending an if it is a Quiz, Question or Answer displays different input fields and labels
+        /// </summary>
         public void InitializeGui()
         {
-            TextActionLabel = (TypeOfAction == TypeOfAction.Add) ? "Add new " : "Edit a ";
+            TextActionLabel = (TypeOfAction == Mode.Add) ? "Add new " : "Edit a ";
             if (TypeOfItemToHandle != TypeOfItemToChange.Quiz)
             {
                 ItemTypeBeingChanged = (TypeOfItemToHandle == TypeOfItemToChange.Question) ? "Question" : "Answer";
@@ -97,6 +103,11 @@ namespace QuizApplication
             }
         }
 
+        /// <summary>
+        /// Event handler for Save button, checks that all information has been filled out, sets the event arguments for the event and fires the event
+        /// </summary>
+        /// <param name="sender">the object sending the request, in this case a button</param>
+        /// <param name="e">The event arguments</param>
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             WarningLabel.Visibility = Visibility.Hidden;
@@ -109,7 +120,7 @@ namespace QuizApplication
                     eventArgs.NewDescription = ChangedItemDescriptionTextBox.Text;
                 }
                 eventArgs.UserControl = this;
-                Action<IsSavedEventArgs> FireEvent = OnIsSavedEvebt;
+                Action<IsSavedEventArgs> FireEvent = OnIsSavedEvent;
                 FireEvent(eventArgs);
             }
             else
@@ -118,11 +129,19 @@ namespace QuizApplication
             }
         }
 
-        private void OnIsSavedEvebt(IsSavedEventArgs eventArgs)
+        /// <summary>
+        /// Initializing the IsSavedEvent
+        /// </summary>
+        /// <param name="eventArgs">Event arguments</param>
+        private void OnIsSavedEvent(IsSavedEventArgs eventArgs)
         {
-            IsSaved?.Invoke(this, eventArgs);
+            IsSavedEvent?.Invoke(this, eventArgs);
         }
 
+        /// <summary>
+        /// Checks that all input fields has been filled out
+        /// </summary>
+        /// <returns>bool</returns>
         private bool IsTextFilledIn()
         {
             if (TypeOfItemToHandle == TypeOfItemToChange.Quiz)
