@@ -19,7 +19,7 @@ namespace QuizApplicationBussinessLogic.QuizClasses
         public QuestionManager Questions { get; set; }
 
         /// <summary>
-        /// THe default constructor needed for serialization to work
+        /// The default constructor needed for serialization to work
         /// </summary>
         public QuizItem()
         {

@@ -369,23 +369,23 @@ namespace QuizApplication
             PerformSearch(GetTypeOfSearchFromRadioButtons());
         }
 
-        private BaseSearchOn GetTypeOfSearchFromRadioButtons()
+        private SearchMode GetTypeOfSearchFromRadioButtons()
         {
             if (SearchInQuizNameRaidoButton.IsChecked == true)
             {
-                return BaseSearchOn.QuizName;
+                return SearchMode.QuizName;
             }
             else if (SearchInQuestions.IsChecked == true)
             {
-                return BaseSearchOn.Questions;
+                return SearchMode.Questions;
             }
             else
             {
-                return BaseSearchOn.Answers;
+                return SearchMode.Answers;
             }
         }
 
-        private void PerformSearch(BaseSearchOn searchIn)
+        private void PerformSearch(SearchMode searchIn)
         {
             quizHandler.SearchQuizes(SearchTermTextBox.Text, searchIn);
         }

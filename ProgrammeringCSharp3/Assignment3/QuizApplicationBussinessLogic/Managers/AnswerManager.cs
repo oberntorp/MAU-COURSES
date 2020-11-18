@@ -7,17 +7,28 @@ using System.Threading.Tasks;
 
 namespace QuizApplicationBussinessLogic.Managers
 {
+    /// <summary>
+    /// The Manager handling Answers
+    /// </summary>
     [Serializable]
     public class AnswerManager: ListManager<Answer>
     {
         private int answerId = 1;
         public List<Answer> AnswersXML { get; set; }
 
+        /// <summary>
+        /// Default constructor, needed for serialization to work, initializes AnswersXML, which acts as a interface for the serializer to read/write
+        /// </summary>
         public AnswerManager()
         {
             AnswersXML = new List<Answer>();
         }
 
+        /// <summary>
+        /// Adds an answer
+        /// </summary>
+        /// <param name="answerToAdd">The answer being added</param>
+        /// <returns>true/false for success/feilure</returns>
         public bool AddAnswer(Answer answerToAdd)
         {
             AddIdToAnswer(ref answerToAdd);
@@ -31,6 +42,10 @@ namespace QuizApplicationBussinessLogic.Managers
             return false;
         }
 
+        /// <summary>
+        /// Adds an id to the Answer being added before adding it to the Manager
+        /// </summary>
+        /// <param name="answerToAddAnId">The answer getting an id (ref parameter)</param>
         private void AddIdToAnswer(ref Answer answerToAddAnId)
         {
             if (Count == 0)
@@ -43,17 +58,33 @@ namespace QuizApplicationBussinessLogic.Managers
             }
         }
 
+        /// <summary>
+        /// Changes an Answer at a given index
+        /// </summary>
+        /// <param name="changedAnswer">The Answer to change</param>
+        /// <param name="indexToChangeAt">The position to put the changed Answer</param>
+        /// <returns>true/false for success/feilure</returns>
         public bool ChangeQuiz(Answer changedAnswer, int indexToChangeAt)
         {
             return ChangeAt(changedAnswer, indexToChangeAt);
         }
 
+        /// <summary>
+        /// Removes an Answer for the manager
+        /// </summary>
+        /// <param name="indexOfAnswerToRemove">Index of the answer to remove</param>
+        /// <returns></returns>
         public bool RemoveAnswer(int indexOfAnswerToRemove)
         {
             answerId--;
             return DeleteAt(indexOfAnswerToRemove);
         }
 
+        /// <summary>
+        /// Adds an answer after deserialization, with the difference that it is not added to the AnswersXML as it is already populated with these answers
+        /// </summary>
+        /// <param name="answerToAdd">The answer being added</param>
+        /// <returns></returns>
         public bool AddAnswerAfterLoad(Answer answerToAdd)
         {
             AddIdToAnswer(ref answerToAdd);
