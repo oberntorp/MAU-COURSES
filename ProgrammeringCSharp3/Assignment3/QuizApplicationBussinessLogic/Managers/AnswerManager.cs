@@ -28,7 +28,7 @@ namespace QuizApplicationBussinessLogic.Managers
         /// Adds an answer
         /// </summary>
         /// <param name="answerToAdd">The answer being added</param>
-        /// <returns>true/false for success/feilure</returns>
+        /// <returns>true/false for success/failure</returns>
         public bool AddAnswer(Answer answerToAdd)
         {
             AddIdToAnswer(ref answerToAdd);
@@ -62,9 +62,9 @@ namespace QuizApplicationBussinessLogic.Managers
         /// Changes an Answer at a given index
         /// </summary>
         /// <param name="changedAnswer">The Answer to change</param>
-        /// <param name="indexToChangeAt">The position to put the changed Answer</param>
-        /// <returns>true/false for success/feilure</returns>
-        public bool ChangeQuiz(Answer changedAnswer, int indexToChangeAt)
+        /// <param name="indexToChangeAt">The index getting the changed Answer</param>
+        /// <returns>true/false for success/failure</returns>
+        public bool ChangeAnswer(Answer changedAnswer, int indexToChangeAt)
         {
             return ChangeAt(changedAnswer, indexToChangeAt);
         }
@@ -73,7 +73,7 @@ namespace QuizApplicationBussinessLogic.Managers
         /// Removes an Answer for the manager
         /// </summary>
         /// <param name="indexOfAnswerToRemove">Index of the answer to remove</param>
-        /// <returns></returns>
+        /// <returns>true/false for success/failure</returns>
         public bool RemoveAnswer(int indexOfAnswerToRemove)
         {
             answerId--;
@@ -84,7 +84,7 @@ namespace QuizApplicationBussinessLogic.Managers
         /// Adds an answer after deserialization, with the difference that it is not added to the AnswersXML as it is already populated with these answers
         /// </summary>
         /// <param name="answerToAdd">The answer being added</param>
-        /// <returns></returns>
+        /// <returns>true/false for success/failure</returns>
         public bool AddAnswerAfterLoad(Answer answerToAdd)
         {
             AddIdToAnswer(ref answerToAdd);

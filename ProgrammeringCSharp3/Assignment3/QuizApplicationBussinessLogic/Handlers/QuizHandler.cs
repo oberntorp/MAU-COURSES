@@ -54,7 +54,7 @@ namespace QuizApplicationBussinessLogic.Handlers
         /// <returns>true/false for success/feilure</returns>
         public bool ChangeQuiz(QuizItem quizBeingChanged, int indexToChangeAt)
         {
-            return quizManager.ChangeAt(quizBeingChanged, indexToChangeAt);
+            return quizManager.ChangeQuiz(quizBeingChanged, indexToChangeAt);
         }
 
         /// <summary>

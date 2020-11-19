@@ -69,7 +69,7 @@ namespace QuizApplication
         /// Event handler for the button "Add Answer", it adds a new row to the DataGrid
         /// </summary>
         /// <param name="sender">The object sending the response, in this case a button</param>
-        /// <param name="e">Event arbuments</param>
+        /// <param name="e">Event arguments</param>
         private void AddAnswerButton_Click(object sender, RoutedEventArgs e)
         {
             AnswersDataGrid.IsReadOnly = false;
