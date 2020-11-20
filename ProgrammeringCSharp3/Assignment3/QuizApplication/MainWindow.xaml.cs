@@ -87,7 +87,8 @@ namespace QuizApplication
             bool result = (bool)createQuestionWindow.ShowDialog();
             if (result)
             {
-                Question newQuestion = new Question(createQuestionWindow.QuestionTitle);
+                QuizItem associatedQuizItem = quizHandler.quizManager.GetAllItems().Where(x => x.Id == (QuizesListView.SelectedIndex + 1)).First();
+                Question newQuestion = new Question(createQuestionWindow.QuestionTitle, associatedQuizItem);
                 AddAnswersToQuestion(createQuestionWindow.Answers.ToList(), newQuestion);
 
                 if (quizHandler.quizManager.GetAt(QuizesListView.SelectedIndex).Questions.AddQuestion(newQuestion))
@@ -218,7 +219,7 @@ namespace QuizApplication
             }
             else
             {
-                MessageBoxes.ShowInformationMessageBox("There is nothing to save yet, create some quizes");
+                MessageBoxes.ShowInformationMessageBox("There is nothing to save yet, please create some quizes");
             }
         }
 
@@ -473,7 +474,15 @@ namespace QuizApplication
         /// <param name="e"></param>
         private void ShowSearchFieldButton_Click(object sender, RoutedEventArgs e)
         {
-            SearchTermTextBox.Visibility = Visibility.Visible;
+            if (quizHandler.quizManager.Count > 0)
+            {
+                SearchTermTextBox.Visibility = Visibility.Visible;
+                SearchGroupBox.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                MessageBoxes.ShowInformationMessageBox("There is nothing to search, please create some quizes.");
+            }
         }
 
         /// <summary>
@@ -483,7 +492,7 @@ namespace QuizApplication
         /// <param name="e">The event arguments</param>
         private void SearchTermTextBox_KeyUp(object sender, KeyEventArgs e)
         {
-            PerformSearch(GetTypeOfSearchFromRadioButtons());
+            PerformSearch(GetTypeOfSearchFromRadioButtons()).ForEach(res => SearchResultsListBox.Items.Add(res));
         }
 
         /// <summary>
@@ -496,7 +505,7 @@ namespace QuizApplication
             {
                 return SearchMode.QuizName;
             }
-            else if (SearchInQuestions.IsChecked == true)
+            else if (SearchInQuestionsRadioButton.IsChecked == true)
             {
                 return SearchMode.Questions;
             }
@@ -510,9 +519,9 @@ namespace QuizApplication
         /// Performs a search
         /// </summary>
         /// <param name="searchIn">What to search in in the Quizes</param>
-        private void PerformSearch(SearchMode searchIn)
+        private List<QuizItem> PerformSearch(SearchMode searchIn)
         {
-            quizHandler.SearchQuizes(SearchTermTextBox.Text, searchIn);
+            return quizHandler.SearchQuizes(SearchTermTextBox.Text, searchIn);
         }
     }
 }

@@ -91,7 +91,7 @@ namespace QuizApplicationBussinessLogic.Handlers
         /// <param name="searchTerm">The search term used in the search</param>
         /// <param name="baseSearchOn">Based on different seach modes the search will happen in different forms</param>
         /// <returns>Object (The search methods returns different things)</returns>
-        public object SearchQuizes(string searchTerm, SearchMode baseSearchOn)
+        public List<QuizItem> SearchQuizes(string searchTerm, SearchMode baseSearchOn)
         {
             switch(baseSearchOn)
             {
@@ -119,21 +119,30 @@ namespace QuizApplicationBussinessLogic.Handlers
         /// </summary>
         /// <param name="searchTerm">The term used in the search</param>
         /// <returns>List of Question</returns>
-        private List<Question> SearchQuizesBasedOnQuestions(string searchTerm)
+        private List<QuizItem> SearchQuizesBasedOnQuestions(string searchTerm)
         {
-            var questions = (from quiz in quizManager.GetAllItems() select new { questions = from question in quiz.Questions.GetAllItems() where question.Title.Contains(searchTerm) select question });
-            return questions.SelectMany(q => q.questions.Where(x => x.Title.Contains(searchTerm))).ToList();
+            //var questions = (from quiz in quizManager.GetAllItems() select new { questions = from question in quiz.Questions.GetAllItems() where question.Title.Contains(searchTerm) select question });
+            //return questions.SelectMany(q => q.questions.Where(x => x.Title.Contains(searchTerm))).ToList();
+
+            return (from quiz in quizManager.GetAllItems()
+                    from q in quiz.Questions.GetAllItems()
+                    where q.Title.Contains(searchTerm)
+                    select quiz).ToList();
         }
+        
 
         /// <summary>
         /// The search method for search mode "Answer"
         /// </summary>
         /// <param name="searchTerm">The term used in the search</param>
         /// <returns>List of Answer</returns>
-        private List<Answer> SearchQuizesBasedOnAnswers(string searchTerm)
+        private List<QuizItem> SearchQuizesBasedOnAnswers(string searchTerm)
         {
-            var questions = (from quiz in quizManager.GetAllItems() select new { questions = from question in quiz.Questions.GetAllItems() select question }).ToList();
-            return questions.SelectMany(q1 => q1.questions.SelectMany(q2 => q2.Answers.GetAllItems().Where(a => a.Title.Contains(searchTerm)))).ToList();
+            return (from quiz in quizManager.GetAllItems()
+                   from q in quiz.Questions.GetAllItems()
+                   from a in q.Answers.GetAllItems()
+                    where a.Title.Contains(searchTerm)
+                    select quiz).ToList();
         }
     }
 }

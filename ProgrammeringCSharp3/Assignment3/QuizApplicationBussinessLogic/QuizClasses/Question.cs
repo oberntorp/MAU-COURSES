@@ -16,6 +16,7 @@ namespace QuizApplicationBussinessLogic.QuizClasses
         public int Id { get; set; }
         public string Title { get; set; }
         public AnswerManager Answers { get; set; }
+        public QuizItem AssociatedWithQuiz { get; set; }
 
         /// <summary>
         /// The default constructor needed for the serialization to work
@@ -29,9 +30,10 @@ namespace QuizApplicationBussinessLogic.QuizClasses
         /// THe constructor used when creating a question
         /// </summary>
         /// <param name="title">The title of the question</param>
-        public Question(string title)
+        public Question(string title, QuizItem assocQuizItem)
         {
             Title = title;
+            AssociatedWithQuiz = assocQuizItem;
             Answers = new AnswerManager();
         }
     }
