@@ -53,8 +53,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Assignment2\Utilities\Utilities.csproj">
-      <Project>{646ac35d-16a6-43b1-baec-e2e40cd4b971}</Project>
+    <ProjectReference Include="..\Utilities\Utilities.csproj">
+      <Project>{124fa469-53c0-479e-8810-e33f49e48740}</Project>
       <Name>Utilities</Name>
     </ProjectReference>
   </ItemGroup>

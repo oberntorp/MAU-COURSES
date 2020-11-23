@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "qAD+xp/PFhQZM7b4yT82TaGgz52D8yt1zVFJbZJGW7HN0lRN1NNpKJWUsndEEnaJ3RprCitjeiIcoLWwNnYNGA==",
+  "success": true,
+  "projectFilePath": "D:\\wamp64\\www\\GitHub\\MAU-COURSES\\ProgrammeringCSharp3\\Assignment3\\Utilities\\Utilities.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\obern\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Users\\obern\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}
