@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "mOMnBCJevav3eZNP6IUYxalrPkyXrNSdNbn+50jFDf2eLvhAEgr6qO+8jE5YR56epJ9tRca8WiuD+zdwslM+5g==",
+  "success": true,
+  "projectFilePath": "D:\\wamp64\\www\\GitHub\\MAU-COURSES\\ProgrammeringCSharp3\\Assignment4\\MultiMediaClassesAndManagers\\MultiMediaClassesAndManagers.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\obern\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Users\\obern\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}

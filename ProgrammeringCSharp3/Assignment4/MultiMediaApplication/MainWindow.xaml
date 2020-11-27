@@ -1,0 +1,104 @@
+﻿<Window x:Class="MultiMediaApplication.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:uc="clr-namespace:MultiMediaApplication.UserControls"
+        xmlns:local="clr-namespace:MultiMediaApplication"
+        mc:Ignorable="d"
+        Title="MultiMediaViewer" Height="450" Width="800" Closing="Window_Closing">
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="File">
+                <MenuItem Header="Choose folders for navigation area" Click="ChoseFolderForNavigationArea_Click"/>
+                <Separator />
+                <MenuItem Header="Exit" Click="ExitMenuItem_Click" />
+            </MenuItem>
+            <MenuItem Header="Playlist">
+                <MenuItem Header="Load playlists">
+                    <MenuItem Header="From XML" Click="LoadPlaylistsFromXMLMenuItem_Click" />
+                    <MenuItem Header="From Database" Click="LoadPlaylistsFromDbMenuItem_Click"/>
+                </MenuItem>
+                <MenuItem Header="Create playlist" Click="CreatePlaylist_Click" />
+                <MenuItem Header="Import Media">
+                    <MenuItem Header="Video" Click="MenuItemVideo_Click"/>
+                    <MenuItem Header="Image" Click="MenuItemImage_Click"/>
+                </MenuItem>
+                <Separator />
+                <MenuItem Header="Change playlist settings" Click="ChangePlaylistSettings_Click" />
+                <Separator/>
+                <MenuItem Header="Play playlist" Click="PlayPlaylist_Click" />
+                <Separator/>
+                <MenuItem Header="Save Playlists">
+                    <MenuItem Header="To XML" Click="SavePlaylistsMenuItem_Click" />
+                    <MenuItem Header="To Database" Click="SaveToDbMenuItem_Click" />
+                </MenuItem>
+            </MenuItem>
+        </Menu>
+        <StatusBar DockPanel.Dock="Bottom">
+            <StatusBarItem>
+                <Label x:Name="LoadingDbStatusExplination" Content="Ready"/>
+            </StatusBarItem>
+            <Separator />
+            <StatusBarItem>
+                <ProgressBar x:Name="LoadingDbStatus" Minimum="0" Maximum="100" Height="20" Width="100"/>
+            </StatusBarItem>
+        </StatusBar>
+        <ScrollViewer>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <TreeView x:Name="PlaylistTreeView" SelectedItemChanged="PlaylistTreeView_SelectedItemChanged" VerticalAlignment="Stretch" Margin="0 0 5 0" BorderThickness="0"/>
+                <StackPanel x:Name="InitialEplinationStackPanel" Orientation="Horizontal" Grid.ColumnSpan="2" Grid.Column="1" Width="550">
+                    <TextBlock>Hi, please add folders to the navigation area by clicking <Bold>File</Bold> -> <Bold>Choose folders for navigation area</Bold>
+                    <LineBreak/>
+                    If you have saved playlists you can click <Bold>File</Bold> -> <Bold>Load playlists</Bold></TextBlock>
+                </StackPanel>
+                <ItemsControl x:Name="mediaItemsControl" Grid.Column="1">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Columns="2"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <uc:MediaViewSelectionUserControl MediaId="{Binding Id, Mode=TwoWay}" MediaName="{Binding Name, Mode=TwoWay}" MediaImageSource="{Binding SourceUrl, Mode=TwoWay}" MediaPreviewSource="{Binding PreviewUrl, Mode=TwoWay}"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <Border x:Name="PlaylistInfoStackPanelBorder" BorderThickness="1" BorderBrush="Black" Visibility="Hidden" Grid.Row="2" Margin="0 0 0 5">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                        </Grid.RowDefinitions>
+                        <Label Content="Information about the selected playlist:" Grid.Row="0" />
+                        <StackPanel x:Name="PlaylistInfoStackPanel" Grid.Row="1" />
+                    </Grid>
+                </Border>
+                <Border x:Name="SearchPlaylistsBorder" Grid.Row="3" BorderBrush="Black" BorderThickness="1" Visibility="Hidden">
+                    <StackPanel>
+                        <Label Content="Search Availible Playlists" />
+                        <Label Content="SearchTearm"/>
+                        <TextBox x:Name="PlaylistSearchTextBox" KeyUp="PlaylistSearchTextBox_KeyUp" />
+                        <ListBox x:Name="SearchResults" Visibility="Hidden" SelectionChanged="SearchResults_SelectionChanged" >
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Title}"/>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </ScrollViewer>
+    </DockPanel>
+</Window>
