@@ -34,3 +34,15 @@ D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment2\MultiMediaClas
 D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment2\MultiMediaClassesAndManagers\obj\Debug\netstandard2.0\MultiMediaClassesAndManagers.csproj.CopyComplete
 D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment2\MultiMediaClassesAndManagers\obj\Debug\netstandard2.0\MultiMediaClassesAndManagers.dll
 D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment2\MultiMediaClassesAndManagers\obj\Debug\netstandard2.0\MultiMediaClassesAndManagers.pdb
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment4\MultiMediaClassesAndManagers\bin\Debug\netstandard2.0\MultiMediaClassesAndManagers.deps.json
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment4\MultiMediaClassesAndManagers\bin\Debug\netstandard2.0\MultiMediaClassesAndManagers.dll
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment4\MultiMediaClassesAndManagers\bin\Debug\netstandard2.0\MultiMediaClassesAndManagers.pdb
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment4\MultiMediaClassesAndManagers\bin\Debug\netstandard2.0\Utilities.dll
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment4\MultiMediaClassesAndManagers\bin\Debug\netstandard2.0\Utilities.pdb
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment4\MultiMediaClassesAndManagers\obj\Debug\netstandard2.0\MultiMediaClassesAndManagers.csprojAssemblyReference.cache
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment4\MultiMediaClassesAndManagers\obj\Debug\netstandard2.0\MultiMediaClassesAndManagers.AssemblyInfoInputs.cache
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment4\MultiMediaClassesAndManagers\obj\Debug\netstandard2.0\MultiMediaClassesAndManagers.AssemblyInfo.cs
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment4\MultiMediaClassesAndManagers\obj\Debug\netstandard2.0\MultiMediaClassesAndManagers.csproj.CoreCompileInputs.cache
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment4\MultiMediaClassesAndManagers\obj\Debug\netstandard2.0\MultiMediaClassesAndManagers.csproj.CopyComplete
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment4\MultiMediaClassesAndManagers\obj\Debug\netstandard2.0\MultiMediaClassesAndManagers.dll
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment4\MultiMediaClassesAndManagers\obj\Debug\netstandard2.0\MultiMediaClassesAndManagers.pdb

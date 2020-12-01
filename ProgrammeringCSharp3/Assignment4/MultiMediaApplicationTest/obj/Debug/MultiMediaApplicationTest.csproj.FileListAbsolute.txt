@@ -1,0 +1,16 @@
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment4\MultiMediaApplicationTest\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment4\MultiMediaApplicationTest\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment4\MultiMediaApplicationTest\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment4\MultiMediaApplicationTest\bin\Debug\MultiMediaApplicationTest.dll
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment4\MultiMediaApplicationTest\bin\Debug\MultiMediaApplicationTest.pdb
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment4\MultiMediaApplicationTest\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.dll
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment4\MultiMediaApplicationTest\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment4\MultiMediaApplicationTest\bin\Debug\Utilities.dll
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment4\MultiMediaApplicationTest\bin\Debug\Utilities.pdb
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment4\MultiMediaApplicationTest\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.xml
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment4\MultiMediaApplicationTest\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.xml
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment4\MultiMediaApplicationTest\obj\Debug\MultiMediaApplicationTest.csprojAssemblyReference.cache
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment4\MultiMediaApplicationTest\obj\Debug\MultiMediaApplicationTest.csproj.CoreCompileInputs.cache
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment4\MultiMediaApplicationTest\obj\Debug\MultiMediaApplicationTest.csproj.CopyComplete
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment4\MultiMediaApplicationTest\obj\Debug\MultiMediaApplicationTest.dll
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment4\MultiMediaApplicationTest\obj\Debug\MultiMediaApplicationTest.pdb
