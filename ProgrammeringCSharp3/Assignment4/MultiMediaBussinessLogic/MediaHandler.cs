@@ -38,7 +38,16 @@ namespace MultiMediaBussinessLogic
         /// <returns></returns>
         public IMediaFile CreateVideoObject(string fullPath, string previewUrl, IWMPMedia vidoInfo, string fileName)
         {
+            CheckVideoDataForErrors(fullPath, previewUrl, vidoInfo, fileName);
             return new MultiMediaClassesAndManagers.MediaSubClasses.Video(fileName, fullPath, previewUrl, FileHandler.GetFileExtension(fullPath), vidoInfo.duration);
+        }
+
+        private void CheckVideoDataForErrors(string fullPath, string previewUrl, IWMPMedia vidoInfo, string fileName)
+        {
+            if(string.IsNullOrEmpty(fullPath) || string.IsNullOrEmpty(previewUrl) || vidoInfo == null || string.IsNullOrEmpty(fileName))
+            {
+                throw new ArgumentException("The Video data contains errors");
+            }
         }
 
         /// <summary>

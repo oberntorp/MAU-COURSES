@@ -47,6 +47,10 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Common, Version=4.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\MultiMediaApplication\packages\System.Drawing.Common.5.0.0\lib\net461\System.Drawing.Common.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MediaHandlerTest.cs" />
@@ -57,10 +61,38 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MultiMediaBussinessLogic\MultiMediaBussinessLogic.csproj">
+      <Project>{870b6196-ff1e-4f6c-8936-af5c98cf4fce}</Project>
+      <Name>MultiMediaBussinessLogic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MultiMediaClassesAndManagers\MultiMediaClassesAndManagers.csproj">
+      <Project>{fd95bfab-180e-40ae-9414-eefcf1874eb6}</Project>
+      <Name>MultiMediaClassesAndManagers</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Utilities\Utilities.csproj">
       <Project>{b4b246d1-b6c0-4437-b2bd-bde15a293244}</Project>
       <Name>Utilities</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\folder_icon8.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\video_icons8.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\video_playlist_icons8.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="WMPLib">
+      <Guid>{6BF52A50-394A-11D3-B153-00C04F79FAA6}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
