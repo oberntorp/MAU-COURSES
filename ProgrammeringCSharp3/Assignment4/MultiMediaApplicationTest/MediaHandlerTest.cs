@@ -12,7 +12,7 @@ namespace MultiMediaApplicationTest
     public class MediaHandlerTest
     {
         [TestMethod]
-        public void IsMediaVideoTest_WithVideoObject()
+        public void IsMediaVideoTest_WithVideoObject_True()
         {
             // Arrange
             Video testVideo = new Video("WIN_20200921_15_43_07_Pro.mp4", "C:\\Users\\obern\\OneDrive\\SkyDrive camera roll\\WIN_20200921_15_43_07_Pro.mp4", "../Images/video_icons8.png", "mp4", 5);
@@ -27,7 +27,7 @@ namespace MultiMediaApplicationTest
         }
 
         [TestMethod]
-        public void IsMediaVideoTest_WithImageObject()
+        public void IsMediaVideoTest_WithImageObject_False()
         {
             // Arrange
             MultiMediaClassesAndManagers.MediaSubClasses.Image testVideo = new MultiMediaClassesAndManagers.MediaSubClasses.Image("TestImg", "C:\\Users\\obern\\OneDrive\\SkyDrive camera roll\\TestImg.jpg", "C:\\Users\\obern\\OneDrive\\SkyDrive camera roll\\TestImg.jpg", "jpg", 100, 400);
@@ -42,24 +42,29 @@ namespace MultiMediaApplicationTest
         }
 
         [TestMethod]
-        public void CreateVideoObjectTest_WithCurrectVideoData()
+        public void CreateVideoObjectTest_WithCurrectVideoData_CurrectObjectReturned()
         {
             // Arrange
             MediaHandler mediaHandlerToTest = new MediaHandler();
             WindowsMediaPlayer wmp = new WindowsMediaPlayer();
 
-            Video expected = new Video("WIN_20200921_15_43_07_Pro.mp4", "C:\\Users\\obern\\OneDrive\\SkyDrive camera roll\\WIN_20200921_15_43_07_Pro.mp4", "../Images/video_icons8.png", "mp4", 5);
+            Video expected = new Video("WIN_20200921_15_43_07_Pro.mp4", "C:\\Users\\obern\\OneDrive\\SkyDrive camera roll\\WIN_20200921_15_43_07_Pro.mp4", "../Images/video_icons8.png", "mp4", 14);
 
             // Act
-            Video actualResult = (Video)mediaHandlerToTest.CreateVideoObject("C:\\Users\\obern\\OneDrive\\SkyDrive camera roll\\WIN_20200921_15_43_07_Pro.mp4", "Images/video_icons8.png", wmp.newMedia("C:\\Users\\obern\\OneDrive\\SkyDrive camera roll\\WIN_20200921_15_43_07_Pro.mp4"), "WIN_20200921_15_43_07_Pro.mp4");
+            Video actualResult = (Video)mediaHandlerToTest.CreateVideoObject("C:\\Users\\obern\\OneDrive\\SkyDrive camera roll\\WIN_20200921_15_43_07_Pro.mp4", "../Images/video_icons8.png", wmp.newMedia("C:\\Users\\obern\\OneDrive\\SkyDrive camera roll\\WIN_20200921_15_43_07_Pro.mp4"), "WIN_20200921_15_43_07_Pro.mp4");
 
             // Assert
-            Assert.AreEqual(expected, actualResult);
+            Assert.AreEqual(expected.Id, actualResult.Id);
+            Assert.AreEqual(expected.Name, actualResult.Name);
+            Assert.AreEqual(expected.LengthInSeconds, actualResult.LengthInSeconds);
+            Assert.AreEqual(expected.PreviewUrl, actualResult.PreviewUrl);
+            Assert.AreEqual(expected.SourceUrl, actualResult.SourceUrl);
+            Assert.AreEqual(expected.SortInPlaylist, actualResult.SortInPlaylist);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void CreateVideoObjectTest_WithIncurrectVideoData()
+        [ExpectedException(typeof(ArgumentException), )]
+        public void CreateVideoObjectTest_WithIncurrectInput_ExceptionThrown()
         {
             // Arrange
             MediaHandler mediaHandlerToTest = new MediaHandler();
