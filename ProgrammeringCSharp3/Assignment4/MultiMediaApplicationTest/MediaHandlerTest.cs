@@ -5,6 +5,7 @@ using MultiMediaBussinessLogic;
 using WMPLib;
 using MultiMediaClassesAndManagers.Interfaces;
 using System.Drawing;
+using System.IO;
 
 namespace MultiMediaApplicationTest
 {
@@ -15,7 +16,7 @@ namespace MultiMediaApplicationTest
         public void IsMediaVideoTest_WithVideoObject_True()
         {
             // Arrange
-            Video testVideo = new Video("WIN_20200921_15_43_07_Pro.mp4", "C:\\Users\\obern\\OneDrive\\SkyDrive camera roll\\WIN_20200921_15_43_07_Pro.mp4", "../Images/video_icons8.png", "mp4", 5);
+            Video testVideo = new Video("WIN_20200921_15_43_07_Pro.mp4", "./VideoForTest/WIN_20200921_15_43_07_Pro.mp4", "./Images/video_icons8.png", "mp4", 5);
             MediaHandler mediaHandlerToTest = new MediaHandler();
             bool expected = true;
 
@@ -47,11 +48,12 @@ namespace MultiMediaApplicationTest
             // Arrange
             MediaHandler mediaHandlerToTest = new MediaHandler();
             WindowsMediaPlayer wmp = new WindowsMediaPlayer();
+            string pathToVideo = Path.Combine(Environment.CurrentDirectory, "VideoForTest\\WIN_20200921_15_43_07_Pro.mp4");
+            string pathToVideoPreview = Path.Combine(Environment.CurrentDirectory, "Images\\video_icons8.png");
 
-            Video expected = new Video("WIN_20200921_15_43_07_Pro.mp4", "C:\\Users\\obern\\OneDrive\\SkyDrive camera roll\\WIN_20200921_15_43_07_Pro.mp4", "../Images/video_icons8.png", "mp4", 14);
-
+            Video expected = new Video("WIN_20200921_15_43_07_Pro.mp4", pathToVideo, pathToVideoPreview, "mp4", 14);
             // Act
-            Video actualResult = (Video)mediaHandlerToTest.CreateVideoObject("C:\\Users\\obern\\OneDrive\\SkyDrive camera roll\\WIN_20200921_15_43_07_Pro.mp4", "../Images/video_icons8.png", wmp.newMedia("C:\\Users\\obern\\OneDrive\\SkyDrive camera roll\\WIN_20200921_15_43_07_Pro.mp4"), "WIN_20200921_15_43_07_Pro.mp4");
+            Video actualResult = (Video)mediaHandlerToTest.CreateVideoObject(pathToVideo, pathToVideoPreview, wmp.newMedia(pathToVideo), "WIN_20200921_15_43_07_Pro.mp4");
 
             // Assert
             Assert.AreEqual(expected.Id, actualResult.Id);
@@ -63,14 +65,15 @@ namespace MultiMediaApplicationTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException), )]
+        [ExpectedException(typeof(ArgumentException))]
         public void CreateVideoObjectTest_WithIncurrectInput_ExceptionThrown()
         {
             // Arrange
             MediaHandler mediaHandlerToTest = new MediaHandler();
+            string pathToVideoPreview = Path.Combine(Environment.CurrentDirectory, "Images\\video_icons8.png");
 
             // Act
-            IMediaFile actualResult = mediaHandlerToTest.CreateVideoObject(null, "Images/video_icons8.png", null, "WIN_20200921_15_43_07_Pro.mp4");
+            IMediaFile actualResult = mediaHandlerToTest.CreateVideoObject(null, pathToVideoPreview, null, "WIN_20200921_15_43_07_Pro.mp4");
         }
     }
 }

@@ -30,3 +30,4 @@ D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment4\MultiMediaAppl
 D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment4\MultiMediaApplicationTest\bin\Debug\Interop.WMPLib.dll
 D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment4\MultiMediaApplicationTest\obj\Debug\Interop.WMPLib.dll
 D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment4\MultiMediaApplicationTest\obj\Debug\MultiMediaApplicationTest.csproj.ResolveComReference.cache
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment4\MultiMediaApplicationTest\bin\Debug\VideoForTest\WIN_20200921_15_43_07_Pro.mp4

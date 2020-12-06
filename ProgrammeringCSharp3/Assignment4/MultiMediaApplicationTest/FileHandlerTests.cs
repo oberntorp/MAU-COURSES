@@ -8,7 +8,7 @@ namespace MultiMediaApplicationTest
     public class FileHandlerTests
     {
         [TestMethod]
-        public void GetFileName_CurrectFileNameTest()
+        public void GetFileNameTest_CurrectFileName_FilenamesMatch()
         {
             // Arrange
             string fileName = "C:\\Users\\obern\\OneDrive\\Bilder\\DSC08984.JPG";
@@ -23,7 +23,7 @@ namespace MultiMediaApplicationTest
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
-        public void GetFileName_WithOutFilePathTest()
+        public void GetFileNameTest_WithOutFilePath_ExceptionThrown()
         {
             // Arrange
             string fileName = string.Empty;
@@ -33,7 +33,7 @@ namespace MultiMediaApplicationTest
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
-        public void GetFileName_WithErrorNoDotInFileNameTest()
+        public void GetFileNameTest_WithErrorNoDotInFileName_ExceptionThrown()
         {
             // Arrange
             string fileName = "file";
@@ -43,7 +43,7 @@ namespace MultiMediaApplicationTest
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
-        public void GetFileName_WithErrorIncompleteFileNameTest()
+        public void GetFileNameTest_WithErrorIncompleteFileName_ExceptionThrown()
         {
             // Arrange
             string fileName = "file.";
@@ -51,7 +51,7 @@ namespace MultiMediaApplicationTest
             FileHandler.GetFileName(fileName);
         }
 
-        public void GetFileExtention_CurrectFileNameTest()
+        public void GetFileExtentionTest_CurrectFileName_FileExtentionMatch()
         {
             // Arrange
             string fileName = "C:\\Users\\obern\\OneDrive\\Bilder\\DSC08984.JPG";
@@ -66,7 +66,7 @@ namespace MultiMediaApplicationTest
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
-        public void GetFileExtention_WithOutFilePathTest()
+        public void GetFileExtentionTest_WithOutFilePath_ExceptionThrown()
         {
             // Arrange
             string fileName = string.Empty;
@@ -76,7 +76,7 @@ namespace MultiMediaApplicationTest
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
-        public void GetFileExtention_WithErrorNoDotInFileNameTest()
+        public void GetFileExtention_WithErrorNoDotInFileNameTest_ExceptionThrown()
         {
             // Arrange
             string fileName = "file";
@@ -86,7 +86,7 @@ namespace MultiMediaApplicationTest
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
-        public void GetFileExtention_WithErrorIncompleteFileNameTest()
+        public void GetFileExtention_WithErrorIncompleteFileNameTest_ExceptionThrown()
         {
             // Arrange
             string fileName = "file.";
