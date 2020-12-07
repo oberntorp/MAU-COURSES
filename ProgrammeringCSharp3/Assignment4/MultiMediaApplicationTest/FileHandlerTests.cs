@@ -76,10 +76,10 @@ namespace MultiMediaApplicationTest
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
-        public void GetFileExtention_WithErrorNoDotInFileNameTest_ExceptionThrown()
+        public void GetFileExtention_WithErrorDotInFileNameTest_ExceptionThrown()
         {
             // Arrange
-            string fileName = "file";
+            string fileName = ".jpg";
             // Act
             FileHandler.GetFileName(fileName);
         }
