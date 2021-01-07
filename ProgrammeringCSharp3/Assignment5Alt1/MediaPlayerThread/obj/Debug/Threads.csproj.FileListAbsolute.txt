@@ -1,0 +1,8 @@
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment5Alt1\MediaPlayerThread\bin\Debug\MediaPlayerThread.dll
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment5Alt1\MediaPlayerThread\bin\Debug\MediaPlayerThread.pdb
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment5Alt1\MediaPlayerThread\bin\Debug\WindowsBase.dll
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment5Alt1\MediaPlayerThread\obj\Debug\Threads.csprojAssemblyReference.cache
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment5Alt1\MediaPlayerThread\obj\Debug\Threads.csproj.CoreCompileInputs.cache
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment5Alt1\MediaPlayerThread\obj\Debug\Threads.csproj.CopyComplete
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment5Alt1\MediaPlayerThread\obj\Debug\MediaPlayerThread.dll
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment5Alt1\MediaPlayerThread\obj\Debug\MediaPlayerThread.pdb
