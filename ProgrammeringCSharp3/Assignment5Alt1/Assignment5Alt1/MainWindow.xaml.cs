@@ -23,10 +23,13 @@ namespace Assignment5Alt1
     /// </summary>
     public partial class MainWindow : Window
     {
-        CancellationTokenSource source = new CancellationTokenSource();
-        CancellationToken token;
         Task mediaPlayerTask;
+        Task movingObjectTask;
+        CancellationTokenSource source = new CancellationTokenSource();
+        CancellationToken tokenMovingObject;
+        CancellationToken tokenMediaPlayer;
         MediaPlayerHandler mediaPlayerHandler;
+        MovingObjectHandler movingObjectHandler;
         public MainWindow()
         {
             InitializeComponent();
@@ -39,26 +42,36 @@ namespace Assignment5Alt1
 
             if (fOpenDialog.ShowDialog() == true)
             {
-                mediaPlayerHandler = new MediaPlayerHandler(new MediaPlayer(), new Uri(fOpenDialog.FileName));
+                mediaPlayerHandler = new MediaPlayerHandler(new MediaPlayer(), new Uri(fOpenDialog.FileName), OpenMusicFileButton, PlayMusicButton, StopMusicButton, NameOfPlayingMusicTextBox);
             }
         }
 
         private void PlayMusicButton_Click(object sender, RoutedEventArgs e)
         {
             source = new CancellationTokenSource();
-            CancellationToken token = source.Token;
-            mediaPlayerTask = new Task(() => mediaPlayerHandler.StartPlay(token), token);
+            tokenMediaPlayer = source.Token;
+            mediaPlayerTask = new Task(() => mediaPlayerHandler.StartPlay(tokenMediaPlayer), tokenMediaPlayer);
             mediaPlayerTask.Start();
         }
 
         private void StopMusicButton_Click(object sender, RoutedEventArgs e)
         {
-            mediaPlayerHandler.StopPlay(token);
+            mediaPlayerHandler.StopPlay(tokenMediaPlayer);
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             source.Cancel();
+        }
+
+        private void StartSpinningButton_Click(object sender, RoutedEventArgs e)
+        {
+            source = new CancellationTokenSource();
+            tokenMediaPlayer = source.Token;
+            movingObjectHandler = new MovingObjectHandler(StartSpinningButton, StopSpinningButton, SpinningObjectCanvas);
+
+            movingObjectTask = new Task(() => movingObjectHandler.StartPlay(tokenMovingObject));
+            movingObjectTask.Start();
         }
     }
 }

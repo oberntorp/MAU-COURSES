@@ -1,23 +1,65 @@
-﻿using System;
+﻿using MediaPlayerThread.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace MediaPlayerThread
 {
     public class MediaPlayerHandler
     {
-        MediaPlayer mediaMplayer;
+        MediaPlayer mediaplayer;
+        Button browseButton;
+        Button playButton;
+        Button stopButton;
+        TextBlock musicPlayedTexBlock;
         bool IsRunning = false;
-        object myLock = new object();
 
-        public MediaPlayerHandler(MediaPlayer mediaPlayer, Uri musicUrl)
+        public MediaPlayerHandler(MediaPlayer mediaPlayerIn, Uri musicUrlIn, Button browseButtonIn, Button playButtonIn, Button stopButtonIn, TextBlock musicPlayedTexBlockIn)
         {
-            mediaMplayer = mediaPlayer;
-            mediaMplayer.Open(musicUrl);
+            mediaplayer = mediaPlayerIn;
+            mediaplayer.Open(musicUrlIn);
+
+            browseButton = browseButtonIn;
+            playButton = playButtonIn;
+            stopButton = stopButtonIn;
+            musicPlayedTexBlock = musicPlayedTexBlockIn;
+
+            UpdateGuiWithNameOfMusicMusicChosen(ExtractMusicName(musicUrlIn));
+            DisableMusicPlayerButtons(ButtonBeingDisabled.Browse);
+        }
+
+        private string ExtractMusicName(Uri musicUrlIn)
+        {
+            return musicUrlIn.ToString().Split('/').Last();
+        }
+
+        private void UpdateGuiWithNameOfMusicMusicChosen(string nameOfMusicChoosen)
+        {
+            musicPlayedTexBlock.Dispatcher.Invoke(() => musicPlayedTexBlock.Text = nameOfMusicChoosen);
+        }
+
+        private void DisableMusicPlayerButtons(ButtonBeingDisabled buttonToDisable)
+        {
+            switch(buttonToDisable)
+            {
+                case ButtonBeingDisabled.Browse:
+                    browseButton.Dispatcher.Invoke(() => browseButton.IsEnabled = false);
+                    playButton.Dispatcher.Invoke(() => playButton.IsEnabled = true);
+                    break;
+                case ButtonBeingDisabled.Play:
+                    playButton.Dispatcher.Invoke(() => playButton.IsEnabled = false);
+                    stopButton.Dispatcher.Invoke(() => stopButton.IsEnabled = true);
+                    break;
+                case ButtonBeingDisabled.Stop:
+                    stopButton.Dispatcher.Invoke(() => stopButton.IsEnabled = false);
+                    playButton.Dispatcher.Invoke(() => playButton.IsEnabled = true);
+                    break;
+            }
         }
 
         private void PlayMusic(CancellationToken cancelationToken)
@@ -28,21 +70,23 @@ namespace MediaPlayerThread
             }
             while (IsRunning)
             {
-                mediaMplayer.Dispatcher.Invoke(() => mediaMplayer.Play());
+                mediaplayer.Dispatcher.Invoke(() => mediaplayer.Play());
                 Thread.Sleep(1000);
             }
-            mediaMplayer.Dispatcher.Invoke(() => mediaMplayer.Pause());
+            mediaplayer.Dispatcher.Invoke(() => mediaplayer.Pause());
         }
 
         public void StartPlay(CancellationToken cancelationToken)
         {
             IsRunning = true;
+            DisableMusicPlayerButtons(ButtonBeingDisabled.Play);
             PlayMusic(cancelationToken);
         }
 
         public void StopPlay(CancellationToken cancelationToken)
         {
             IsRunning = false;
+            DisableMusicPlayerButtons(ButtonBeingDisabled.Stop);
             PlayMusic(cancelationToken);
         }
     }

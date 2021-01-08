@@ -17,10 +17,11 @@
             <RowDefinition Height="100"/>
         </Grid.RowDefinitions>
             <StackPanel Grid.Column="0" Grid.ColumnSpan="1">
-                <Line X1="0" X2="30" Y1="0" Y2="200" Stroke="Blue" StrokeThickness="4"/>
+            <Canvas x:Name="SpinningObjectCanvas" Height="295">
+            </Canvas>
                 <Border BorderBrush="Green" BorderThickness="1" Width="164">
                 <WrapPanel HorizontalAlignment="Center">
-                    <Button x:Name="StartSpinningButton" Content="Start Spinning" Margin="0 0 5 0"/>
+                    <Button x:Name="StartSpinningButton" Content="Start Spinning" Margin="0 0 5 0" Click="StartSpinningButton_Click"/>
                     <Button x:Name="StopSpinningButton" Content="Stop Spinning"/>
                 </WrapPanel>
                 </Border>
@@ -29,7 +30,7 @@
             <StackPanel>
                 <WrapPanel HorizontalAlignment="Center">
                     <TextBlock Text="Currently playing: " FontSize="18"/>
-                    <TextBlock Text="Nothing at the moment" FontSize="18" Margin="5 0 0 0"/>
+                    <TextBlock x:Name="NameOfPlayingMusicTextBox" Text="Nothing at the moment" FontSize="18" Margin="5 0 0 0"/>
                 </WrapPanel>
                 <WrapPanel HorizontalAlignment="Center" Margin="0 5 0 0">
                     <Button x:Name="OpenMusicFileButton" Content="Browse music to play" Margin="0 0 15 0" Click="OpenMusicFileButton_Click"/>
