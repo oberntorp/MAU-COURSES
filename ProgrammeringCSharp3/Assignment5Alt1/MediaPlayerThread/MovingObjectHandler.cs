@@ -20,7 +20,7 @@ namespace MediaPlayerThread
         Polygon polygonOfClass;
 
         private bool IsRunning;
-        private bool leftToRight = true;
+        private FigureMoveDirection direction;
 
 
         public MovingObjectHandler(Button StartSpinnButtonFromGui, Button StopSpinnButtonFromGui, Canvas spinningObjectCanvasFromGui)
@@ -43,14 +43,21 @@ namespace MediaPlayerThread
 
         private void DrawFigure()
         {
-            polygonOfClass = new Polygon();
-            polygonOfClass.Points = GetPointsOfPollygon();
-
-            polygonOfClass.Fill = Brushes.Aqua;
-            polygonOfClass.Stroke = Brushes.Blue;
-            polygonOfClass.StrokeThickness = 1;
-
+            DrawFigureIfNotExist();
             SetFigurePosition(FigureDrawMode.StartUp);
+        }
+
+        private void DrawFigureIfNotExist()
+        {
+            if (polygonOfClass == null)
+            {
+                polygonOfClass = new Polygon();
+                polygonOfClass.Points = GetPointsOfPollygon();
+
+                polygonOfClass.Fill = Brushes.Aqua;
+                polygonOfClass.Stroke = Brushes.Blue;
+                polygonOfClass.StrokeThickness = 1;
+            }
         }
 
         private void SetFigurePosition(FigureDrawMode drawMode)
@@ -63,7 +70,6 @@ namespace MediaPlayerThread
             }
             else
             {
-                FigureMoveDirection direction = FigureMoveDirection.Left;
                 if (direction == FigureMoveDirection.Left)
                 {
                     marginOfShape.Left += 20;
@@ -72,16 +78,21 @@ namespace MediaPlayerThread
                 {
                     marginOfShape.Left -= 20;
                 }
-                direction = DesideDirection(marginOfShape.Left, direction == FigureMoveDirection.Left ? FigureMoveDirection.Left : direction);
+                direction = GetDirection(marginOfShape.Left, direction == FigureMoveDirection.Left ? FigureMoveDirection.Left : direction);
             }
             polygonOfClass.Dispatcher.Invoke(() => polygonOfClass.Margin = marginOfShape);
             spinningObjectCanvas.Dispatcher.Invoke(() => spinningObjectCanvas.Children.Remove(polygonOfClass));
             spinningObjectCanvas.Dispatcher.Invoke(() => spinningObjectCanvas.Children.Add(polygonOfClass));
         }
 
-        private FigureMoveDirection DesideDirection(double left, FigureMoveDirection previousDirection)
+        private FigureMoveDirection GetDirection(double left, FigureMoveDirection previousDirection)
         {
-            return left < spinningObjectCanvas.Dispatcher.Invoke(() => spinningObjectCanvas.ActualWidth) ? FigureMoveDirection.Left : FigureMoveDirection.Right;        
+            if ((previousDirection == FigureMoveDirection.Left) && (left < (spinningObjectCanvas.Dispatcher.Invoke(() => spinningObjectCanvas.ActualWidth))))
+                return FigureMoveDirection.Left;
+            else if (left >= 0)
+                return FigureMoveDirection.Right;
+
+            return FigureMoveDirection.Left;
         }
 
         private PointCollection GetPointsOfPollygon()
@@ -103,8 +114,8 @@ namespace MediaPlayerThread
                     stopSpinnButton.Dispatcher.Invoke(() => stopSpinnButton.IsEnabled = true);
                     break;
                 case ButtonBeingDisabled.Stop:
-                    stopSpinnButton.Dispatcher.Invoke(() => stopSpinnButton.IsEnabled = true);
-                    startSpinnButton.Dispatcher.Invoke(() => startSpinnButton.IsEnabled = false);
+                    stopSpinnButton.Dispatcher.Invoke(() => stopSpinnButton.IsEnabled = false);
+                    startSpinnButton.Dispatcher.Invoke(() => startSpinnButton.IsEnabled = true);
                     break;
             }
         }

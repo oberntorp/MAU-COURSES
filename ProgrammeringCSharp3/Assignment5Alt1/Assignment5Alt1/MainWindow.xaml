@@ -22,7 +22,7 @@
                 <Border BorderBrush="Green" BorderThickness="1" Width="164">
                 <WrapPanel HorizontalAlignment="Center">
                     <Button x:Name="StartSpinningButton" Content="Start Spinning" Margin="0 0 5 0" Click="StartSpinningButton_Click"/>
-                    <Button x:Name="StopSpinningButton" Content="Stop Spinning"/>
+                    <Button x:Name="StopSpinningButton" Content="Stop Spinning" Click="StopSpinningButton_Click"/>
                 </WrapPanel>
                 </Border>
             </StackPanel>

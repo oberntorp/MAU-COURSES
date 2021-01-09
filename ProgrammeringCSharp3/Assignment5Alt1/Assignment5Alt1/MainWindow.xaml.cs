@@ -66,12 +66,25 @@ namespace Assignment5Alt1
 
         private void StartSpinningButton_Click(object sender, RoutedEventArgs e)
         {
-            source = new CancellationTokenSource();
-            tokenMediaPlayer = source.Token;
-            movingObjectHandler = new MovingObjectHandler(StartSpinningButton, StopSpinningButton, SpinningObjectCanvas);
+            if (movingObjectHandler == null)
+            {
+                source = new CancellationTokenSource();
+                tokenMovingObject = source.Token;
+                movingObjectHandler = new MovingObjectHandler(StartSpinningButton, StopSpinningButton, SpinningObjectCanvas);
 
-            movingObjectTask = new Task(() => movingObjectHandler.StartPlay(tokenMovingObject));
-            movingObjectTask.Start();
+                movingObjectTask = new Task(() => movingObjectHandler.StartPlay(tokenMovingObject));
+                movingObjectTask.Start();
+            }
+            else
+            {
+                movingObjectTask = new Task(() => movingObjectHandler.StartPlay(tokenMovingObject));
+                movingObjectTask.Start();
+            }
+        }
+
+        private void StopSpinningButton_Click(object sender, RoutedEventArgs e)
+        {
+            movingObjectHandler.StopPlay(tokenMovingObject);
         }
     }
 }
