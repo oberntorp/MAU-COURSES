@@ -7,6 +7,24 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
         Closing="Window_Closing">
+    <Window.Resources>
+        <LinearGradientBrush StartPoint="0,1" EndPoint="0,0" x:Key="BtnsBg">
+            <GradientStop Offset="0.1" Color="Black"/>
+            <GradientStop Offset="0.3" Color="Blue"/>
+        </LinearGradientBrush>
+        <LinearGradientBrush StartPoint="0,1" EndPoint="0,0" x:Key="ClockFigureColor">
+            <GradientStop Offset="0.1" Color="Silver"/>
+            <GradientStop Offset="0.3" Color="Black"/>
+        </LinearGradientBrush>
+        <RadialGradientBrush GradientOrigin="0.5, 0.5" Center="0.5 ,0.5" x:Key="ClockBg">
+            <GradientStop Offset="0.14" Color="White"/>
+            <GradientStop Offset="1"  Color="Blue"/>
+        </RadialGradientBrush>
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="{StaticResource BtnsBg}"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -14,18 +32,53 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="100"/>
+            <RowDefinition Height="90"/>
         </Grid.RowDefinitions>
-            <StackPanel Grid.Column="0" Grid.ColumnSpan="1">
+        <StackPanel Grid.Column="0" Grid.ColumnSpan="1">
             <Canvas x:Name="SpinningObjectCanvas" Height="295">
             </Canvas>
-                <Border BorderBrush="Green" BorderThickness="1" Width="164">
+            <Border BorderBrush="Green" BorderThickness="1" Width="164">
                 <WrapPanel HorizontalAlignment="Center">
-                    <Button x:Name="StartSpinningButton" Content="Start Spinning" Margin="0 0 5 0" Click="StartSpinningButton_Click"/>
-                    <Button x:Name="StopSpinningButton" Content="Stop Spinning" Click="StopSpinningButton_Click"/>
+                    <Button x:Name="StartMoveButton" Content="Start Move" Margin="0 0 5 0" Click="StartMoveButton_Click"/>
+                    <Button x:Name="StopMoveButton" Content="Stop Move" Click="StopMoveButton_Click"/>
                 </WrapPanel>
-                </Border>
-            </StackPanel>
+            </Border>
+        </StackPanel>
+        <StackPanel Grid.Column="1" Grid.ColumnSpan="1">
+            <Canvas x:Name="ClockCanvas" Height="295">
+                <Ellipse Height="280" Width="280" HorizontalAlignment="Center" Canvas.Left="56" Canvas.Top="5" Fill="{StaticResource ClockBg}" Stroke="Black" StrokeThickness="2"/>
+                <Line x:Name="HourHand" X1="0" X2="1" Y1="90" Stroke="Silver" StrokeThickness="5" RenderTransformOrigin="0.0, 1.0" Canvas.Top="51" Canvas.Left="196">
+                    <Line.RenderTransform>
+                        <RotateTransform x:Name="HourHandTransform" Angle="0"/>
+                    </Line.RenderTransform>
+                </Line>
+                <Line x:Name="MinuteHand" X1="0" X2="1" Y1="70" Stroke="Black" StrokeThickness="5" RenderTransformOrigin="0.0, 1.0" Canvas.Top="71" Canvas.Left="196">
+                    <Line.RenderTransform>
+                        <RotateTransform x:Name="MinuteHandTransform" Angle="0"/>
+                    </Line.RenderTransform>
+                </Line>
+                <Line x:Name="SecondHand" X1="0" X2="1" Y1="50" Stroke="Red" StrokeThickness="5" RenderTransformOrigin="0.0, 1.0" Canvas.Top="91" Canvas.Left="196">
+                    <Line.RenderTransform>
+                        <RotateTransform x:Name="SecondHandTransform" Angle="0"/>
+                    </Line.RenderTransform>
+                </Line>
+                <TextBlock Text="12" Canvas.Left="171" Canvas.Top="10" FontSize="50" FontWeight="Bold"/>
+                <TextBlock Text="3" Canvas.Right="65" Canvas.Top="103" FontSize="50" FontWeight="Bold" Canvas.Left="302"/>
+                <TextBlock Text="6" Canvas.Left="65" Canvas.Top="103" FontSize="50" FontWeight="Bold"/>
+                <TextBlock Text="9" Canvas.Left="179" Canvas.Bottom="10" FontSize="50" FontWeight="Bold"/>
+                <Canvas.Resources>
+                    <Style TargetType="{x:Type TextBlock}">
+                        <Setter Property="Foreground" Value="{StaticResource ClockFigureColor}"/>
+                    </Style>
+                </Canvas.Resources>
+            </Canvas>
+            <Border BorderBrush="Green" BorderThickness="1" Width="164">
+                <WrapPanel HorizontalAlignment="Center">
+                    <Button x:Name="StartClockButton" Content="Start Clock" Margin="0 0 5 0" Click="StartClockButton_Click"/>
+                    <Button x:Name="StopClockButton" Content="Stop Clock" Click="StopClockButton_Click"/>
+                </WrapPanel>
+            </Border>
+        </StackPanel>
         <Border Grid.Row="1" Grid.ColumnSpan="2" BorderBrush="Green" BorderThickness="2">
             <StackPanel>
                 <WrapPanel HorizontalAlignment="Center">

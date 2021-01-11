@@ -50,6 +50,7 @@
     <Compile Include="Enums\FigureDrawMode.cs" />
     <Compile Include="Enums\ButtonBeingDisabled.cs" />
     <Compile Include="MediaPlayerHandler.cs" />
+    <Compile Include="MoveHandsHandler.cs" />
     <Compile Include="MovingObjectHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

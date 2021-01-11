@@ -14,8 +14,8 @@ namespace MediaPlayerThread
 {
     public class MovingObjectHandler
     {
-        private Button startSpinnButton;
-        private Button stopSpinnButton;
+        private Button startMoveButton;
+        private Button stopMoveButton;
         private Canvas spinningObjectCanvas;
         Polygon polygonOfClass;
 
@@ -23,10 +23,10 @@ namespace MediaPlayerThread
         private FigureMoveDirection direction;
 
 
-        public MovingObjectHandler(Button StartSpinnButtonFromGui, Button StopSpinnButtonFromGui, Canvas spinningObjectCanvasFromGui)
+        public MovingObjectHandler(Button StartMoveButtonFromGui, Button StopMoveButtonFromGui, Canvas spinningObjectCanvasFromGui)
         {
-            startSpinnButton = StartSpinnButtonFromGui;
-            stopSpinnButton = StopSpinnButtonFromGui;
+            startMoveButton = StartMoveButtonFromGui;
+            stopMoveButton = StopMoveButtonFromGui;
             spinningObjectCanvas = spinningObjectCanvasFromGui;
 
             DisableSpinningObjectButtons(ButtonBeingDisabled.Stop);
@@ -110,12 +110,12 @@ namespace MediaPlayerThread
             switch (buttonToDisable)
             {
                 case ButtonBeingDisabled.Play:
-                    startSpinnButton.Dispatcher.Invoke(() => startSpinnButton.IsEnabled = false);
-                    stopSpinnButton.Dispatcher.Invoke(() => stopSpinnButton.IsEnabled = true);
+                    startMoveButton.Dispatcher.Invoke(() => startMoveButton.IsEnabled = false);
+                    stopMoveButton.Dispatcher.Invoke(() => stopMoveButton.IsEnabled = true);
                     break;
                 case ButtonBeingDisabled.Stop:
-                    stopSpinnButton.Dispatcher.Invoke(() => stopSpinnButton.IsEnabled = false);
-                    startSpinnButton.Dispatcher.Invoke(() => startSpinnButton.IsEnabled = true);
+                    stopMoveButton.Dispatcher.Invoke(() => stopMoveButton.IsEnabled = false);
+                    startMoveButton.Dispatcher.Invoke(() => startMoveButton.IsEnabled = true);
                     break;
             }
         }
