@@ -34,11 +34,11 @@ namespace MediaPlayerThread
             DrawFigure();
         }
 
-        public void StartSpinning(CancellationToken cancelationToken)
+        public void StartSpinning()
         {
             DrawFigure();
             spinningObjectCanvas.Dispatcher.Invoke(() => spinningObjectCanvas.Children.Add(polygonOfClass));
-            MoveObject(cancelationToken);
+            MoveObject();
         }
 
         private void DrawFigure()
@@ -120,12 +120,8 @@ namespace MediaPlayerThread
             }
         }
 
-        private void MoveObject(CancellationToken cancelationToken)
+        private void MoveObject()
         {
-            if (cancelationToken.IsCancellationRequested)
-            {
-                cancelationToken.ThrowIfCancellationRequested();
-            }
             while (IsRunning)
             {
                 SetFigurePosition(FigureDrawMode.Move);
@@ -134,18 +130,18 @@ namespace MediaPlayerThread
         }
 
 
-        public void StartPlay(CancellationToken cancelationToken)
+        public void StartPlay()
         {
             IsRunning = true;
             DisableSpinningObjectButtons(ButtonBeingDisabled.Play);
-            MoveObject(cancelationToken);
+            MoveObject();
         }
 
-        public void StopPlay(CancellationToken cancelationToken)
+        public void StopPlay()
         {
             IsRunning = false;
             DisableSpinningObjectButtons(ButtonBeingDisabled.Stop);
-            MoveObject(cancelationToken);
+            MoveObject();
         }
     }
 }

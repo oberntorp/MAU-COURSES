@@ -5,8 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Assignment5Alt1"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800"
-        Closing="Window_Closing">
+        Title="MainWindow" Height="450" Width="800">
     <Window.Resources>
         <LinearGradientBrush StartPoint="0,1" EndPoint="0,0" x:Key="BtnsBg">
             <GradientStop Offset="0.1" Color="Black"/>
@@ -18,7 +17,7 @@
         </LinearGradientBrush>
         <RadialGradientBrush GradientOrigin="0.5, 0.5" Center="0.5 ,0.5" x:Key="ClockBg">
             <GradientStop Offset="0.14" Color="White"/>
-            <GradientStop Offset="1"  Color="Blue"/>
+            <GradientStop Offset="1"  Color="Silver"/>
         </RadialGradientBrush>
         <Style TargetType="{x:Type Button}">
             <Setter Property="Background" Value="{StaticResource BtnsBg}"/>
@@ -47,21 +46,22 @@
         <StackPanel Grid.Column="1" Grid.ColumnSpan="1">
             <Canvas x:Name="ClockCanvas" Height="295">
                 <Ellipse Height="280" Width="280" HorizontalAlignment="Center" Canvas.Left="56" Canvas.Top="5" Fill="{StaticResource ClockBg}" Stroke="Black" StrokeThickness="2"/>
-                <Line x:Name="HourHand" X1="0" X2="1" Y1="90" Stroke="Silver" StrokeThickness="5" RenderTransformOrigin="0.0, 1.0" Canvas.Top="51" Canvas.Left="196">
+                <Line x:Name="HourHand" X1="0" X2="1" Y1="90" Stroke="DarkSlateGray" StrokeThickness="5" RenderTransformOrigin="0.0, 1.0" Canvas.Top="54" Canvas.Left="196">
                     <Line.RenderTransform>
                         <RotateTransform x:Name="HourHandTransform" Angle="0"/>
                     </Line.RenderTransform>
                 </Line>
-                <Line x:Name="MinuteHand" X1="0" X2="1" Y1="70" Stroke="Black" StrokeThickness="5" RenderTransformOrigin="0.0, 1.0" Canvas.Top="71" Canvas.Left="196">
+                <Line x:Name="MinuteHand" X1="0" X2="1" Y1="70" Stroke="Black" StrokeThickness="5" RenderTransformOrigin="0.0, 1.0" Canvas.Top="74" Canvas.Left="196">
                     <Line.RenderTransform>
                         <RotateTransform x:Name="MinuteHandTransform" Angle="0"/>
                     </Line.RenderTransform>
                 </Line>
-                <Line x:Name="SecondHand" X1="0" X2="1" Y1="50" Stroke="Red" StrokeThickness="5" RenderTransformOrigin="0.0, 1.0" Canvas.Top="91" Canvas.Left="196">
+                <Line x:Name="SecondHand" X1="0" X2="1" Y1="100" Stroke="Red" StrokeThickness="1" RenderTransformOrigin="0.0, 1.0" Canvas.Top="44" Canvas.Left="196">
                     <Line.RenderTransform>
                         <RotateTransform x:Name="SecondHandTransform" Angle="0"/>
                     </Line.RenderTransform>
                 </Line>
+                <Ellipse Height="30" Width="30" Canvas.Left="181" Canvas.Top="130" Fill="WhiteSmoke" Stroke="Black" StrokeThickness="2"/>
                 <TextBlock Text="12" Canvas.Left="171" Canvas.Top="10" FontSize="50" FontWeight="Bold"/>
                 <TextBlock Text="3" Canvas.Right="65" Canvas.Top="103" FontSize="50" FontWeight="Bold" Canvas.Left="302"/>
                 <TextBlock Text="6" Canvas.Left="65" Canvas.Top="103" FontSize="50" FontWeight="Bold"/>

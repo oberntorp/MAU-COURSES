@@ -28,31 +28,6 @@ namespace MediaPlayerThread
             secondHand = secondHandFromGyi;
         }
 
-        public void StartPlay(CancellationToken cancelationToken)
-        {
-            IsRunning = true;
-            DisableClockButtonObjectButtons(ButtonBeingDisabled.Play);
-            MoveHand(cancelationToken);
-        }
-
-        private void MoveHand(CancellationToken cancelationToken)
-        {
-            while(IsRunning)
-            {
-                hourHand.Dispatcher.Invoke(() => hourHand.Angle = (DateTime.Now.Hour * 30) + (DateTime.Now.Minute * 0.5));
-                minuteHand.Dispatcher.Invoke(() => minuteHand.Angle = DateTime.Now.Minute * 6);
-                secondHand.Dispatcher.Invoke(() => secondHand.Angle = DateTime.Now.Second * 6);
-                Thread.Sleep(1000);
-            }
-        }
-
-        public void StopPlay(CancellationToken cancelationToken)
-        {
-            IsRunning = false;
-            DisableClockButtonObjectButtons(ButtonBeingDisabled.Stop);
-            MoveHand(cancelationToken);
-        }
-
         private void DisableClockButtonObjectButtons(ButtonBeingDisabled buttonToDisable)
         {
             switch (buttonToDisable)
@@ -66,6 +41,31 @@ namespace MediaPlayerThread
                     startClockButton.Dispatcher.Invoke(() => startClockButton.IsEnabled = true);
                     break;
             }
+        }
+
+        public void StartPlay()
+        {
+            IsRunning = true;
+            DisableClockButtonObjectButtons(ButtonBeingDisabled.Play);
+            MoveHand();
+        }
+
+        private void MoveHand()
+        {
+            while (IsRunning)
+            {
+                hourHand.Dispatcher.Invoke(() => hourHand.Angle = (DateTime.Now.Hour * 30) + (DateTime.Now.Minute * 0.5));
+                minuteHand.Dispatcher.Invoke(() => minuteHand.Angle = DateTime.Now.Minute * 6);
+                secondHand.Dispatcher.Invoke(() => secondHand.Angle = DateTime.Now.Second * 6);
+                Thread.Sleep(1000);
+            }
+        }
+
+        public void StopPlay()
+        {
+            IsRunning = false;
+            DisableClockButtonObjectButtons(ButtonBeingDisabled.Stop);
+            MoveHand();
         }
     }
 }

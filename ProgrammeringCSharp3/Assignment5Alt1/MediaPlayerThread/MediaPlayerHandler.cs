@@ -62,12 +62,8 @@ namespace MediaPlayerThread
             }
         }
 
-        private void PlayMusic(CancellationToken cancelationToken)
+        private void PlayMusic()
         {
-            if (cancelationToken.IsCancellationRequested)
-            {
-                cancelationToken.ThrowIfCancellationRequested();
-            }
             while (IsRunning)
             {
                 mediaplayer.Dispatcher.Invoke(() => mediaplayer.Play());
@@ -76,18 +72,18 @@ namespace MediaPlayerThread
             mediaplayer.Dispatcher.Invoke(() => mediaplayer.Pause());
         }
 
-        public void StartPlay(CancellationToken cancelationToken)
+        public void StartPlay()
         {
             IsRunning = true;
             DisableMusicPlayerButtons(ButtonBeingDisabled.Play);
-            PlayMusic(cancelationToken);
+            PlayMusic();
         }
 
-        public void StopPlay(CancellationToken cancelationToken)
+        public void StopPlay()
         {
             IsRunning = false;
             DisableMusicPlayerButtons(ButtonBeingDisabled.Stop);
-            PlayMusic(cancelationToken);
+            PlayMusic();
         }
     }
 }

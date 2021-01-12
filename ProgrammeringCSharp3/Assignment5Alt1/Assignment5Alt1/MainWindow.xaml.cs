@@ -27,11 +27,6 @@ namespace Assignment5Alt1
         Task movingObjectTask;
         Task moveHandsTask;
 
-        CancellationTokenSource source = new CancellationTokenSource();
-        CancellationToken tokenMovingObject;
-        CancellationToken tokenMediaPlayer;
-        CancellationToken tokenHands;
-
         MediaPlayerHandler mediaPlayerHandler;
         MovingObjectHandler movingObjectHandler;
         MoveHandsHandler moveHandsHandler;
@@ -53,66 +48,56 @@ namespace Assignment5Alt1
 
         private void PlayMusicButton_Click(object sender, RoutedEventArgs e)
         {
-            source = new CancellationTokenSource();
-            tokenMediaPlayer = source.Token;
-            mediaPlayerTask = new Task(() => mediaPlayerHandler.StartPlay(tokenMediaPlayer), tokenMediaPlayer);
+            mediaPlayerTask = new Task(() => mediaPlayerHandler.StartPlay());
             mediaPlayerTask.Start();
         }
 
         private void StopMusicButton_Click(object sender, RoutedEventArgs e)
         {
-            mediaPlayerHandler.StopPlay(tokenMediaPlayer);
+            mediaPlayerHandler.StopPlay();
         }
 
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            source.Cancel();
-        }
 
         private void StartMoveButton_Click(object sender, RoutedEventArgs e)
         {
             if (movingObjectHandler == null)
             {
-                source = new CancellationTokenSource();
-                tokenMovingObject = source.Token;
                 movingObjectHandler = new MovingObjectHandler(StartMoveButton, StopMoveButton, SpinningObjectCanvas);
 
-                movingObjectTask = new Task(() => movingObjectHandler.StartPlay(tokenMovingObject));
+                movingObjectTask = new Task(() => movingObjectHandler.StartPlay());
                 movingObjectTask.Start();
             }
             else
             {
-                movingObjectTask = new Task(() => movingObjectHandler.StartPlay(tokenMovingObject));
+                movingObjectTask = new Task(() => movingObjectHandler.StartPlay());
                 movingObjectTask.Start();
             }
         }
 
         private void StopMoveButton_Click(object sender, RoutedEventArgs e)
         {
-            movingObjectHandler.StopPlay(tokenMovingObject);
+            movingObjectHandler.StopPlay();
         }
 
         private void StartClockButton_Click(object sender, RoutedEventArgs e)
         {
             if (moveHandsHandler == null)
             {
-                source = new CancellationTokenSource();
-                tokenHands = source.Token;
                 moveHandsHandler = new MoveHandsHandler(StartClockButton, StopClockButton, HourHandTransform, MinuteHandTransform, SecondHandTransform); 
 
-                moveHandsTask = new Task(() => moveHandsHandler.StartPlay(tokenMovingObject));
+                moveHandsTask = new Task(() => moveHandsHandler.StartPlay());
                 moveHandsTask.Start();
             }
             else
             {
-                moveHandsTask = new Task(() => moveHandsHandler.StartPlay(tokenMovingObject));
+                moveHandsTask = new Task(() => moveHandsHandler.StartPlay());
                 moveHandsTask.Start();
             }
         }
 
         private void StopClockButton_Click(object sender, RoutedEventArgs e)
         {
-            moveHandsHandler.StopPlay(tokenHands);
+            moveHandsHandler.StopPlay();
         }
     }
 }
