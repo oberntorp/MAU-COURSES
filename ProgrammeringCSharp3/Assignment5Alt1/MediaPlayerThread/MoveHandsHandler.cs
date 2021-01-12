@@ -10,6 +10,9 @@ using System.Windows.Media;
 
 namespace MediaPlayerThread
 {
+    /// <summary>
+    /// This class is responsible for moving the hands of the clock
+    /// </summary>
     public class MoveHandsHandler
     {
         private Button startClockButton;
@@ -19,6 +22,14 @@ namespace MediaPlayerThread
         private RotateTransform secondHand;
         bool IsRunning = false;
 
+        /// <summary>
+        /// The constructor configures the essentials of the class
+        /// </summary>
+        /// <param name="startClockButtonFromGui">The start button</param>
+        /// <param name="stopClockButtonFromGui">The stop button</param>
+        /// <param name="hourHandFromGyi">The hours hand transformation from the gui</param>
+        /// <param name="minuteHandFromGyi">The minute hand transformation from the gui</param>
+        /// <param name="secondHandFromGyi">The second hand transformation from the gui</param>
         public MoveHandsHandler(Button startClockButtonFromGui, Button stopClockButtonFromGui, RotateTransform hourHandFromGyi, RotateTransform minuteHandFromGyi, RotateTransform secondHandFromGyi)
         {
             startClockButton = startClockButtonFromGui;
@@ -28,6 +39,10 @@ namespace MediaPlayerThread
             secondHand = secondHandFromGyi;
         }
 
+        /// <summary>
+        /// Disable buttons according to the button being used recently
+        /// </summary>
+        /// <param name="buttonToDisable">The button to disable</param>
         private void DisableClockButtonObjectButtons(ButtonBeingDisabled buttonToDisable)
         {
             switch (buttonToDisable)
@@ -43,6 +58,9 @@ namespace MediaPlayerThread
             }
         }
 
+        /// <summary>
+        /// Starts the moving of the clocks hands
+        /// </summary>
         public void StartPlay()
         {
             IsRunning = true;
@@ -50,6 +68,9 @@ namespace MediaPlayerThread
             MoveHand();
         }
 
+        /// <summary>
+        /// Moves the hands
+        /// </summary>
         private void MoveHand()
         {
             while (IsRunning)
@@ -61,11 +82,22 @@ namespace MediaPlayerThread
             }
         }
 
-        public void StopPlay()
+        /// <summary>
+        /// Stops the player
+        /// </summary>
+        /// <param name="cancellationToken">Cancellation token to cancel the task</param>
+        public void StopPlay(CancellationToken cancellationToken)
         {
-            IsRunning = false;
-            DisableClockButtonObjectButtons(ButtonBeingDisabled.Stop);
-            MoveHand();
+            if (cancellationToken.IsCancellationRequested)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+            }
+            else
+            {
+                IsRunning = false;
+                DisableClockButtonObjectButtons(ButtonBeingDisabled.Stop);
+                MoveHand();
+            }
         }
     }
 }

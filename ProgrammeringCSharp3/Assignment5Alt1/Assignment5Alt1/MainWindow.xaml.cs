@@ -23,6 +23,13 @@ namespace Assignment5Alt1
     /// </summary>
     public partial class MainWindow : Window
     {
+        CancellationTokenSource tokenSource;
+
+        CancellationToken cancellationTokenMediaPlayer;
+        CancellationToken cancellationTokenMovingObject;
+        CancellationToken cancellationTokenMoveHands;
+
+
         Task mediaPlayerTask;
         Task movingObjectTask;
         Task moveHandsTask;
@@ -30,11 +37,20 @@ namespace Assignment5Alt1
         MediaPlayerHandler mediaPlayerHandler;
         MovingObjectHandler movingObjectHandler;
         MoveHandsHandler moveHandsHandler;
+
+        /// <summary>
+        /// Constructor, sets cancellationSource
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();
+            tokenSource = new CancellationTokenSource();
         }
-
+        /// <summary>
+        /// Handler for OpenMusicFile
+        /// </summary>
+        /// <param name="sender">The button sending the request</param>
+        /// <param name="e">Event arguments</param>
         private void OpenMusicFileButton_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog fOpenDialog = new OpenFileDialog();
@@ -46,58 +62,109 @@ namespace Assignment5Alt1
             }
         }
 
+        /// <summary>
+        /// Handler for PlayMusic
+        /// </summary>
+        /// <param name="sender">The button sending the request</param>
+        /// <param name="e">Event arguments</param>
         private void PlayMusicButton_Click(object sender, RoutedEventArgs e)
         {
-            mediaPlayerTask = new Task(() => mediaPlayerHandler.StartPlay());
-            mediaPlayerTask.Start();
+            cancellationTokenMediaPlayer = tokenSource.Token;
+            mediaPlayerTask = Task.Factory.StartNew(mediaPlayerHandler.StartPlay, cancellationTokenMediaPlayer);
         }
 
+        /// <summary>
+        /// Handler for StopMusic
+        /// </summary>
+        /// <param name="sender">The button sending the request</param>
+        /// <param name="e">Event arguments</param>
         private void StopMusicButton_Click(object sender, RoutedEventArgs e)
         {
-            mediaPlayerHandler.StopPlay();
+            mediaPlayerHandler.StopPlay(cancellationTokenMediaPlayer);
         }
 
-
+        /// <summary>
+        /// Handler that starts the move of the object
+        /// </summary>
+        /// <param name="sender">The button sending the request</param>
+        /// <param name="e">Event arguments</param>
         private void StartMoveButton_Click(object sender, RoutedEventArgs e)
         {
+            cancellationTokenMovingObject = tokenSource.Token;
             if (movingObjectHandler == null)
             {
                 movingObjectHandler = new MovingObjectHandler(StartMoveButton, StopMoveButton, SpinningObjectCanvas);
 
-                movingObjectTask = new Task(() => movingObjectHandler.StartPlay());
-                movingObjectTask.Start();
+                movingObjectTask = Task.Factory.StartNew(movingObjectHandler.StartPlay, cancellationTokenMovingObject);
             }
             else
             {
-                movingObjectTask = new Task(() => movingObjectHandler.StartPlay());
-                movingObjectTask.Start();
+                movingObjectTask = Task.Factory.StartNew(movingObjectHandler.StartPlay, cancellationTokenMovingObject);
             }
         }
 
+        /// <summary>
+        /// Handler for Stop moving of the object
+        /// </summary>
+        /// <param name="sender">The button sending the request</param>
+        /// <param name="e">Event arguments</param>
         private void StopMoveButton_Click(object sender, RoutedEventArgs e)
         {
-            movingObjectHandler.StopPlay();
+            movingObjectHandler.StopPlay(cancellationTokenMovingObject);
         }
 
+        /// <summary>
+        /// Handler for starting the clock
+        /// </summary>
+        /// <param name="sender">The button sending the request</param>
+        /// <param name="e">Event arguments</param>
         private void StartClockButton_Click(object sender, RoutedEventArgs e)
         {
+            cancellationTokenMoveHands = tokenSource.Token;
             if (moveHandsHandler == null)
             {
-                moveHandsHandler = new MoveHandsHandler(StartClockButton, StopClockButton, HourHandTransform, MinuteHandTransform, SecondHandTransform); 
+                moveHandsHandler = new MoveHandsHandler(StartClockButton, StopClockButton, HourHandTransform, MinuteHandTransform, SecondHandTransform);
 
-                moveHandsTask = new Task(() => moveHandsHandler.StartPlay());
-                moveHandsTask.Start();
+                moveHandsTask = Task.Factory.StartNew(moveHandsHandler.StartPlay, cancellationTokenMoveHands);
             }
             else
             {
-                moveHandsTask = new Task(() => moveHandsHandler.StartPlay());
-                moveHandsTask.Start();
+                moveHandsTask = Task.Factory.StartNew(moveHandsHandler.StartPlay, cancellationTokenMoveHands);
             }
         }
 
+        /// <summary>
+        /// Handler for stopping the clock
+        /// </summary>
+        /// <param name="sender">The button sending the request</param>
+        /// <param name="e">Event arguments</param>
         private void StopClockButton_Click(object sender, RoutedEventArgs e)
         {
-            moveHandsHandler.StopPlay();
+            moveHandsHandler.StopPlay(cancellationTokenMoveHands);
+        }
+
+        /// <summary>
+        /// Handler for Closing the window, terminates the tasks
+        /// </summary>
+        /// <param name="sender">The button sending the request</param>
+        /// <param name="e">Event arguments</param>
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            try
+            {
+                tokenSource.Cancel();
+                mediaPlayerHandler?.StopPlay(cancellationTokenMediaPlayer);
+                movingObjectHandler?.StopPlay(cancellationTokenMovingObject);
+                moveHandsHandler?.StopPlay(cancellationTokenMoveHands);
+            }
+            catch(OperationCanceledException ex)
+            {
+                MessageBox.Show("Thank you, the application is now closed.");
+            }
+            finally
+            {
+                tokenSource.Dispose();
+            }
         }
     }
 }

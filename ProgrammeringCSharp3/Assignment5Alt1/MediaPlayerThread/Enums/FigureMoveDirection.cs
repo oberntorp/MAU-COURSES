@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace MediaPlayerThread.Enums
 {
+    /// <summary>
+    /// Used to keep track of the latest direction
+    /// </summary>
     enum FigureMoveDirection
     {
         Left,
