@@ -1,0 +1,10 @@
+D:\.NET\programmering_c#_3\moduler\modul6\kodexempel\filer\OvalClock\solution\MyOvalClock\bin\Debug\MyOvalClock.exe.config
+D:\.NET\programmering_c#_3\moduler\modul6\kodexempel\filer\OvalClock\solution\MyOvalClock\bin\Debug\MyOvalClock.exe
+D:\.NET\programmering_c#_3\moduler\modul6\kodexempel\filer\OvalClock\solution\MyOvalClock\bin\Debug\MyOvalClock.pdb
+D:\.NET\programmering_c#_3\moduler\modul6\kodexempel\filer\OvalClock\solution\MyOvalClock\obj\Debug\MyOvalClock.csprojAssemblyReference.cache
+D:\.NET\programmering_c#_3\moduler\modul6\kodexempel\filer\OvalClock\solution\MyOvalClock\obj\Debug\MyOvalClock.Form1.resources
+D:\.NET\programmering_c#_3\moduler\modul6\kodexempel\filer\OvalClock\solution\MyOvalClock\obj\Debug\MyOvalClock.Properties.Resources.resources
+D:\.NET\programmering_c#_3\moduler\modul6\kodexempel\filer\OvalClock\solution\MyOvalClock\obj\Debug\MyOvalClock.csproj.GenerateResource.cache
+D:\.NET\programmering_c#_3\moduler\modul6\kodexempel\filer\OvalClock\solution\MyOvalClock\obj\Debug\MyOvalClock.csproj.CoreCompileInputs.cache
+D:\.NET\programmering_c#_3\moduler\modul6\kodexempel\filer\OvalClock\solution\MyOvalClock\obj\Debug\MyOvalClock.exe
+D:\.NET\programmering_c#_3\moduler\modul6\kodexempel\filer\OvalClock\solution\MyOvalClock\obj\Debug\MyOvalClock.pdb
