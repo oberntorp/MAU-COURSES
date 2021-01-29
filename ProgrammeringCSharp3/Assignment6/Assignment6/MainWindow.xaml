@@ -36,15 +36,15 @@
 
                 <Label Content="Diagram intervall" Grid.Row="2"/>
                 <WrapPanel Grid.Row="2" Grid.Column="1" Margin="5 1 0 0">
-                    <TextBox x:Name="DiaIntervalMin" Width="35"/>
+                    <TextBox x:Name="DiaIntervalMinTextBox" Width="35"/>
                     <TextBlock Text=" - " Margin="0 5 0 0"/>
-                    <TextBox x:Name="DiaIntervalMax" Width="34"/>
+                    <TextBox x:Name="DiaIntervalMaxTextBox" Width="34"/>
                 </WrapPanel>
 
                 <Label Content="Intervall step" Grid.Row="3"/>
                 <TextBox x:Name="DiaIntervallStepTextBox" Grid.Row="3" Grid.Column="1"/>
 
-                <Button x:Name="SaveSettingsButton" Grid.Row="4" Content="Save Settings" Style="{StaticResource MyButtonStyle}"/>
+                <Button x:Name="SaveSettingsButton" Grid.Row="4" Content="Save Settings" Click="SaveSettingsButton_Click" Style="{StaticResource MyButtonStyle}"/>
             </Grid>
         </GroupBox>
         <GroupBox Header="Points" Grid.Row="1">
@@ -68,6 +68,9 @@
                 <Button x:Name="SavePointButton" Grid.Row="3" Content="Save Point" Style="{StaticResource MyButtonStyle}"/>
             </Grid>
         </GroupBox>
-        <GroupBox Header="Diagram" Grid.Column="1" Grid.RowSpan="2"></GroupBox>
+        <GroupBox Header="Diagram" Grid.Column="1" Grid.RowSpan="2">
+            
+            <Grid x:Name="DiagramGrid"></Grid>
+        </GroupBox>
     </Grid>
 </Window>
