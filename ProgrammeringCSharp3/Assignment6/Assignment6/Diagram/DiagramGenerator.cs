@@ -6,24 +6,31 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using BussinessLogic;
 
 namespace Assignment6.Diagram
 {
     class DiagramGenerator: Canvas
     {
         private string diagramTitle;
-        private int diagramMin;
-        private int diagramMax;
-        private int diagramStep;
+        private int intervalX;
+        private int intervalY;
+        private int divisionsX;
+        private int divisionsY;
+        private int intervalStep;
 
-        public DiagramGenerator(double width, double  height, string diagramTitleFromGui, int diagramIntervalMinFromGui, int diagramIntervalMaxFromGui, int diagramStepFromGui)
+        public DiagramGenerator(double width, double  height, DiagramInformation diagramData)
         {
             Width = width;
             Height = height;
-            diagramTitle = diagramTitleFromGui;
-            diagramMin = diagramIntervalMinFromGui;
-            diagramMax = diagramIntervalMaxFromGui;
-            diagramStep = diagramStepFromGui;
+
+            diagramTitle = diagramData.Title;
+            intervalX = diagramData.IntervalX;
+            intervalY = diagramData.IntervalY;
+            divisionsX = diagramData.DivisionsX;
+            divisionsY = diagramData.DivisionsY;
+            intervalStep = diagramData.IntervalStep;
+
         }
 
         protected override void OnRender(DrawingContext dc)

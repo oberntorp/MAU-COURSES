@@ -30,3 +30,6 @@ D:\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment6\Assignment6\obj\Debug\Ass
 D:\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment6\Assignment6\obj\Debug\Assignment6.csproj.CoreCompileInputs.cache
 D:\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment6\Assignment6\obj\Debug\Assignment6.exe
 D:\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment6\Assignment6\obj\Debug\Assignment6.pdb
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment6\Assignment6\bin\Debug\BussinessLogic.dll
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment6\Assignment6\bin\Debug\BussinessLogic.pdb
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment6\Assignment6\obj\Debug\Assignment6.csproj.CopyComplete

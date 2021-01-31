@@ -1,0 +1,6 @@
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment6\BussinessLogic\bin\Debug\BussinessLogic.dll
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment6\BussinessLogic\bin\Debug\BussinessLogic.pdb
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment6\BussinessLogic\obj\Debug\BussinessLogic.csprojAssemblyReference.cache
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment6\BussinessLogic\obj\Debug\BussinessLogic.csproj.CoreCompileInputs.cache
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment6\BussinessLogic\obj\Debug\BussinessLogic.dll
+D:\wamp64\www\GitHub\MAU-COURSES\ProgrammeringCSharp3\Assignment6\BussinessLogic\obj\Debug\BussinessLogic.pdb

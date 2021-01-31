@@ -1,4 +1,5 @@
 ﻿using Assignment6.Diagram;
+using BussinessLogic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,15 +29,12 @@ namespace Assignment6
 
         private void SaveSettingsButton_Click(object sender, RoutedEventArgs e)
         {
-            string diagramTitle = DiaTitleTextBox.Text;
-            string diagramMin = DiaIntervalMinTextBox.Text;
-            string diagramMax = DiaIntervalMaxTextBox.Text;
-            string diagramStep = DiaIntervallStepTextBox.Text;
+            DiagramInformation diagramInformation = new DiagramInformation(DiaTitleTextBox.Text, int.Parse(DiaIntervalXAxisTextBox.Text), int.Parse(DiaIntervalYAxisTextBox.Text), int.Parse(DiaDivisionsXAxisTextBox.Text), int.Parse(DiaDivisionsYAxisTextBox.Text), int.Parse(DiaIntervallStepTextBox.Text));
 
 
-            if (AllDataEntered(diagramTitle, diagramMin, diagramMax, diagramStep))
+            if (AllDataEntered(diagramInformation))
             {
-                DiagramGenerator dGenerator = new DiagramGenerator(Width, Height, diagramTitle, int.Parse(diagramMin), int.Parse(diagramMax), int.Parse(diagramStep));
+                DiagramGenerator dGenerator = new DiagramGenerator(Width, Height, diagramInformation);
                 DiagramGrid.Children.Add(dGenerator);
             }
             else
@@ -45,9 +43,9 @@ namespace Assignment6
             }
         }
 
-        private bool AllDataEntered(string diagramTitle, string diagramMin, string diagramMax, string diagramStep)
+        private bool AllDataEntered(DiagramInformation diagramInformation)
         {
-            return !(string.IsNullOrEmpty(diagramTitle) || string.IsNullOrEmpty(diagramMin) || string.IsNullOrEmpty(diagramMax) || string.IsNullOrEmpty(diagramStep));
+            return !(string.IsNullOrEmpty(diagramInformation.Title) || string.IsNullOrEmpty(diagramInformation.IntervalX.ToString()) || string.IsNullOrEmpty(diagramInformation.IntervalY.ToString()) || string.IsNullOrEmpty(diagramInformation.DivisionsX.ToString()) || string.IsNullOrEmpty(diagramInformation.DivisionsY.ToString()) || string.IsNullOrEmpty(diagramInformation.IntervalStep.ToString()));
         }
     }
 }
