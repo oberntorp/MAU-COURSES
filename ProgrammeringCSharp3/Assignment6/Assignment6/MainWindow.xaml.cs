@@ -29,7 +29,7 @@ namespace Assignment6
 
         private void SaveSettingsButton_Click(object sender, RoutedEventArgs e)
         {
-            DiagramInformation diagramInformation = new DiagramInformation(DiaTitleTextBox.Text, int.Parse(DiaIntervalXAxisTextBox.Text), int.Parse(DiaIntervalYAxisTextBox.Text), int.Parse(DiaDivisionsXAxisTextBox.Text), int.Parse(DiaDivisionsYAxisTextBox.Text), int.Parse(DiaIntervallStepTextBox.Text));
+            DiagramInformation diagramInformation = new DiagramInformation(DiaTitleTextBox.Text, int.Parse(DiaIntervalXAxisTextBox.Text), int.Parse(DiaIntervalYAxisTextBox.Text), int.Parse(DiaDivisionsXAxisTextBox.Text), int.Parse(DiaDivisionsYAxisTextBox.Text));
 
 
             if (AllDataEntered(diagramInformation))
@@ -45,7 +45,7 @@ namespace Assignment6
 
         private bool AllDataEntered(DiagramInformation diagramInformation)
         {
-            return !(string.IsNullOrEmpty(diagramInformation.Title) || string.IsNullOrEmpty(diagramInformation.IntervalX.ToString()) || string.IsNullOrEmpty(diagramInformation.IntervalY.ToString()) || string.IsNullOrEmpty(diagramInformation.DivisionsX.ToString()) || string.IsNullOrEmpty(diagramInformation.DivisionsY.ToString()) || string.IsNullOrEmpty(diagramInformation.IntervalStep.ToString()));
+            return !(string.IsNullOrEmpty(diagramInformation.Title) || string.IsNullOrEmpty(diagramInformation.IntervalX.ToString()) || string.IsNullOrEmpty(diagramInformation.IntervalY.ToString()) || string.IsNullOrEmpty(diagramInformation.DivisionsX.ToString()) || string.IsNullOrEmpty(diagramInformation.DivisionsY.ToString()));
         }
     }
 }

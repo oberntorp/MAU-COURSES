@@ -12,7 +12,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="258"/>
+            <RowDefinition Height="228"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <GroupBox Header="DiagramSettings">
@@ -25,7 +25,6 @@
                     <RowDefinition Height="30"/>
                     <RowDefinition Height="60"/>
                     <RowDefinition Height="60"/>
-                    <RowDefinition Height="40"/>
                     <RowDefinition Height="40"/>
                 </Grid.RowDefinitions>
                 <Label Content="Diagram title"/>
@@ -55,10 +54,7 @@
                     </WrapPanel>
                 </StackPanel>
 
-                <Label Content="Intervall step" Grid.Row="3"/>
-                <TextBox x:Name="DiaIntervallStepTextBox" Grid.Row="3" Grid.Column="1"/>
-
-                <Button x:Name="SaveSettingsButton" Grid.Row="4" Content="Save Settings" Click="SaveSettingsButton_Click" Style="{StaticResource MyButtonStyle}"/>
+                <Button x:Name="SaveSettingsButton" Grid.Row="3" Content="Save Settings" Click="SaveSettingsButton_Click" Style="{StaticResource MyButtonStyle}"/>
             </Grid>
         </GroupBox>
         <GroupBox Header="Points" Grid.Row="1">
