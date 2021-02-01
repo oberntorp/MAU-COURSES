@@ -12,6 +12,10 @@ namespace Assignment6.Diagram
 {
     class DiagramGenerator: Canvas
     {
+        private int sixeOfAxes = 300;
+
+        private int maxLengthYAxis = 105;
+        private int maxLengthOfXAxis = 50;
         private string diagramTitle;
         private int intervalX;
         private int intervalY;
@@ -28,6 +32,9 @@ namespace Assignment6.Diagram
             intervalY = diagramData.IntervalY;
             divisionsX = diagramData.DivisionsX;
             divisionsY = diagramData.DivisionsY;
+
+            maxLengthYAxis += sixeOfAxes;
+            maxLengthOfXAxis += sixeOfAxes;
         }
 
         protected override void OnRender(DrawingContext dc)
@@ -48,19 +55,43 @@ namespace Assignment6.Diagram
             dc.DrawText(textToRender, new Point(50, 0));
         }
 
-        private static void DrawYAxis(DrawingContext dc)
+        private void DrawYAxis(DrawingContext dc)
         {
-            Pen yAxis = new Pen(Brushes.Blue, 4);
-            yAxis.StartLineCap = PenLineCap.Triangle;
-            dc.DrawLine(yAxis, new Point(50, 105), new Point(50, 280));
+            Pen yAxisPen = new Pen(Brushes.Blue, 4);
+            yAxisPen.StartLineCap = PenLineCap.Triangle;
+            dc.DrawLine(yAxisPen, new Point(50, 105), new Point(50, maxLengthYAxis));
+
+            DrawIntervalsYAxis(dc, yAxisPen);
         }
 
-        private static void DrawXAxis(DrawingContext dc)
+        private void DrawIntervalsYAxis(DrawingContext dc, Pen yAxisPen)
         {
-            Pen xAxis = new Pen(Brushes.Black, 4);
-            xAxis.EndLineCap = PenLineCap.Triangle;
+            yAxisPen.Thickness = 1;
+            int interval = sixeOfAxes / divisionsY;
+            for (int i = (divisionsY/intervalY)+105, intervalFigure = intervalY; i < maxLengthYAxis-intervalY; i += interval, intervalFigure += intervalY)
+            {
+                dc.DrawLine(yAxisPen, new Point(45, i), new Point(55, i));
+            }
+        }
 
-            dc.DrawLine(xAxis, new Point(50, 280), new Point(280, 280));
+        private void DrawXAxis(DrawingContext dc)
+        {
+            Pen xAxisPen = new Pen(Brushes.Black, 4);
+            xAxisPen.EndLineCap = PenLineCap.Triangle;
+
+            dc.DrawLine(xAxisPen, new Point(50, 105 + sixeOfAxes), new Point(maxLengthOfXAxis, maxLengthYAxis));
+
+            DrawIntervalsXAxis(dc, xAxisPen);
+        }
+
+        private void DrawIntervalsXAxis(DrawingContext dc, Pen xAxisPen)
+        {
+            xAxisPen.Thickness = 1;
+            int interval = sixeOfAxes / divisionsX;
+            for (int offsetXAxis = (divisionsX/intervalX)+50, intervalFigure = intervalX; offsetXAxis < maxLengthOfXAxis-divisionsX; offsetXAxis += interval, intervalFigure += intervalX)
+            {
+                dc.DrawLine(xAxisPen, new Point(offsetXAxis, (105 + sixeOfAxes) - 5), new Point(offsetXAxis, (105 + sixeOfAxes) + 5));
+            }
         }
     }
 }
