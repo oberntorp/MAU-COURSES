@@ -22,6 +22,7 @@ namespace Assignment6
     /// </summary>
     public partial class MainWindow : Window
     {
+        DiagramInformation diagramInformation;
         public MainWindow()
         {
             InitializeComponent();
@@ -29,13 +30,16 @@ namespace Assignment6
 
         private void SaveSettingsButton_Click(object sender, RoutedEventArgs e)
         {
-            DiagramInformation diagramInformation = new DiagramInformation(DiaTitleTextBox.Text, int.Parse(DiaIntervalXAxisTextBox.Text), int.Parse(DiaIntervalYAxisTextBox.Text), int.Parse(DiaDivisionsXAxisTextBox.Text), int.Parse(DiaDivisionsYAxisTextBox.Text));
-
-
             if (AllDataEntered(diagramInformation))
             {
+                diagramInformation = new DiagramInformation(DiaTitleTextBox.Text, int.Parse(DiaIntervalXAxisTextBox.Text), int.Parse(DiaIntervalYAxisTextBox.Text), int.Parse(DiaDivisionsXAxisTextBox.Text), int.Parse(DiaDivisionsYAxisTextBox.Text));
                 DiagramGenerator dGenerator = new DiagramGenerator(Width, Height, diagramInformation);
                 DiagramGrid.Children.Add(dGenerator);
+                DiagramSettingsGroupBox.IsEnabled = false;
+                PointsGroupBox.IsEnabled = true;
+                ClearDiagramButton.IsEnabled = true;
+
+                ClearDiagramSettings();
             }
             else
             {
@@ -43,9 +47,62 @@ namespace Assignment6
             }
         }
 
+        private void ClearDiagramSettings()
+        {
+            DiaTitleTextBox.Text = "";
+            DiaIntervalXAxisTextBox.Text = "";
+            DiaIntervalYAxisTextBox.Text = "";
+            DiaDivisionsXAxisTextBox.Text = "";
+            DiaDivisionsYAxisTextBox.Text = "";
+        }
+
         private bool AllDataEntered(DiagramInformation diagramInformation)
         {
-            return !(string.IsNullOrEmpty(diagramInformation.Title) || string.IsNullOrEmpty(diagramInformation.IntervalX.ToString()) || string.IsNullOrEmpty(diagramInformation.IntervalY.ToString()) || string.IsNullOrEmpty(diagramInformation.DivisionsX.ToString()) || string.IsNullOrEmpty(diagramInformation.DivisionsY.ToString()));
+            return !(string.IsNullOrEmpty(DiaTitleTextBox.Text) || string.IsNullOrEmpty(DiaIntervalXAxisTextBox.Text) || string.IsNullOrEmpty(DiaIntervalYAxisTextBox.Text) || string.IsNullOrEmpty(DiaDivisionsXAxisTextBox.Text) || string.IsNullOrEmpty(DiaDivisionsYAxisTextBox.Text));
+        }
+
+        private void SavePointButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (ValidatePionts(PointXTextBox.Text, PointYTextBox.Text, out double XValidatedValue, out double YValidatedValue))
+            {
+                diagramInformation.XPoints.Add(XValidatedValue);
+                diagramInformation.YPoints.Add(YValidatedValue);
+                PointsListBox.Items.Add($"({XValidatedValue} {YValidatedValue})");
+
+                ClearPointsInput();
+            }
+            else
+            {
+                MessageBox.Show("Check that your points is within range", "InvalidData", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void ClearPointsInput()
+        {
+            PointXTextBox.Text = "";
+            PointYTextBox.Text = "";
+        }
+
+        private bool ValidatePionts(string xPointValue, string YPointValue, out double XValue, out double YValue)
+        {
+            XValue = -1;
+            YValue = -1;
+            if ((double.TryParse(xPointValue, out double resultXValue) && double.TryParse(YPointValue, out double resultYVallue)) && (resultXValue >= 0 && resultXValue <= diagramInformation.DivisionsX && resultYVallue <= diagramInformation.DivisionsY))
+            {
+                XValue = resultXValue;
+                YValue = resultYVallue;
+                return true;
+            }
+
+            return false;
+        }
+
+        private void ClearDiagramButton_Click(object sender, RoutedEventArgs e)
+        {
+            DiagramGrid.Children.RemoveAt(1);
+            DiagramSettingsGroupBox.IsEnabled = true;
+            ClearDiagramButton.IsEnabled = false;
+            PointsGroupBox.IsEnabled = false;
         }
     }
 }

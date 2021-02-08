@@ -13,6 +13,8 @@ namespace BussinessLogic
         public int IntervalY { get; set; }
         public int DivisionsX { get; set; }
         public int DivisionsY { get; set; }
+        public List<double> XPoints { get; set; }
+        public List<double> YPoints { get; set; }
 
         public DiagramInformation(string titleFromGui, int intervalXFromGui, int IntervalYFromGui, int divisionsXFromGui, int divisionsYFromGui)
         {
@@ -21,6 +23,8 @@ namespace BussinessLogic
             IntervalY = IntervalYFromGui;
             DivisionsX = divisionsXFromGui;
             DivisionsY = divisionsYFromGui;
+            XPoints = new List<double>();
+            YPoints = new List<double>();
         }
     }
 }

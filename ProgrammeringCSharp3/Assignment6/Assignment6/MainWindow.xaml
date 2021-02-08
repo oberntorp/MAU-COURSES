@@ -6,81 +6,103 @@
         xmlns:local="clr-namespace:Assignment6"
         mc:Ignorable="d"
         Title="MainWindow" Height="650" Width="800" Background="MintCream">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="228"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <GroupBox Header="DiagramSettings">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="90"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="30"/>
-                    <RowDefinition Height="60"/>
-                    <RowDefinition Height="60"/>
-                    <RowDefinition Height="40"/>
-                </Grid.RowDefinitions>
-                <Label Content="Diagram title"/>
-                <TextBox x:Name="DiaTitleTextBox" Grid.Column="1"/>
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="File">
+                <MenuItem Header="Ëxit Application"/>
+            </MenuItem>
+            <MenuItem Header="Data">
+                <MenuItem Header="Sort X axis points"/>
+                <MenuItem Header="Sort Y axis points"/>
+            </MenuItem>
+        </Menu>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="230"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <GroupBox x:Name="DiagramSettingsGroupBox" Header="DiagramSettings">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="65"/>
+                        <ColumnDefinition Width="33"/>
+                        <ColumnDefinition Width="90"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="60"/>
+                        <RowDefinition Height="60"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <Label Content="Diagram title" Grid.ColumnSpan="2"/>
+                    <TextBox x:Name="DiaTitleTextBox" Grid.Column="2" Margin="5,2,5,1"/>
 
-                <Label Content="Diagram divisions" Grid.Row="1"/>
-                <StackPanel Grid.Row="1" Grid.RowSpan="2" Grid.Column="1">
-                    <WrapPanel Margin="5 0 0 0">
-                        <TextBlock Text="X:" Margin="0 5 0 0"/>
-                        <TextBlock Text="Y:" Margin="35 5 0 0"/>
-                    </WrapPanel>
-                    <WrapPanel Grid.Column="1" Margin="5 1 0 0">
-                        <TextBox x:Name="DiaDivisionsXAxisTextBox" Width="35"/>
-                        <TextBox x:Name="DiaDivisionsYAxisTextBox" Margin="8 0 0 0" Width="35"/>
-                    </WrapPanel>
-                </StackPanel>
+                    <Label Content="Diagram divisions" Grid.Row="1" Grid.ColumnSpan="2"/>
+                    <StackPanel Grid.Row="1" Grid.RowSpan="2" Grid.Column="2">
+                        <WrapPanel Margin="5 0 0 0">
+                            <TextBlock Text="X:" Margin="0 5 0 0"/>
+                            <TextBlock Text="Y:" Margin="35 5 0 0"/>
+                        </WrapPanel>
+                        <WrapPanel Grid.Column="1" Margin="5 1 0 0">
+                            <TextBox x:Name="DiaDivisionsXAxisTextBox" Width="35"/>
+                            <TextBox x:Name="DiaDivisionsYAxisTextBox" Margin="8 0 0 0" Width="35"/>
+                        </WrapPanel>
+                    </StackPanel>
 
-                <Label Content="Diagram intervall" Grid.Row="2"/>
-                <StackPanel Grid.Row="2" Grid.Column="1">
-                    <WrapPanel Margin="5 0 0 0">
-                        <TextBlock Text="X:" Margin="0 5 0 0"/>
-                        <TextBlock Text="Y:" Margin="35 5 0 0"/>
-                    </WrapPanel>
-                    <WrapPanel Grid.Column="1" Margin="5 1 0 0">
-                        <TextBox x:Name="DiaIntervalXAxisTextBox" Width="35"/>
-                        <TextBox x:Name="DiaIntervalYAxisTextBox" Margin="8 0 0 0" Width="35"/>
-                    </WrapPanel>
-                </StackPanel>
+                    <Label Content="Diagram intervall" Grid.Row="2" Grid.ColumnSpan="2"/>
+                    <StackPanel Grid.Row="2" Grid.Column="2">
+                        <WrapPanel Margin="5 0 0 0">
+                            <TextBlock Text="X:" Margin="0 5 0 0"/>
+                            <TextBlock Text="Y:" Margin="35 5 0 0"/>
+                        </WrapPanel>
+                        <WrapPanel Grid.Column="1" Margin="5 1 0 0">
+                            <TextBox x:Name="DiaIntervalXAxisTextBox" Width="35"/>
+                            <TextBox x:Name="DiaIntervalYAxisTextBox" Margin="8 0 0 0" Width="35"/>
+                        </WrapPanel>
+                    </StackPanel>
 
-                <Button x:Name="SaveSettingsButton" Grid.Row="3" Content="Save Settings" Click="SaveSettingsButton_Click" Style="{StaticResource MyButtonStyle}"/>
-            </Grid>
-        </GroupBox>
-        <GroupBox Header="Points" Grid.Row="1">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="90"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="30"/>
-                    <RowDefinition Height="30"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                </Grid.RowDefinitions>
-                <Label Content="New X Point"/>
-                <TextBox x:Name="PoitXTextBox" Grid.Column="1"/>
+                    <Button x:Name="SaveSettingsButton" Grid.Row="3" Content="Save Settings" Click="SaveSettingsButton_Click" Style="{StaticResource MyButtonStyle}" Grid.ColumnSpan="2" Margin="9,8,9,3"/>
+                </Grid>
+            </GroupBox>
+            <GroupBox x:Name="PointsGroupBox" Header="Points" IsEnabled="False" Grid.Row="1">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="90"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <Label Content="New X Point"/>
+                    <TextBox x:Name="PointXTextBox" Grid.Column="1"/>
 
-                <Label Content="New Y Point" Grid.Row="1"/>
-                <TextBox x:Name="PointYTextBox" Grid.Row="1" Grid.Column="1"/>
-                <ListBox x:Name="PointsListBox" Grid.Row="2" MinHeight="100" Grid.ColumnSpan="2" Margin="0 5 0 0"/>
-                <Button x:Name="SavePointButton" Grid.Row="3" Content="Save Point" Style="{StaticResource MyButtonStyle}"/>
-            </Grid>
-        </GroupBox>
-        <GroupBox Header="Diagram" Grid.Column="1" Grid.RowSpan="2">
+                    <Label Content="New Y Point" Grid.Row="1"/>
+                    <TextBox x:Name="PointYTextBox" Grid.Row="1" Grid.Column="1"/>
+                    <ListBox x:Name="PointsListBox" Grid.Row="2" MinHeight="100" Grid.ColumnSpan="2" Margin="0 5 0 0"/>
+                    <Button x:Name="SavePointButton" Grid.Row="3" Content="Save Point" Style="{StaticResource MyButtonStyle}" Click="SavePointButton_Click"/>
+                </Grid>
+            </GroupBox>
+            <GroupBox Header="Diagram" Grid.Column="1" Grid.RowSpan="2">
 
-            <Grid x:Name="DiagramGrid"></Grid>
-        </GroupBox>
-    </Grid>
+                <Grid x:Name="DiagramGrid">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="ClearDiagramButton" Style="{StaticResource MyButtonStyle}" Content="Clear Diagram" Grid.Row="1" Grid.Column="1" Click="ClearDiagramButton_Click" IsEnabled="False"/>
+                </Grid>
+            </GroupBox>
+        </Grid>
+    </DockPanel>
 </Window>
