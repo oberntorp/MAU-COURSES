@@ -12,7 +12,8 @@ namespace Assignment6.Diagram
 {
     class DiagramGenerator: Canvas
     {
-        private int sixeOfAxes = 300;
+        private DiagramInformation diagramDataToDraw;
+        private int sixeOfAxes;
 
         private int maxLengthYAxis = 105;
         private int maxLengthOfXAxis = 50;
@@ -21,6 +22,7 @@ namespace Assignment6.Diagram
         private int intervalY;
         private int divisionsX;
         private int divisionsY;
+        private DrawingContext globalDc;
 
         public DiagramGenerator(double width, double  height, DiagramInformation diagramData)
         {
@@ -32,7 +34,8 @@ namespace Assignment6.Diagram
             intervalY = diagramData.IntervalY;
             divisionsX = diagramData.DivisionsX;
             divisionsY = diagramData.DivisionsY;
-
+            diagramDataToDraw = diagramData;
+            sixeOfAxes = diagramData.sizeOfAxes;
             maxLengthYAxis += sixeOfAxes;
             maxLengthOfXAxis += sixeOfAxes;
         }
@@ -40,11 +43,12 @@ namespace Assignment6.Diagram
         protected override void OnRender(DrawingContext dc)
         {
             base.OnRender(dc);
-
+            globalDc = dc;
             DrawDiagramHeader(dc);
 
             DrawYAxis(dc);
             DrawXAxis(dc);
+            WritePointsToDiagram();
         }
 
         private void DrawDiagramHeader(DrawingContext dc)
@@ -110,6 +114,20 @@ namespace Assignment6.Diagram
             FormattedText textToRender = new FormattedText(intToDraw, new System.Globalization.CultureInfo("se-SV"), dir, new Typeface("Arial"), 10, Brushes.Green, VisualTreeHelper.GetDpi(this).PixelsPerDip);
 
             dc.DrawText(textToRender, new Point(positionOfInt - 4, (105 + sixeOfAxes) + 15));
+        }
+
+        public void WritePointsToDiagram()
+        {
+            StreamGeometry streamGeomitry = new StreamGeometry();
+            streamGeomitry.FillRule = FillRule.EvenOdd;
+
+            using(StreamGeometryContext context = streamGeomitry.Open())
+            {
+                context.BeginFigure(diagramDataToDraw.Points.First(), false, false);
+                context.PolyLineTo(diagramDataToDraw.Points.Skip(1).ToArray(), true, false);
+            }
+
+            globalDc.DrawGeometry(Brushes.Black, new Pen(Brushes.Black, 5), streamGeomitry);
         }
     }
 }

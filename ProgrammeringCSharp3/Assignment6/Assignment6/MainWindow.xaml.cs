@@ -22,7 +22,10 @@ namespace Assignment6
     /// </summary>
     public partial class MainWindow : Window
     {
-        DiagramInformation diagramInformation;
+        private DiagramInformation diagramInformation;
+        private DiagramGenerator dGenerator;
+        private double OffsetYAxis;
+        private double OffsetXAxis;
         public MainWindow()
         {
             InitializeComponent();
@@ -33,8 +36,8 @@ namespace Assignment6
             if (AllDataEntered(diagramInformation))
             {
                 diagramInformation = new DiagramInformation(DiaTitleTextBox.Text, int.Parse(DiaIntervalXAxisTextBox.Text), int.Parse(DiaIntervalYAxisTextBox.Text), int.Parse(DiaDivisionsXAxisTextBox.Text), int.Parse(DiaDivisionsYAxisTextBox.Text));
-                DiagramGenerator dGenerator = new DiagramGenerator(Width, Height, diagramInformation);
-                DiagramGrid.Children.Add(dGenerator);
+                OffsetXAxis = 50;
+                OffsetYAxis = 105;
                 DiagramSettingsGroupBox.IsEnabled = false;
                 PointsGroupBox.IsEnabled = true;
                 ClearDiagramButton.IsEnabled = true;
@@ -65,10 +68,10 @@ namespace Assignment6
         {
             if (ValidatePionts(PointXTextBox.Text, PointYTextBox.Text, out double XValidatedValue, out double YValidatedValue))
             {
-                diagramInformation.XPoints.Add(XValidatedValue);
-                diagramInformation.YPoints.Add(YValidatedValue);
+                dGenerator = new DiagramGenerator(Width, Height, diagramInformation);
+                DiagramGrid.Children.Add(dGenerator);
+                diagramInformation.Points.Add(new Point(OffsetXAxis+((diagramInformation.sizeOfAxes / diagramInformation.DivisionsX)*XValidatedValue), (OffsetYAxis + ((diagramInformation.sizeOfAxes / diagramInformation.DivisionsY)*YValidatedValue))));
                 PointsListBox.Items.Add($"({XValidatedValue} {YValidatedValue})");
-
                 ClearPointsInput();
             }
             else
@@ -87,7 +90,7 @@ namespace Assignment6
         {
             XValue = -1;
             YValue = -1;
-            if ((double.TryParse(xPointValue, out double resultXValue) && double.TryParse(YPointValue, out double resultYVallue)) && (resultXValue >= 0 && resultXValue <= diagramInformation.DivisionsX && resultYVallue <= diagramInformation.DivisionsY))
+            if ((double.TryParse(xPointValue, out double resultXValue) && double.TryParse(YPointValue, out double resultYVallue)) && (resultXValue >= 0 && resultXValue <= (diagramInformation.DivisionsX * diagramInformation.IntervalX) && resultYVallue <= (diagramInformation.DivisionsY * diagramInformation.IntervalY)))
             {
                 XValue = resultXValue;
                 YValue = resultYVallue;
