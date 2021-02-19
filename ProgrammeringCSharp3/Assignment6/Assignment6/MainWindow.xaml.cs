@@ -24,8 +24,6 @@ namespace Assignment6
     {
         private DiagramInformation diagramInformation;
         private DiagramGenerator dGenerator;
-        private double OffsetYAxis;
-        private double OffsetXAxis;
         public MainWindow()
         {
             InitializeComponent();
@@ -36,8 +34,6 @@ namespace Assignment6
             if (AllDataEntered(diagramInformation))
             {
                 diagramInformation = new DiagramInformation(DiaTitleTextBox.Text, int.Parse(DiaIntervalXAxisTextBox.Text), int.Parse(DiaIntervalYAxisTextBox.Text), int.Parse(DiaDivisionsXAxisTextBox.Text), int.Parse(DiaDivisionsYAxisTextBox.Text));
-                OffsetXAxis = 50;
-                OffsetYAxis = 105;
                 DiagramSettingsGroupBox.IsEnabled = false;
                 PointsGroupBox.IsEnabled = true;
                 ClearDiagramButton.IsEnabled = true;
@@ -70,7 +66,7 @@ namespace Assignment6
             {
                 dGenerator = new DiagramGenerator(Width, Height, diagramInformation);
                 DiagramGrid.Children.Add(dGenerator);
-                diagramInformation.Points.Add(new Point(OffsetXAxis+((diagramInformation.sizeOfAxes / diagramInformation.DivisionsX)*XValidatedValue), (OffsetYAxis + ((diagramInformation.sizeOfAxes / diagramInformation.DivisionsY)*YValidatedValue))));
+                diagramInformation.Points.Add(new Point(diagramInformation.ConvertXPointToBeUsed(XValidatedValue), diagramInformation.ConvertYPointToBeUsed(YValidatedValue)));
                 PointsListBox.Items.Add($"({XValidatedValue} {YValidatedValue})");
                 ClearPointsInput();
             }
