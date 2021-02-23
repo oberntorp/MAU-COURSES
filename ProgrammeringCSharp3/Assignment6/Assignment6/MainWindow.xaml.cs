@@ -24,6 +24,7 @@ namespace Assignment6
     {
         private DiagramInformation diagramInformation;
         private DiagramGenerator dGenerator;
+        private DiagramPointsToDrawOfGenerator pointsGenerator; 
         public MainWindow()
         {
             InitializeComponent();
@@ -33,7 +34,8 @@ namespace Assignment6
         {
             if (AllDataEntered(diagramInformation))
             {
-                diagramInformation = new DiagramInformation(DiaTitleTextBox.Text, int.Parse(DiaIntervalXAxisTextBox.Text), int.Parse(DiaIntervalYAxisTextBox.Text), int.Parse(DiaDivisionsXAxisTextBox.Text), int.Parse(DiaDivisionsYAxisTextBox.Text));
+                diagramInformation = new DiagramInformation(DiaTitleTextBox.Text, int.Parse(DiaIntervalXAxisTextBox.Text), int.Parse(DiaIntervalYAxisTextBox.Text), int.Parse(DiaDivisionsXAxisTextBox.Text), int.Parse(DiaDivisionsYAxisTextBox.Text), (int)DiagramGrid.ColumnDefinitions[0].ActualWidth
+);
                 DiagramSettingsGroupBox.IsEnabled = false;
                 PointsGroupBox.IsEnabled = true;
                 ClearDiagramButton.IsEnabled = true;
@@ -64,7 +66,12 @@ namespace Assignment6
         {
             if (ValidatePionts(PointXTextBox.Text, PointYTextBox.Text, out double XValidatedValue, out double YValidatedValue))
             {
-                dGenerator = new DiagramGenerator(Width, Height, diagramInformation);
+                pointsGenerator = new DiagramPointsToDrawOfGenerator(diagramInformation);
+                dGenerator = new DiagramGenerator(Width, Height, diagramInformation, pointsGenerator.YPointsUsedInDiagramGeneration, pointsGenerator.XPointsUsedInDiagramGeneration);
+                if(DiagramGrid.Children.Count > 1)
+                {
+                    RemoveDiagram();
+                }
                 DiagramGrid.Children.Add(dGenerator);
                 diagramInformation.Points.Add(new Point(diagramInformation.ConvertXPointToBeUsed(XValidatedValue), diagramInformation.ConvertYPointToBeUsed(YValidatedValue)));
                 PointsListBox.Items.Add($"({XValidatedValue} {YValidatedValue})");
@@ -98,10 +105,16 @@ namespace Assignment6
 
         private void ClearDiagramButton_Click(object sender, RoutedEventArgs e)
         {
-            DiagramGrid.Children.RemoveAt(1);
+            RemoveDiagram();
             DiagramSettingsGroupBox.IsEnabled = true;
             ClearDiagramButton.IsEnabled = false;
             PointsGroupBox.IsEnabled = false;
+        }
+
+        private void RemoveDiagram()
+        {
+            UIElement diagramToRemove = DiagramGrid.Children.Cast<UIElement>().Where(x => Grid.GetColumn(x) == 0).First();
+            DiagramGrid.Children.Remove(diagramToRemove);
         }
     }
 }

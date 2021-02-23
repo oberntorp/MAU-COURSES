@@ -19,7 +19,7 @@ namespace BussinessLogic
         private int OffsetYAxis = 105;
         private int OffsetXAxis = 50;
 
-        public DiagramInformation(string titleFromGui, int intervalXFromGui, int IntervalYFromGui, int divisionsXFromGui, int divisionsYFromGui)
+        public DiagramInformation(string titleFromGui, int intervalXFromGui, int IntervalYFromGui, int divisionsXFromGui, int divisionsYFromGui, int diagramContainerWidth)
         {
             Title = titleFromGui;
             IntervalX = intervalXFromGui;
@@ -27,6 +27,7 @@ namespace BussinessLogic
             DivisionsX = divisionsXFromGui;
             DivisionsY = divisionsYFromGui;
             Points = new List<Point>();
+            sizeOfAxes = diagramContainerWidth - (50 + 105);
         }
 
         public double ConvertXPointToBeUsed(double XValidatedValue)

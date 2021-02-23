@@ -89,7 +89,7 @@
                     <Button x:Name="SavePointButton" Grid.Row="3" Content="Save Point" Style="{StaticResource MyButtonStyle}" Click="SavePointButton_Click"/>
                 </Grid>
             </GroupBox>
-            <GroupBox Header="Diagram" Grid.Column="1" Grid.RowSpan="2">
+            <GroupBox x:Name="DiagramGroupBox" Header="Diagram" Grid.Column="1" Grid.RowSpan="2">
 
                 <Grid x:Name="DiagramGrid">
                     <Grid.RowDefinitions>

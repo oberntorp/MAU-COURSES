@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,26 +19,22 @@ namespace Assignment6.Diagram
         private int maxLengthYAxis = 105;
         private int maxLengthOfXAxis = 50;
         private string diagramTitle;
-        private int intervalX;
-        private int intervalY;
-        private int divisionsX;
-        private int divisionsY;
         private DrawingContext globalDc;
+        List<ArrayList> dataYPointsToPlot;
+        List<ArrayList> dataXPointsToPlot;
 
-        public DiagramGenerator(double width, double  height, DiagramInformation diagramData)
+        public DiagramGenerator(double width, double  height, DiagramInformation diagramData, List<ArrayList> YPointsUsedInDiagramGeneration, List<ArrayList> XPointsUsedInDiagramGeneration)
         {
             Width = width;
             Height = height;
 
             diagramTitle = diagramData.Title;
-            intervalX = diagramData.IntervalX;
-            intervalY = diagramData.IntervalY;
-            divisionsX = diagramData.DivisionsX;
-            divisionsY = diagramData.DivisionsY;
             diagramDataToDraw = diagramData;
             sixeOfAxes = diagramData.sizeOfAxes;
             maxLengthYAxis += sixeOfAxes;
             maxLengthOfXAxis += sixeOfAxes;
+            dataYPointsToPlot = YPointsUsedInDiagramGeneration;
+            dataXPointsToPlot = XPointsUsedInDiagramGeneration;
         }
 
         protected override void OnRender(DrawingContext dc)
@@ -71,11 +68,10 @@ namespace Assignment6.Diagram
         private void DrawIntervalsYAxis(DrawingContext dc)
         {
             Pen yAxisPen = new Pen(Brushes.Black, 2);
-            int interval = sixeOfAxes / divisionsY;
-            for (int offsetYAxis = maxLengthYAxis - interval, intervalFigure = intervalY; offsetYAxis >= 105; offsetYAxis -= interval, intervalFigure += intervalY)
+            foreach(ArrayList pointToPlot in dataYPointsToPlot)
             {
-                dc.DrawLine(yAxisPen, new Point(45, offsetYAxis), new Point(55, offsetYAxis));
-                DrawYAxisNumbers(dc, intervalFigure.ToString(), offsetYAxis);
+                dc.DrawLine(yAxisPen, (Point)pointToPlot[0], (Point)pointToPlot[1]);
+                DrawYAxisNumbers(dc, pointToPlot[2].ToString(), (int)pointToPlot[3]);
             }
         }
 
@@ -99,12 +95,11 @@ namespace Assignment6.Diagram
 
         private void DrawIntervalsXAxis(DrawingContext dc)
         {
-            Pen xAxisTickPen = new Pen(Brushes.Gray, 2);
-            int interval = sixeOfAxes / divisionsX;
-            for (int offsetXAxis = interval+50, intervalFigure = intervalX; offsetXAxis <= maxLengthOfXAxis; offsetXAxis += interval, intervalFigure += intervalX)
+            Pen xAxisPen = new Pen(Brushes.Gray, 2);
+            foreach (ArrayList pointToPlot in dataXPointsToPlot)
             {
-                dc.DrawLine(xAxisTickPen, new Point(offsetXAxis, (105 + sixeOfAxes) - 5), new Point(offsetXAxis, (105 + sixeOfAxes) + 5));
-                DrawXAxisNumbers(dc, intervalFigure.ToString(), offsetXAxis);
+                dc.DrawLine(xAxisPen, (Point)pointToPlot[0], (Point)pointToPlot[1]);
+                DrawXAxisNumbers(dc, (string)pointToPlot[2].ToString(), (int)pointToPlot[3]);
             }
         }
 
