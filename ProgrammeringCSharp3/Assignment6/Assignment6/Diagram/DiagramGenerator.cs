@@ -13,15 +13,15 @@ namespace Assignment6.Diagram
 {
     class DiagramGenerator: Canvas
     {
-        private DiagramInformation diagramDataToDraw;
+        public DiagramInformation DiagramDataToDraw { get; set; }
         private int sixeOfAxes;
 
         private int maxLengthYAxis = 105;
         private int maxLengthOfXAxis = 50;
         private string diagramTitle;
         private DrawingContext globalDc;
-        List<ArrayList> dataYPointsToPlot;
-        List<ArrayList> dataXPointsToPlot;
+        public List<ArrayList> dataYPointsToPlot;
+        public List<ArrayList> dataXPointsToPlot;
 
         public DiagramGenerator(double width, double  height, DiagramInformation diagramData, List<ArrayList> YPointsUsedInDiagramGeneration, List<ArrayList> XPointsUsedInDiagramGeneration)
         {
@@ -29,7 +29,7 @@ namespace Assignment6.Diagram
             Height = height;
 
             diagramTitle = diagramData.Title;
-            diagramDataToDraw = diagramData;
+            DiagramDataToDraw = diagramData;
             sixeOfAxes = diagramData.sizeOfAxes;
             maxLengthYAxis += sixeOfAxes;
             maxLengthOfXAxis += sixeOfAxes;
@@ -45,7 +45,10 @@ namespace Assignment6.Diagram
 
             DrawYAxis(dc);
             DrawXAxis(dc);
-            WritePointsToDiagram();
+            if(DiagramDataToDraw.Points.Count() > 0)
+            {
+                WritePointsToDiagram();
+            }
         }
 
         private void DrawDiagramHeader(DrawingContext dc)
@@ -118,8 +121,8 @@ namespace Assignment6.Diagram
 
             using(StreamGeometryContext context = streamGeomitry.Open())
             {
-                context.BeginFigure(diagramDataToDraw.Points.First(), false, false);
-                context.PolyLineTo(diagramDataToDraw.Points.Skip(1).ToArray(), true, false);
+                context.BeginFigure(DiagramDataToDraw.Points.First().Value, false, false);
+                context.PolyLineTo(DiagramDataToDraw.Points.Values.Skip(1).ToArray(), true, false);
             }
 
             globalDc.DrawGeometry(Brushes.Black, new Pen(Brushes.Black, 5), streamGeomitry);

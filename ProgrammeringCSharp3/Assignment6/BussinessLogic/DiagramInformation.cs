@@ -14,7 +14,7 @@ namespace BussinessLogic
         public int IntervalY { get; set; }
         public int DivisionsX { get; set; }
         public int DivisionsY { get; set; }
-        public List<Point> Points { get; set; }
+        public Dictionary<string, Point> Points { get; set; }
         public int sizeOfAxes = 300;
         private int OffsetYAxis = 105;
         private int OffsetXAxis = 50;
@@ -26,7 +26,7 @@ namespace BussinessLogic
             IntervalY = IntervalYFromGui;
             DivisionsX = divisionsXFromGui;
             DivisionsY = divisionsYFromGui;
-            Points = new List<Point>();
+            Points = new Dictionary<string, Point>();
             sizeOfAxes = diagramContainerWidth - (50 + 105);
         }
 
@@ -39,6 +39,16 @@ namespace BussinessLogic
         public double ConvertYPointToBeUsed(double YValidatedValue)
         {
             return (((OffsetYAxis + sizeOfAxes) - ((sizeOfAxes / DivisionsY) * (YValidatedValue / IntervalY))));
+        }
+
+        public void SortPointsAccordingToXAxis()
+        {
+            Points = Points.OrderBy(p => p.Value.X).ToDictionary(x => x.Key, x => x.Value);
+        }
+
+        public void SortPointsAccordingToYAxis()
+        {
+            Points = Points.OrderBy(p => p.Value.Y).ToDictionary(x => x.Key, x => x.Value);
         }
     }
 }

@@ -24,7 +24,7 @@ namespace Assignment6
     {
         private DiagramInformation diagramInformation;
         private DiagramGenerator dGenerator;
-        private DiagramPointsToDrawOfGenerator pointsGenerator; 
+        private DiagramPointsToDrawOfGenerator pointsGenerator;
         public MainWindow()
         {
             InitializeComponent();
@@ -34,8 +34,11 @@ namespace Assignment6
         {
             if (AllDataEntered(diagramInformation))
             {
-                diagramInformation = new DiagramInformation(DiaTitleTextBox.Text, int.Parse(DiaIntervalXAxisTextBox.Text), int.Parse(DiaIntervalYAxisTextBox.Text), int.Parse(DiaDivisionsXAxisTextBox.Text), int.Parse(DiaDivisionsYAxisTextBox.Text), (int)DiagramGrid.ColumnDefinitions[0].ActualWidth
-);
+                diagramInformation = new DiagramInformation(DiaTitleTextBox.Text, int.Parse(DiaIntervalXAxisTextBox.Text), int.Parse(DiaIntervalYAxisTextBox.Text), int.Parse(DiaDivisionsXAxisTextBox.Text), int.Parse(DiaDivisionsYAxisTextBox.Text), (int)DiagramGrid.ColumnDefinitions[0].ActualWidth);
+                pointsGenerator = new DiagramPointsToDrawOfGenerator(diagramInformation);
+                dGenerator = new DiagramGenerator(Width, Height, diagramInformation, pointsGenerator.YPointsUsedInDiagramGeneration, pointsGenerator.XPointsUsedInDiagramGeneration);
+                DiagramGrid.Children.Add(dGenerator);
+
                 DiagramSettingsGroupBox.IsEnabled = false;
                 PointsGroupBox.IsEnabled = true;
                 ClearDiagramButton.IsEnabled = true;
@@ -66,21 +69,40 @@ namespace Assignment6
         {
             if (ValidatePionts(PointXTextBox.Text, PointYTextBox.Text, out double XValidatedValue, out double YValidatedValue))
             {
-                pointsGenerator = new DiagramPointsToDrawOfGenerator(diagramInformation);
-                dGenerator = new DiagramGenerator(Width, Height, diagramInformation, pointsGenerator.YPointsUsedInDiagramGeneration, pointsGenerator.XPointsUsedInDiagramGeneration);
-                if(DiagramGrid.Children.Count > 1)
-                {
-                    RemoveDiagram();
-                }
-                DiagramGrid.Children.Add(dGenerator);
-                diagramInformation.Points.Add(new Point(diagramInformation.ConvertXPointToBeUsed(XValidatedValue), diagramInformation.ConvertYPointToBeUsed(YValidatedValue)));
-                PointsListBox.Items.Add($"({XValidatedValue} {YValidatedValue})");
+                AddPointToDiagram(XValidatedValue, YValidatedValue);
                 ClearPointsInput();
             }
             else
             {
                 MessageBox.Show("Check that your points is within range", "InvalidData", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        private void AddPointToDiagram(double XValidatedValue, double YValidatedValue)
+        {
+            diagramInformation.Points.Add($"{GenerateId()}-{XValidatedValue}, {YValidatedValue}", new Point(diagramInformation.ConvertXPointToBeUsed(XValidatedValue), diagramInformation.ConvertYPointToBeUsed(YValidatedValue)));
+            PointsListBox.Items.Add($"({GetOriginalNumberFromIdLastAdded()})");
+            dGenerator.DiagramDataToDraw = diagramInformation;
+            GeneratePointsToDrawAndDiagram();
+        }
+
+        private string GetOriginalNumberFromIdLastAdded()
+        {
+            return diagramInformation.Points.Last().Key.Split('-').Last();
+        }
+
+        private int GenerateId()
+        {
+            Random randGenerator = new Random();
+            return randGenerator.Next(1000);
+        }
+
+        private void GeneratePointsToDrawAndDiagram()
+        {
+            pointsGenerator = new DiagramPointsToDrawOfGenerator(diagramInformation);
+            dGenerator.dataYPointsToPlot = pointsGenerator.YPointsUsedInDiagramGeneration;
+            dGenerator.dataXPointsToPlot = pointsGenerator.XPointsUsedInDiagramGeneration;
+            dGenerator.InvalidateVisual();
         }
 
         private void ClearPointsInput()
@@ -115,6 +137,36 @@ namespace Assignment6
         {
             UIElement diagramToRemove = DiagramGrid.Children.Cast<UIElement>().Where(x => Grid.GetColumn(x) == 0).First();
             DiagramGrid.Children.Remove(diagramToRemove);
+        }
+
+        private void SortXPointsMenuItewm_Click(object sender, RoutedEventArgs e)
+        {
+            diagramInformation.SortPointsAccordingToXAxis();
+            WriteNewOrderInListBox();
+            RedrawDiagram();
+        }
+
+        private void WriteNewOrderInListBox()
+        {
+            PointsListBox.Items.Clear();
+            diagramInformation.Points.Keys.ToList().ForEach(x => PointsListBox.Items.Add(GetOriginalNumberFromId(x)));
+        }
+
+        private void SortYPointsMenuItewm_Click(object sender, RoutedEventArgs e)
+        {
+            diagramInformation.SortPointsAccordingToYAxis();
+            WriteNewOrderInListBox();
+            RedrawDiagram();
+        }
+
+        private void RedrawDiagram()
+        {
+            GeneratePointsToDrawAndDiagram();
+        }
+
+        private string GetOriginalNumberFromId(string idToGetNumbersFrom)
+        {
+            return idToGetNumbersFrom.Split('-').Last();
         }
     }
 }

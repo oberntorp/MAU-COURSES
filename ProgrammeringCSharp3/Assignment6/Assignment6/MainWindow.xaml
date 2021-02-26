@@ -12,8 +12,8 @@
                 <MenuItem Header="Ëxit Application"/>
             </MenuItem>
             <MenuItem Header="Data">
-                <MenuItem Header="Sort X axis points"/>
-                <MenuItem Header="Sort Y axis points"/>
+                <MenuItem x:Name="SortXPointsMenuItewm" Header="Sort X axis points" Click="SortXPointsMenuItewm_Click"/>
+                <MenuItem x:Name="SortYPointsMenuItewm" Header="Sort Y axis points" Click="SortYPointsMenuItewm_Click"/>
             </MenuItem>
         </Menu>
         <Grid>
