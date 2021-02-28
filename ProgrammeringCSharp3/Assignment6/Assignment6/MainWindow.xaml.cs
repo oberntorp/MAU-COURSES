@@ -47,7 +47,7 @@ namespace Assignment6
             }
             else
             {
-                MessageBox.Show("You have not entered all data needed", "InvalidData", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBoxes.ShowErrorMessageBox("You have not entered all data needed");
             }
         }
 
@@ -70,31 +70,32 @@ namespace Assignment6
             if (ValidatePionts(PointXTextBox.Text, PointYTextBox.Text, out double XValidatedValue, out double YValidatedValue))
             {
                 AddPointToDiagram(XValidatedValue, YValidatedValue);
+                SaveDataAndGenerateDiagram();
                 ClearPointsInput();
             }
             else
             {
-                MessageBox.Show("Check that your points is within range", "InvalidData", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBoxes.ShowErrorMessageBox("Check that your points is within range");
             }
         }
 
         private void AddPointToDiagram(double XValidatedValue, double YValidatedValue)
         {
-            diagramInformation.Points.Add($"{GenerateId()}-{XValidatedValue}, {YValidatedValue}", new Point(diagramInformation.ConvertXPointToBeUsed(XValidatedValue), diagramInformation.ConvertYPointToBeUsed(YValidatedValue)));
-            PointsListBox.Items.Add($"({GetOriginalNumberFromIdLastAdded()})");
+            if (diagramInformation.AddPoint(XValidatedValue, YValidatedValue))
+            {
+                PointsListBox.Items.Add($"({diagramInformation.GetOriginalNumberFromPointIdLastAdded()})");
+                SaveDataAndGenerateDiagram();
+            }
+            else
+            {
+                MessageBoxes.ShowErrorMessageBox($"Point {XValidatedValue}, {YValidatedValue} already Exists");
+            }
+        }
+
+        private void SaveDataAndGenerateDiagram()
+        {
             dGenerator.DiagramDataToDraw = diagramInformation;
             GeneratePointsToDrawAndDiagram();
-        }
-
-        private string GetOriginalNumberFromIdLastAdded()
-        {
-            return diagramInformation.Points.Last().Key.Split('-').Last();
-        }
-
-        private int GenerateId()
-        {
-            Random randGenerator = new Random();
-            return randGenerator.Next(1000);
         }
 
         private void GeneratePointsToDrawAndDiagram()
@@ -131,6 +132,15 @@ namespace Assignment6
             DiagramSettingsGroupBox.IsEnabled = true;
             ClearDiagramButton.IsEnabled = false;
             PointsGroupBox.IsEnabled = false;
+            PointsListBox.Items.Clear();
+            ResetDiagramRelatedVariables();
+        }
+
+        private void ResetDiagramRelatedVariables()
+        {
+            diagramInformation.ClearDiagramPoints();
+            pointsGenerator = null;
+            dGenerator = null;
         }
 
         private void RemoveDiagram()

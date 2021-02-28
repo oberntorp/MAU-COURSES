@@ -22,6 +22,9 @@ namespace Assignment6.Diagram
         private DrawingContext globalDc;
         public List<ArrayList> dataYPointsToPlot;
         public List<ArrayList> dataXPointsToPlot;
+        public const int axesThickness = 4;
+        public const int axesTickThickness = 2;
+        public const int diagramDataLineThickness = 2;
 
         public DiagramGenerator(double width, double  height, DiagramInformation diagramData, List<ArrayList> YPointsUsedInDiagramGeneration, List<ArrayList> XPointsUsedInDiagramGeneration)
         {
@@ -61,7 +64,7 @@ namespace Assignment6.Diagram
 
         private void DrawYAxis(DrawingContext dc)
         {
-            Pen yAxisPen = new Pen(Brushes.Blue, 4);
+            Pen yAxisPen = new Pen(Brushes.Blue, axesThickness);
             yAxisPen.StartLineCap = PenLineCap.Triangle;
             dc.DrawLine(yAxisPen, new Point(50, 105), new Point(50, maxLengthYAxis));
 
@@ -70,7 +73,7 @@ namespace Assignment6.Diagram
 
         private void DrawIntervalsYAxis(DrawingContext dc)
         {
-            Pen yAxisPen = new Pen(Brushes.Black, 2);
+            Pen yAxisPen = new Pen(Brushes.Black, axesTickThickness);
             foreach(ArrayList pointToPlot in dataYPointsToPlot)
             {
                 dc.DrawLine(yAxisPen, (Point)pointToPlot[0], (Point)pointToPlot[1]);
@@ -88,7 +91,7 @@ namespace Assignment6.Diagram
 
         private void DrawXAxis(DrawingContext dc)
         {
-            Pen xAxisTickPen = new Pen(Brushes.Black, 4);
+            Pen xAxisTickPen = new Pen(Brushes.Black, axesThickness);
             xAxisTickPen.EndLineCap = PenLineCap.Triangle;
 
             dc.DrawLine(xAxisTickPen, new Point(50, 105 + sixeOfAxes), new Point(maxLengthOfXAxis, maxLengthYAxis));
@@ -98,7 +101,7 @@ namespace Assignment6.Diagram
 
         private void DrawIntervalsXAxis(DrawingContext dc)
         {
-            Pen xAxisPen = new Pen(Brushes.Gray, 2);
+            Pen xAxisPen = new Pen(Brushes.Gray, axesTickThickness);
             foreach (ArrayList pointToPlot in dataXPointsToPlot)
             {
                 dc.DrawLine(xAxisPen, (Point)pointToPlot[0], (Point)pointToPlot[1]);
@@ -125,7 +128,7 @@ namespace Assignment6.Diagram
                 context.PolyLineTo(DiagramDataToDraw.Points.Values.Skip(1).ToArray(), true, false);
             }
 
-            globalDc.DrawGeometry(Brushes.Black, new Pen(Brushes.Black, 5), streamGeomitry);
+            globalDc.DrawGeometry(Brushes.Black, new Pen(Brushes.Black, diagramDataLineThickness), streamGeomitry);
         }
     }
 }

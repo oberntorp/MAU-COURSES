@@ -50,5 +50,32 @@ namespace BussinessLogic
         {
             Points = Points.OrderBy(p => p.Value.Y).ToDictionary(x => x.Key, x => x.Value);
         }
+
+        public bool AddPoint(double XValidatedValue, double YValidatedValue)
+        {
+            int nbrPointsBeforeAdd = Points.Count();
+            Point pointBeingAdded = new Point(ConvertXPointToBeUsed(XValidatedValue), ConvertYPointToBeUsed(YValidatedValue));
+            if(!DoesPointExist(pointBeingAdded))
+            {
+                Points.Add($"{XValidatedValue}, {YValidatedValue}", pointBeingAdded);
+            }
+
+            return (Points.Count > nbrPointsBeforeAdd);
+        }
+
+        public void ClearDiagramPoints()
+        {
+            Points.Clear();
+        }
+
+        public string GetOriginalNumberFromPointIdLastAdded()
+        {
+            return Points.Last().Key;
+        }
+
+        public bool DoesPointExist(Point checkIfExist)
+        {
+            return Points.ContainsValue(checkIfExist);
+        }
     }
 }
