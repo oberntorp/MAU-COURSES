@@ -22,21 +22,21 @@ namespace Assignment6
     /// </summary>
     public partial class MainWindow : Window
     {
-        private DiagramInformation diagramInformation;
+        private DiagramHandler diagramHandler;
         private DiagramGenerator dGenerator;
-        private DiagramPointsToDrawOfGenerator pointsGenerator;
         public MainWindow()
         {
+            diagramHandler = new DiagramHandler();
             InitializeComponent();
         }
 
         private void SaveSettingsButton_Click(object sender, RoutedEventArgs e)
         {
-            if (AllDataEntered(diagramInformation))
+            if (AllDataEntered(diagramHandler.DiagramInformation))
             {
-                diagramInformation = new DiagramInformation(DiaTitleTextBox.Text, int.Parse(DiaIntervalXAxisTextBox.Text), int.Parse(DiaIntervalYAxisTextBox.Text), int.Parse(DiaDivisionsXAxisTextBox.Text), int.Parse(DiaDivisionsYAxisTextBox.Text), (int)DiagramGrid.ColumnDefinitions[0].ActualWidth);
-                pointsGenerator = new DiagramPointsToDrawOfGenerator(diagramInformation);
-                dGenerator = new DiagramGenerator(Width, Height, diagramInformation, pointsGenerator.YPointsUsedInDiagramGeneration, pointsGenerator.XPointsUsedInDiagramGeneration);
+                diagramHandler.CreateDiagramInformationObject(DiaTitleTextBox.Text, int.Parse(DiaIntervalXAxisTextBox.Text), int.Parse(DiaIntervalYAxisTextBox.Text), int.Parse(DiaDivisionsXAxisTextBox.Text), int.Parse(DiaDivisionsYAxisTextBox.Text), (int)DiagramGrid.ColumnDefinitions[0].ActualWidth);
+                diagramHandler.CreatePointsGenerator();
+                dGenerator = new DiagramGenerator(Width, Height, diagramHandler.DiagramInformation, diagramHandler.PointsGenerator.YPointsUsedInDiagramGeneration, diagramHandler.PointsGenerator.XPointsUsedInDiagramGeneration);
                 DiagramGrid.Children.Add(dGenerator);
 
                 DiagramSettingsGroupBox.IsEnabled = false;
@@ -81,9 +81,10 @@ namespace Assignment6
 
         private void AddPointToDiagram(double XValidatedValue, double YValidatedValue)
         {
-            if (diagramInformation.AddPoint(XValidatedValue, YValidatedValue))
+            if (diagramHandler.DiagramInformation.AddPoint(XValidatedValue, YValidatedValue))
             {
-                PointsListBox.Items.Add($"({diagramInformation.GetOriginalNumberFromPointIdLastAdded()})");
+                PointsListBox.Items.Add($"({diagramHandler.DiagramInformation.GetOriginalNumberFromPointIdLastAdded()})");
+                diagramHandler.UpdatePointsGeneratorUpdatedDiagramPoints();
                 SaveDataAndGenerateDiagram();
             }
             else
@@ -94,15 +95,14 @@ namespace Assignment6
 
         private void SaveDataAndGenerateDiagram()
         {
-            dGenerator.DiagramDataToDraw = diagramInformation;
-            GeneratePointsToDrawAndDiagram();
+            dGenerator.DiagramDataToDraw = diagramHandler.DiagramInformation;
+            SavePointsInDiagramGenerator();
         }
 
-        private void GeneratePointsToDrawAndDiagram()
+        private void SavePointsInDiagramGenerator()
         {
-            pointsGenerator = new DiagramPointsToDrawOfGenerator(diagramInformation);
-            dGenerator.dataYPointsToPlot = pointsGenerator.YPointsUsedInDiagramGeneration;
-            dGenerator.dataXPointsToPlot = pointsGenerator.XPointsUsedInDiagramGeneration;
+            dGenerator.dataYPointsToPlot = diagramHandler.PointsGenerator.YPointsUsedInDiagramGeneration;
+            dGenerator.dataXPointsToPlot = diagramHandler.PointsGenerator.XPointsUsedInDiagramGeneration;
             dGenerator.InvalidateVisual();
         }
 
@@ -116,7 +116,7 @@ namespace Assignment6
         {
             XValue = -1;
             YValue = -1;
-            if ((double.TryParse(xPointValue, out double resultXValue) && double.TryParse(YPointValue, out double resultYVallue)) && (resultXValue >= 0 && resultXValue <= (diagramInformation.DivisionsX * diagramInformation.IntervalX) && resultYVallue <= (diagramInformation.DivisionsY * diagramInformation.IntervalY)))
+            if ((double.TryParse(xPointValue, out double resultXValue) && double.TryParse(YPointValue, out double resultYVallue)) && (resultXValue >= 0 && resultXValue <= (diagramHandler.DiagramInformation.DivisionsX * diagramHandler.DiagramInformation.IntervalX) && resultYVallue <= (diagramHandler.DiagramInformation.DivisionsY * diagramHandler.DiagramInformation.IntervalY)))
             {
                 XValue = resultXValue;
                 YValue = resultYVallue;
@@ -138,8 +138,7 @@ namespace Assignment6
 
         private void ResetDiagramRelatedVariables()
         {
-            diagramInformation.ClearDiagramPoints();
-            pointsGenerator = null;
+            diagramHandler.ResetDiagramData();
             dGenerator = null;
         }
 
@@ -151,7 +150,7 @@ namespace Assignment6
 
         private void SortXPointsMenuItewm_Click(object sender, RoutedEventArgs e)
         {
-            diagramInformation.SortPointsAccordingToXAxis();
+            diagramHandler.DiagramInformation.SortPointsAccordingToXAxis();
             WriteNewOrderInListBox();
             RedrawDiagram();
         }
@@ -159,19 +158,19 @@ namespace Assignment6
         private void WriteNewOrderInListBox()
         {
             PointsListBox.Items.Clear();
-            diagramInformation.Points.Keys.ToList().ForEach(x => PointsListBox.Items.Add(GetOriginalNumberFromId(x)));
+            diagramHandler.DiagramInformation.Points.Keys.ToList().ForEach(x => PointsListBox.Items.Add(GetOriginalNumberFromId(x)));
         }
 
         private void SortYPointsMenuItewm_Click(object sender, RoutedEventArgs e)
         {
-            diagramInformation.SortPointsAccordingToYAxis();
+            diagramHandler.DiagramInformation.SortPointsAccordingToYAxis();
             WriteNewOrderInListBox();
             RedrawDiagram();
         }
 
         private void RedrawDiagram()
         {
-            GeneratePointsToDrawAndDiagram();
+            SavePointsInDiagramGenerator();
         }
 
         private string GetOriginalNumberFromId(string idToGetNumbersFrom)
