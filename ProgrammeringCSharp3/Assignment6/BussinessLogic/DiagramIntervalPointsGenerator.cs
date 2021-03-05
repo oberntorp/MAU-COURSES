@@ -8,7 +8,10 @@ using System.Windows;
 
 namespace BussinessLogic
 {
-    public class DiagramPointsToDrawOfGenerator
+    /// <summary>
+    /// Class responsible for Points and figures making up an interval
+    /// </summary>
+    public class DiagramIntervalPointsGenerator
     {
         public DiagramInformation DiagramDataToDraw { get; set; }
         private int sixeOfAxes;
@@ -17,7 +20,11 @@ namespace BussinessLogic
         public List<ArrayList> YPointsUsedInDiagramGeneration { get; set; }
         public List<ArrayList> XPointsUsedInDiagramGeneration { get; set; }
 
-        public DiagramPointsToDrawOfGenerator(DiagramInformation diagramData)
+        /// <summary>
+        /// Constructor setting prerequisit from a diagramInformation object
+        /// </summary>
+        /// <param name="diagramData">Object containing information about the diagram being created</param>
+        public DiagramIntervalPointsGenerator(DiagramInformation diagramData)
         {
             DiagramDataToDraw = diagramData;
             sixeOfAxes = diagramData.sizeOfAxes;
@@ -25,16 +32,22 @@ namespace BussinessLogic
             maxLengthOfXAxis += sixeOfAxes;
             YPointsUsedInDiagramGeneration = new List<ArrayList>();
             XPointsUsedInDiagramGeneration = new List<ArrayList>();
-            StartPointsGenerator();
+            StartIntervalsGenerator();
         }
 
-        private void StartPointsGenerator()
+        /// <summary>
+        /// Start the generation of x/y intervals points
+        /// </summary>
+        private void StartIntervalsGenerator()
         {
-            DrawIntervalsYAxis();
-            DrawIntervalsXAxis();
+            CreateIntervalPointsYAxis();
+            CreateIntervalPointssXAxis();
         }
 
-        private void DrawIntervalsYAxis()
+        /// <summary>
+        /// Creates the points, of the Y axisused when drawing the diagrams interval
+        /// </summary>
+        private void CreateIntervalPointsYAxis()
         {
             int interval = sixeOfAxes / DiagramDataToDraw.DivisionsY;
             for (int offsetYAxis = maxLengthYAxis - interval, intervalFigure = DiagramDataToDraw.IntervalY; offsetYAxis >= 105; offsetYAxis -= interval, intervalFigure += DiagramDataToDraw.IntervalY)
@@ -49,7 +62,10 @@ namespace BussinessLogic
             }
         }
 
-        private void DrawIntervalsXAxis()
+        /// <summary>
+        /// Creates the points, of the X axisused when drawing the diagrams interval
+        /// </summary>
+        private void CreateIntervalPointssXAxis()
         {
             int interval = sixeOfAxes / DiagramDataToDraw.DivisionsX;
             for (int offsetXAxis = interval + 50, intervalFigure = DiagramDataToDraw.IntervalX; offsetXAxis <= maxLengthOfXAxis; offsetXAxis += interval, intervalFigure += DiagramDataToDraw.IntervalX)

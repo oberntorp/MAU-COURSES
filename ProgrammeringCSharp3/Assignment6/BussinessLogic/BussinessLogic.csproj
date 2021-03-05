@@ -44,7 +44,7 @@
   <ItemGroup>
     <Compile Include="DiagramHandler.cs" />
     <Compile Include="DiagramInformation.cs" />
-    <Compile Include="DiagramPointsToDrawOfGenerator.cs" />
+    <Compile Include="DiagramIntervalPointsGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

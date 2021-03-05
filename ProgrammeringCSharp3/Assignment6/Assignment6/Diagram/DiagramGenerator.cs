@@ -48,7 +48,7 @@ namespace Assignment6.Diagram
 
             DrawYAxis(dc);
             DrawXAxis(dc);
-            if(DiagramDataToDraw.Points.Count() > 0)
+            if(DiagramDataToDraw.DataPoints.Count() > 0)
             {
                 WritePointsToDiagram();
             }
@@ -124,8 +124,8 @@ namespace Assignment6.Diagram
 
             using(StreamGeometryContext context = streamGeomitry.Open())
             {
-                context.BeginFigure(DiagramDataToDraw.Points.First().Value, false, false);
-                context.PolyLineTo(DiagramDataToDraw.Points.Values.Skip(1).ToArray(), true, false);
+                context.BeginFigure(DiagramDataToDraw.DataPoints.First().Value, false, false);
+                context.PolyLineTo(DiagramDataToDraw.DataPoints.Values.Skip(1).ToArray(), true, false);
             }
 
             globalDc.DrawGeometry(Brushes.Black, new Pen(Brushes.Black, diagramDataLineThickness), streamGeomitry);

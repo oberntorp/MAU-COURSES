@@ -36,7 +36,7 @@ namespace Assignment6
             {
                 diagramHandler.CreateDiagramInformationObject(DiaTitleTextBox.Text, int.Parse(DiaIntervalXAxisTextBox.Text), int.Parse(DiaIntervalYAxisTextBox.Text), int.Parse(DiaDivisionsXAxisTextBox.Text), int.Parse(DiaDivisionsYAxisTextBox.Text), (int)DiagramGrid.ColumnDefinitions[0].ActualWidth);
                 diagramHandler.CreatePointsGenerator();
-                dGenerator = new DiagramGenerator(Width, Height, diagramHandler.DiagramInformation, diagramHandler.PointsGenerator.YPointsUsedInDiagramGeneration, diagramHandler.PointsGenerator.XPointsUsedInDiagramGeneration);
+                dGenerator = new DiagramGenerator(Width, Height, diagramHandler.DiagramInformation, diagramHandler.IntervalPointsGenerator.YPointsUsedInDiagramGeneration, diagramHandler.IntervalPointsGenerator.XPointsUsedInDiagramGeneration);
                 DiagramGrid.Children.Add(dGenerator);
 
                 DiagramSettingsGroupBox.IsEnabled = false;
@@ -101,8 +101,8 @@ namespace Assignment6
 
         private void SavePointsInDiagramGenerator()
         {
-            dGenerator.dataYPointsToPlot = diagramHandler.PointsGenerator.YPointsUsedInDiagramGeneration;
-            dGenerator.dataXPointsToPlot = diagramHandler.PointsGenerator.XPointsUsedInDiagramGeneration;
+            dGenerator.dataYPointsToPlot = diagramHandler.IntervalPointsGenerator.YPointsUsedInDiagramGeneration;
+            dGenerator.dataXPointsToPlot = diagramHandler.IntervalPointsGenerator.XPointsUsedInDiagramGeneration;
             dGenerator.InvalidateVisual();
         }
 
@@ -158,7 +158,7 @@ namespace Assignment6
         private void WriteNewOrderInListBox()
         {
             PointsListBox.Items.Clear();
-            diagramHandler.DiagramInformation.Points.Keys.ToList().ForEach(x => PointsListBox.Items.Add(GetOriginalNumberFromId(x)));
+            diagramHandler.DiagramInformation.DataPoints.Keys.ToList().ForEach(x => PointsListBox.Items.Add(GetOriginalNumberFromId(x)));
         }
 
         private void SortYPointsMenuItewm_Click(object sender, RoutedEventArgs e)

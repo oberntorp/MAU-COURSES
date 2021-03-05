@@ -7,6 +7,11 @@ using System.Windows;
 
 namespace BussinessLogic
 {
+    /// <summary>
+    /// This class is responsible for Saving the diagram information inputted of the GUI.
+    /// It does also hold the data points making up the polyline of the plotted diagram.
+    /// It does also sort the Points on request.
+    /// </summary>
     public class DiagramInformation
     {
         public string Title { get; set; }
@@ -14,7 +19,7 @@ namespace BussinessLogic
         public int IntervalY { get; set; }
         public int DivisionsX { get; set; }
         public int DivisionsY { get; set; }
-        public Dictionary<string, Point> Points { get; set; }
+        public Dictionary<string, Point> DataPoints { get; set; }
         public int sizeOfAxes = 300;
         private int OffsetYAxis = 105;
         private int OffsetXAxis = 50;
@@ -26,7 +31,7 @@ namespace BussinessLogic
             IntervalY = IntervalYFromGui;
             DivisionsX = divisionsXFromGui;
             DivisionsY = divisionsYFromGui;
-            Points = new Dictionary<string, Point>();
+            DataPoints = new Dictionary<string, Point>();
             sizeOfAxes = diagramContainerWidth - (50 + 105);
         }
 
@@ -43,39 +48,39 @@ namespace BussinessLogic
 
         public void SortPointsAccordingToXAxis()
         {
-            Points = Points.OrderBy(p => p.Value.X).ToDictionary(x => x.Key, x => x.Value);
+            DataPoints = DataPoints.OrderBy(p => p.Value.X).ToDictionary(x => x.Key, x => x.Value);
         }
 
         public void SortPointsAccordingToYAxis()
         {
-            Points = Points.OrderBy(p => p.Value.Y).ToDictionary(x => x.Key, x => x.Value);
+            DataPoints = DataPoints.OrderByDescending(p => p.Value.Y).ToDictionary(x => x.Key, x => x.Value);
         }
 
         public bool AddPoint(double XValidatedValue, double YValidatedValue)
         {
-            int nbrPointsBeforeAdd = Points.Count();
+            int nbrPointsBeforeAdd = DataPoints.Count();
             Point pointBeingAdded = new Point(ConvertXPointToBeUsed(XValidatedValue), ConvertYPointToBeUsed(YValidatedValue));
             if(!DoesPointExist(pointBeingAdded))
             {
-                Points.Add($"{XValidatedValue}, {YValidatedValue}", pointBeingAdded);
+                DataPoints.Add($"{XValidatedValue}, {YValidatedValue}", pointBeingAdded);
             }
 
-            return (Points.Count > nbrPointsBeforeAdd);
+            return (DataPoints.Count > nbrPointsBeforeAdd);
         }
 
         public void ClearDiagramPoints()
         {
-            Points.Clear();
+            DataPoints.Clear();
         }
 
         public string GetOriginalNumberFromPointIdLastAdded()
         {
-            return Points.Last().Key;
+            return DataPoints.Last().Key;
         }
 
         public bool DoesPointExist(Point checkIfExist)
         {
-            return Points.ContainsValue(checkIfExist);
+            return DataPoints.ContainsValue(checkIfExist);
         }
     }
 }
