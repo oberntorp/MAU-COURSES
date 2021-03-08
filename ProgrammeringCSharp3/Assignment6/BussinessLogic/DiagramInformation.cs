@@ -20,9 +20,9 @@ namespace BussinessLogic
         public int DivisionsX { get; set; }
         public int DivisionsY { get; set; }
         public Dictionary<string, Point> DataPoints { get; set; }
-        public int sizeOfAxes = 300;
-        private int OffsetYAxis = 105;
-        private int OffsetXAxis = 50;
+        public readonly int SizeOfAxes = 300;
+        public readonly int OffsetYAxis = 105;
+        public readonly int OffsetXAxis = 50;
 
         public DiagramInformation(string titleFromGui, int intervalXFromGui, int IntervalYFromGui, int divisionsXFromGui, int divisionsYFromGui, int diagramContainerWidth)
         {
@@ -32,18 +32,18 @@ namespace BussinessLogic
             DivisionsX = divisionsXFromGui;
             DivisionsY = divisionsYFromGui;
             DataPoints = new Dictionary<string, Point>();
-            sizeOfAxes = diagramContainerWidth - (50 + 105);
+            SizeOfAxes = diagramContainerWidth - (50 + 105);
         }
 
         public double ConvertXPointToBeUsed(double XValidatedValue)
         {
-            return ((OffsetXAxis + ((sizeOfAxes / DivisionsX) * XValidatedValue)));
+            return ((OffsetXAxis + ((SizeOfAxes / DivisionsX) * XValidatedValue)));
         }
 
 
         public double ConvertYPointToBeUsed(double YValidatedValue)
         {
-            return (((OffsetYAxis + sizeOfAxes) - ((sizeOfAxes / DivisionsY) * (YValidatedValue / IntervalY))));
+            return (((OffsetYAxis + SizeOfAxes) - ((SizeOfAxes / DivisionsY) * (YValidatedValue / IntervalY))));
         }
 
         public void SortPointsAccordingToXAxis()

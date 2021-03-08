@@ -27,7 +27,7 @@ namespace BussinessLogic
         public DiagramIntervalPointsGenerator(DiagramInformation diagramData)
         {
             DiagramDataToDraw = diagramData;
-            sixeOfAxes = diagramData.sizeOfAxes;
+            sixeOfAxes = diagramData.SizeOfAxes;
             maxLengthYAxis += sixeOfAxes;
             maxLengthOfXAxis += sixeOfAxes;
             YPointsUsedInDiagramGeneration = new List<ArrayList>();

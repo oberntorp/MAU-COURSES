@@ -47,7 +47,7 @@ namespace BussinessLogic
         /// <summary>
         /// Updates the Points collection with the new points that has been added
         /// </summary>
-        public void UpdatePointsGeneratorUpdatedDiagramPoints()
+        public void UpdatePointsGeneratorDiagramPoints()
         {
             IntervalPointsGenerator.DiagramDataToDraw.DataPoints = DiagramInformation.DataPoints;
         }
