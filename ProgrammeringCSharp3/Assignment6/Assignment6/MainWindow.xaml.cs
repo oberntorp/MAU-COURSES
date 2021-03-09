@@ -43,9 +43,9 @@ namespace Assignment6
         {
             if (AllDataEntered(diagramHandler.DiagramInformation))
             {
-                diagramHandler.CreateDiagramInformationObject(DiaTitleTextBox.Text, int.Parse(DiaIntervalXAxisTextBox.Text), int.Parse(DiaIntervalYAxisTextBox.Text), int.Parse(DiaDivisionsXAxisTextBox.Text), int.Parse(DiaDivisionsYAxisTextBox.Text), (int)DiagramGrid.ColumnDefinitions[0].ActualWidth);
+                diagramHandler.CreateDiagramInformationObject(DiaTitleTextBox.Text, int.Parse(DiaIntervalXAxisTextBox.Text), int.Parse(DiaIntervalYAxisTextBox.Text), int.Parse(DiaDivisionsXAxisTextBox.Text), int.Parse(DiaDivisionsYAxisTextBox.Text), DiagramGrid.RowDefinitions[0].ActualHeight);
                 diagramHandler.CreatePointsGenerator();
-                diagramGenerator = new DiagramGenerator((int)DiagramGrid.ColumnDefinitions[0].ActualWidth, (int)DiagramGrid.RowDefinitions[0].ActualHeight, diagramHandler.DiagramInformation, diagramHandler.IntervalPointsGenerator.YPointsUsedInDiagramGeneration, diagramHandler.IntervalPointsGenerator.XPointsUsedInDiagramGeneration);
+                diagramGenerator = new DiagramGenerator(DiagramGrid.ColumnDefinitions[0].ActualWidth, DiagramGrid.RowDefinitions[0].ActualHeight, diagramHandler.DiagramInformation, diagramHandler.IntervalPointsGenerator.YPointsUsedInDiagramGeneration, diagramHandler.IntervalPointsGenerator.XPointsUsedInDiagramGeneration);
                 DiagramGrid.Children.Add(diagramGenerator);
 
                 DiagramSettingsGroupBox.IsEnabled = false;

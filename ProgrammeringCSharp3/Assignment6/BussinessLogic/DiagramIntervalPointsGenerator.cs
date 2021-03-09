@@ -14,9 +14,6 @@ namespace BussinessLogic
     public class DiagramIntervalPointsGenerator
     {
         public DiagramInformation DiagramDataToDraw { get; set; }
-        private int sixeOfAxes;
-        private int maxLengthYAxis = 105;
-        private int maxLengthOfXAxis = 50;
         public List<ArrayList> YPointsUsedInDiagramGeneration { get; set; }
         public List<ArrayList> XPointsUsedInDiagramGeneration { get; set; }
 
@@ -27,9 +24,6 @@ namespace BussinessLogic
         public DiagramIntervalPointsGenerator(DiagramInformation diagramData)
         {
             DiagramDataToDraw = diagramData;
-            sixeOfAxes = diagramData.SizeOfAxes;
-            maxLengthYAxis += sixeOfAxes;
-            maxLengthOfXAxis += sixeOfAxes;
             YPointsUsedInDiagramGeneration = new List<ArrayList>();
             XPointsUsedInDiagramGeneration = new List<ArrayList>();
             StartIntervalsGenerator();
@@ -49,8 +43,8 @@ namespace BussinessLogic
         /// </summary>
         private void CreateIntervalPointsYAxis()
         {
-            int interval = sixeOfAxes / DiagramDataToDraw.DivisionsY;
-            for (int offsetYAxis = maxLengthYAxis - interval, intervalFigure = DiagramDataToDraw.IntervalY; offsetYAxis >= 105; offsetYAxis -= interval, intervalFigure += DiagramDataToDraw.IntervalY)
+            double interval = (DiagramDataToDraw.HeightOfAxes - DiagramDataToDraw.OffsetYAxis) / DiagramDataToDraw.DivisionsY;
+            for (double offsetYAxis = DiagramDataToDraw.HeightOfAxes - interval, intervalFigure = DiagramDataToDraw.IntervalY; intervalFigure <= (DiagramDataToDraw.IntervalY * DiagramDataToDraw.DivisionsY); offsetYAxis -= interval, intervalFigure += DiagramDataToDraw.IntervalY)
             {
                 ArrayList pointArray = new ArrayList();
                 pointArray.Add(new Point(45, offsetYAxis));
@@ -67,12 +61,12 @@ namespace BussinessLogic
         /// </summary>
         private void CreateIntervalPointssXAxis()
         {
-            int interval = sixeOfAxes / DiagramDataToDraw.DivisionsX;
-            for (int offsetXAxis = interval + 50, intervalFigure = DiagramDataToDraw.IntervalX; offsetXAxis <= maxLengthOfXAxis; offsetXAxis += interval, intervalFigure += DiagramDataToDraw.IntervalX)
+            double interval = (DiagramDataToDraw.WidthOfAxes - DiagramDataToDraw.OffsetXAxis) / DiagramDataToDraw.DivisionsX;
+            for (double offsetXAxis = interval + DiagramDataToDraw.OffsetXAxis, intervalFigure = DiagramDataToDraw.IntervalX; intervalFigure <= (DiagramDataToDraw.IntervalX * DiagramDataToDraw.DivisionsX); offsetXAxis += interval, intervalFigure += DiagramDataToDraw.IntervalX)
             {
                 ArrayList pointArray = new ArrayList();
-                pointArray.Add(new Point(offsetXAxis, (105 + sixeOfAxes) - 5));
-                pointArray.Add(new Point(offsetXAxis, (105 + sixeOfAxes) + 5));
+                pointArray.Add(new Point(offsetXAxis, DiagramDataToDraw.HeightOfAxes - 5));
+                pointArray.Add(new Point(offsetXAxis, DiagramDataToDraw.HeightOfAxes + 5));
                 pointArray.Add(intervalFigure);
                 pointArray.Add(offsetXAxis);
 

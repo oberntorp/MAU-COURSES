@@ -18,9 +18,6 @@ namespace Assignment6.Diagram
     {
         public DiagramInformation DiagramDataToDraw { get; set; }
 
-        private int maxLengthYAxis;
-        private int maxLengthOfXAxis;
-        private string diagramTitle;
         private DrawingContext globalDc;
         public List<ArrayList> dataYPointsToPlot;
         public List<ArrayList> dataXPointsToPlot;
@@ -40,11 +37,7 @@ namespace Assignment6.Diagram
         {
             Width = width;
             Height = height;
-
-            diagramTitle = diagramData.Title;
             DiagramDataToDraw = diagramData;
-            maxLengthYAxis = diagramData.OffsetYAxis + diagramData.SizeOfAxes;
-            maxLengthOfXAxis = diagramData.OffsetXAxis + diagramData.SizeOfAxes;
             dataYPointsToPlot = YPointsUsedInDiagramGeneration;
             dataXPointsToPlot = XPointsUsedInDiagramGeneration;
         }
@@ -74,7 +67,7 @@ namespace Assignment6.Diagram
         private void DrawDiagramHeader(DrawingContext dc)
         {
             FlowDirection dir = FlowDirection.LeftToRight;
-            FormattedText textToRender = new FormattedText(diagramTitle, new System.Globalization.CultureInfo("se-SV"), dir, new Typeface("Arial"), 102, Brushes.Blue, VisualTreeHelper.GetDpi(this).PixelsPerDip);
+            FormattedText textToRender = new FormattedText(DiagramDataToDraw.Title, new System.Globalization.CultureInfo("se-SV"), dir, new Typeface("Arial"), 102, Brushes.Blue, VisualTreeHelper.GetDpi(this).PixelsPerDip);
 
             dc.DrawText(textToRender, new Point(50, 0));
         }
@@ -87,7 +80,7 @@ namespace Assignment6.Diagram
         {
             Pen yAxisPen = new Pen(Brushes.Blue, axesThickness);
             yAxisPen.StartLineCap = PenLineCap.Triangle;
-            dc.DrawLine(yAxisPen, new Point(DiagramDataToDraw.OffsetXAxis, DiagramDataToDraw.OffsetYAxis), new Point(DiagramDataToDraw.OffsetXAxis, maxLengthYAxis));
+            dc.DrawLine(yAxisPen, new Point(DiagramDataToDraw.OffsetXAxis, DiagramDataToDraw.OffsetYAxis), new Point(DiagramDataToDraw.OffsetXAxis, DiagramDataToDraw.HeightOfAxes));
 
             DrawIntervalsYAxis(dc);
         }
@@ -102,7 +95,7 @@ namespace Assignment6.Diagram
             foreach (ArrayList pointToPlot in dataYPointsToPlot)
             {
                 dc.DrawLine(yAxisPen, (Point)pointToPlot[0], (Point)pointToPlot[1]);
-                DrawYAxisNumbers(dc, pointToPlot[2].ToString(), (int)pointToPlot[3]);
+                DrawYAxisNumbers(dc, pointToPlot[2].ToString(), (double)pointToPlot[3]);
             }
         }
 
@@ -112,7 +105,7 @@ namespace Assignment6.Diagram
         /// <param name="dc">Drawing context</param>
         /// <param name="numberToDraw">the number to draw</param>
         /// <param name="positionOfNumber">Where to position the number</param>
-        private void DrawYAxisNumbers(DrawingContext dc, string numberToDraw, int positionOfNumber)
+        private void DrawYAxisNumbers(DrawingContext dc, string numberToDraw, double positionOfNumber)
         {
             FlowDirection dir = FlowDirection.LeftToRight;
             FormattedText textToRender = new FormattedText(numberToDraw, new System.Globalization.CultureInfo("se-SV"), dir, new Typeface("Arial"), 10, Brushes.Green, VisualTreeHelper.GetDpi(this).PixelsPerDip);
@@ -129,7 +122,7 @@ namespace Assignment6.Diagram
             Pen xAxisTickPen = new Pen(Brushes.Black, axesThickness);
             xAxisTickPen.EndLineCap = PenLineCap.Triangle;
 
-            dc.DrawLine(xAxisTickPen, new Point(DiagramDataToDraw.OffsetXAxis, DiagramDataToDraw.OffsetYAxis + DiagramDataToDraw.SizeOfAxes), new Point(maxLengthOfXAxis, maxLengthYAxis));
+            dc.DrawLine(xAxisTickPen, new Point(DiagramDataToDraw.OffsetXAxis, DiagramDataToDraw.HeightOfAxes), new Point(DiagramDataToDraw.WidthOfAxes, DiagramDataToDraw.HeightOfAxes));
 
             DrawIntervalsXAxis(dc);
         }
@@ -144,7 +137,7 @@ namespace Assignment6.Diagram
             foreach (ArrayList pointToPlot in dataXPointsToPlot)
             {
                 dc.DrawLine(xAxisPen, (Point)pointToPlot[0], (Point)pointToPlot[1]);
-                DrawXAxisNumbers(dc, (string)pointToPlot[2].ToString(), (int)pointToPlot[3]);
+                DrawXAxisNumbers(dc, (string)pointToPlot[2].ToString(), (double)pointToPlot[3]);
             }
         }
 
@@ -154,12 +147,12 @@ namespace Assignment6.Diagram
         /// <param name="dc">Drawing context</param>
         /// <param name="numberToDraw">the number to draw</param>
         /// <param name="positionOfNumber">Where to position the number</param>
-        private void DrawXAxisNumbers(DrawingContext dc, string numberToDraw, int positionOfNumber)
+        private void DrawXAxisNumbers(DrawingContext dc, string numberToDraw, double positionOfNumber)
         {
             FlowDirection dir = FlowDirection.LeftToRight;
             FormattedText textToRender = new FormattedText(numberToDraw, new System.Globalization.CultureInfo("se-SV"), dir, new Typeface("Arial"), 10, Brushes.Green, VisualTreeHelper.GetDpi(this).PixelsPerDip);
 
-            dc.DrawText(textToRender, new Point(positionOfNumber - 4, (DiagramDataToDraw.OffsetYAxis + DiagramDataToDraw.SizeOfAxes) + 15));
+            dc.DrawText(textToRender, new Point(positionOfNumber - 4, (DiagramDataToDraw.HeightOfAxes + 15)));
         }
 
         /// <summary>

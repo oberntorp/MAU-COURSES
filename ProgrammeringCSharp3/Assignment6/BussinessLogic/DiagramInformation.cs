@@ -20,11 +20,28 @@ namespace BussinessLogic
         public int DivisionsX { get; set; }
         public int DivisionsY { get; set; }
         public Dictionary<string, Point> DataPoints { get; set; }
-        public readonly int SizeOfAxes = 300;
-        public readonly int OffsetYAxis = 105;
-        public readonly int OffsetXAxis = 50;
+        private double heightOfAxes = 300;
+        private double widthOfAxes = 300;
+        public double HeightOfAxes
+        {
+            get => heightOfAxes;
+            set { heightOfAxes = value; }
+        }
+        public double WidthOfAxes
+        {
+            get => widthOfAxes;
+            set
+            {
+                if (value >= 0)
+                {
+                    widthOfAxes = value;
+                }
+            }
+        }
+        public int OffsetYAxis = 105;
+        public int OffsetXAxis = 50;
 
-        public DiagramInformation(string titleFromGui, int intervalXFromGui, int IntervalYFromGui, int divisionsXFromGui, int divisionsYFromGui, int diagramContainerWidth)
+        public DiagramInformation(string titleFromGui, int intervalXFromGui, int IntervalYFromGui, int divisionsXFromGui, int divisionsYFromGui, double diagramContainerHeight)
         {
             Title = titleFromGui;
             IntervalX = intervalXFromGui;
@@ -32,18 +49,19 @@ namespace BussinessLogic
             DivisionsX = divisionsXFromGui;
             DivisionsY = divisionsYFromGui;
             DataPoints = new Dictionary<string, Point>();
-            SizeOfAxes = diagramContainerWidth - (50 + 105);
+            HeightOfAxes = diagramContainerHeight - OffsetYAxis;
+            WidthOfAxes = HeightOfAxes * 1.5;
         }
 
         public double ConvertXPointToBeUsed(double XValidatedValue)
         {
-            return ((OffsetXAxis + ((SizeOfAxes / DivisionsX) * XValidatedValue)));
+            return (((WidthOfAxes - OffsetYAxis) / DivisionsX) * XValidatedValue);
         }
 
 
         public double ConvertYPointToBeUsed(double YValidatedValue)
         {
-            return (((OffsetYAxis + SizeOfAxes) - ((SizeOfAxes / DivisionsY) * (YValidatedValue / IntervalY))));
+            return (((HeightOfAxes - OffsetYAxis) / DivisionsY) * YValidatedValue);
         }
 
         public void SortPointsAccordingToXAxis()
@@ -60,7 +78,7 @@ namespace BussinessLogic
         {
             int nbrPointsBeforeAdd = DataPoints.Count();
             Point pointBeingAdded = new Point(ConvertXPointToBeUsed(XValidatedValue), ConvertYPointToBeUsed(YValidatedValue));
-            if(!DoesPointExist(pointBeingAdded))
+            if (!DoesPointExist(pointBeingAdded))
             {
                 DataPoints.Add($"{XValidatedValue}, {YValidatedValue}", pointBeingAdded);
             }
