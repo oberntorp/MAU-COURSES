@@ -258,5 +258,10 @@ namespace Assignment6
         {
             SavePointsInDiagramGenerator();
         }
+
+        private void RemovePointButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

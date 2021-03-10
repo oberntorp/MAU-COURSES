@@ -43,7 +43,7 @@ namespace BussinessLogic
         /// </summary>
         private void CreateIntervalPointsYAxis()
         {
-            for (double offsetYAxis = DiagramDataToDraw.HeightOfAxes - DiagramDataToDraw.IntervalDistanceYAxis, intervalFigure = DiagramDataToDraw.IntervalY; intervalFigure <= (DiagramDataToDraw.IntervalY * DiagramDataToDraw.DivisionsY); offsetYAxis -= DiagramDataToDraw.IntervalDistanceYAxis, intervalFigure += DiagramDataToDraw.IntervalY)
+            for (double offsetYAxis = DiagramDataToDraw.HeightOfAxes, intervalFigure = 0; intervalFigure <= (DiagramDataToDraw.IntervalY * DiagramDataToDraw.DivisionsY); offsetYAxis -= DiagramDataToDraw.IntervalDistanceYAxis, intervalFigure += DiagramDataToDraw.IntervalY)
             {
                 ArrayList pointArray = new ArrayList();
                 pointArray.Add(new Point(45, offsetYAxis));
@@ -60,7 +60,7 @@ namespace BussinessLogic
         /// </summary>
         private void CreateIntervalPointssXAxis()
         {
-            for (double offsetXAxis = DiagramDataToDraw.IntervalDistanceXAxis + DiagramDataToDraw.OffsetXAxis, intervalFigure = DiagramDataToDraw.IntervalX; intervalFigure <= (DiagramDataToDraw.IntervalX * DiagramDataToDraw.DivisionsX); offsetXAxis += DiagramDataToDraw.IntervalDistanceXAxis, intervalFigure += DiagramDataToDraw.IntervalX)
+            for (double offsetXAxis = DiagramDataToDraw.OffsetXAxis, intervalFigure = 0; intervalFigure <= (DiagramDataToDraw.IntervalX * DiagramDataToDraw.DivisionsX); offsetXAxis += DiagramDataToDraw.IntervalDistanceXAxis, intervalFigure += DiagramDataToDraw.IntervalX)
             {
                 ArrayList pointArray = new ArrayList();
                 pointArray.Add(new Point(offsetXAxis, DiagramDataToDraw.HeightOfAxes - 5));

@@ -92,10 +92,13 @@ namespace Assignment6.Diagram
         private void DrawIntervalsYAxis(DrawingContext dc)
         {
             Pen yAxisPen = new Pen(Brushes.Black, axesTickThickness);
-            foreach (ArrayList pointToPlot in dataYPointsToPlot)
+            for (int i = 0; i < dataYPointsToPlot.Count; i++)
             {
-                dc.DrawLine(yAxisPen, (Point)pointToPlot[0], (Point)pointToPlot[1]);
-                DrawYAxisNumbers(dc, pointToPlot[2].ToString(), (double)pointToPlot[3]);
+                if (i > 0)
+                {
+                    dc.DrawLine(yAxisPen, (Point)dataYPointsToPlot[i][0], (Point)dataYPointsToPlot[i][1]);
+                }
+                DrawYAxisNumbers(dc, dataYPointsToPlot[i][2].ToString(), (double)dataYPointsToPlot[i][3]);
             }
         }
 
@@ -134,10 +137,13 @@ namespace Assignment6.Diagram
         private void DrawIntervalsXAxis(DrawingContext dc)
         {
             Pen xAxisPen = new Pen(Brushes.Gray, axesTickThickness);
-            foreach (ArrayList pointToPlot in dataXPointsToPlot)
+            for (int i = 0; i < dataXPointsToPlot.Count; i++)
             {
-                dc.DrawLine(xAxisPen, (Point)pointToPlot[0], (Point)pointToPlot[1]);
-                DrawXAxisNumbers(dc, (string)pointToPlot[2].ToString(), (double)pointToPlot[3]);
+                if (i > 0)
+                {
+                    dc.DrawLine(xAxisPen, (Point)dataXPointsToPlot[i][0], (Point)dataXPointsToPlot[i][1]);
+                }
+                DrawXAxisNumbers(dc, (string)dataXPointsToPlot[i][2].ToString(), (double)dataXPointsToPlot[i][3]);
             }
         }
 

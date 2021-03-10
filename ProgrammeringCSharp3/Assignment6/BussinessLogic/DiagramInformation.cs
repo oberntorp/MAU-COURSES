@@ -47,6 +47,15 @@ namespace BussinessLogic
         public double IntervalDistanceYAxis { get => pixelIntervalYAxis; }
         public double IntervalDistanceXAxis { get => pixelIntervalXAxis; }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="titleFromGui"></param>
+        /// <param name="intervalXFromGui"></param>
+        /// <param name="IntervalYFromGui"></param>
+        /// <param name="divisionsXFromGui"></param>
+        /// <param name="divisionsYFromGui"></param>
+        /// <param name="diagramContainerHeight"></param>
         public DiagramInformation(string titleFromGui, int intervalXFromGui, int IntervalYFromGui, int divisionsXFromGui, int divisionsYFromGui, double diagramContainerHeight)
         {
             Title = titleFromGui;
@@ -56,7 +65,7 @@ namespace BussinessLogic
             DivisionsY = divisionsYFromGui;
             DataPoints = new Dictionary<string, Point>();
             HeightOfAxes = diagramContainerHeight - OffsetYAxis;
-            WidthOfAxes = HeightOfAxes * 1.5;
+            WidthOfAxes = HeightOfAxes * 0.8;
 
             pixelIntervalYAxis = (HeightOfAxes - OffsetYAxis) / DivisionsY;
             pixelIntervalXAxis = (WidthOfAxes - OffsetXAxis) / DivisionsX;
@@ -93,6 +102,19 @@ namespace BussinessLogic
             }
 
             return (DataPoints.Count > nbrPointsBeforeAdd);
+        }
+
+        /// <summary>
+        /// Remove a datapoint
+        /// </summary>
+        /// <param name="dataPointToRemove">DataPoint being removed</param>
+        /// <returns>true/false</returns>
+        public bool RemovePoint(Point dataPointToRemove)
+        {
+            int nbrPointsBeforeRemove = DataPoints.Count();
+            return (nbrPointsBeforeRemove > DataPoints.Count);
+
+            return (DataPoints.Count > nbrPointsBeforeRemove);
         }
 
         public void ClearDiagramPoints()
