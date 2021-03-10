@@ -43,8 +43,7 @@ namespace BussinessLogic
         /// </summary>
         private void CreateIntervalPointsYAxis()
         {
-            double interval = (DiagramDataToDraw.HeightOfAxes - DiagramDataToDraw.OffsetYAxis) / DiagramDataToDraw.DivisionsY;
-            for (double offsetYAxis = DiagramDataToDraw.HeightOfAxes - interval, intervalFigure = DiagramDataToDraw.IntervalY; intervalFigure <= (DiagramDataToDraw.IntervalY * DiagramDataToDraw.DivisionsY); offsetYAxis -= interval, intervalFigure += DiagramDataToDraw.IntervalY)
+            for (double offsetYAxis = DiagramDataToDraw.HeightOfAxes - DiagramDataToDraw.IntervalDistanceYAxis, intervalFigure = DiagramDataToDraw.IntervalY; intervalFigure <= (DiagramDataToDraw.IntervalY * DiagramDataToDraw.DivisionsY); offsetYAxis -= DiagramDataToDraw.IntervalDistanceYAxis, intervalFigure += DiagramDataToDraw.IntervalY)
             {
                 ArrayList pointArray = new ArrayList();
                 pointArray.Add(new Point(45, offsetYAxis));
@@ -61,8 +60,7 @@ namespace BussinessLogic
         /// </summary>
         private void CreateIntervalPointssXAxis()
         {
-            double interval = (DiagramDataToDraw.WidthOfAxes - DiagramDataToDraw.OffsetXAxis) / DiagramDataToDraw.DivisionsX;
-            for (double offsetXAxis = interval + DiagramDataToDraw.OffsetXAxis, intervalFigure = DiagramDataToDraw.IntervalX; intervalFigure <= (DiagramDataToDraw.IntervalX * DiagramDataToDraw.DivisionsX); offsetXAxis += interval, intervalFigure += DiagramDataToDraw.IntervalX)
+            for (double offsetXAxis = DiagramDataToDraw.IntervalDistanceXAxis + DiagramDataToDraw.OffsetXAxis, intervalFigure = DiagramDataToDraw.IntervalX; intervalFigure <= (DiagramDataToDraw.IntervalX * DiagramDataToDraw.DivisionsX); offsetXAxis += DiagramDataToDraw.IntervalDistanceXAxis, intervalFigure += DiagramDataToDraw.IntervalX)
             {
                 ArrayList pointArray = new ArrayList();
                 pointArray.Add(new Point(offsetXAxis, DiagramDataToDraw.HeightOfAxes - 5));

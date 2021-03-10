@@ -41,6 +41,12 @@ namespace BussinessLogic
         public int OffsetYAxis = 105;
         public int OffsetXAxis = 50;
 
+        private double pixelIntervalYAxis;
+        private double pixelIntervalXAxis;
+
+        public double IntervalDistanceYAxis { get => pixelIntervalYAxis; }
+        public double IntervalDistanceXAxis { get => pixelIntervalXAxis; }
+
         public DiagramInformation(string titleFromGui, int intervalXFromGui, int IntervalYFromGui, int divisionsXFromGui, int divisionsYFromGui, double diagramContainerHeight)
         {
             Title = titleFromGui;
@@ -51,17 +57,20 @@ namespace BussinessLogic
             DataPoints = new Dictionary<string, Point>();
             HeightOfAxes = diagramContainerHeight - OffsetYAxis;
             WidthOfAxes = HeightOfAxes * 1.5;
+
+            pixelIntervalYAxis = (HeightOfAxes - OffsetYAxis) / DivisionsY;
+            pixelIntervalXAxis = (WidthOfAxes - OffsetXAxis) / DivisionsX;
         }
 
         public double ConvertXPointToBeUsed(double XValidatedValue)
         {
-            return (((WidthOfAxes - OffsetYAxis) / DivisionsX) * XValidatedValue);
+            return OffsetXAxis + (IntervalDistanceXAxis * XValidatedValue);
         }
 
 
         public double ConvertYPointToBeUsed(double YValidatedValue)
         {
-            return (((HeightOfAxes - OffsetYAxis) / DivisionsY) * YValidatedValue);
+            return HeightOfAxes - (IntervalDistanceYAxis * (YValidatedValue / IntervalY));
         }
 
         public void SortPointsAccordingToXAxis()
