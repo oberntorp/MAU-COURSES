@@ -48,14 +48,14 @@ namespace BussinessLogic
         public double IntervalDistanceXAxis { get => pixelIntervalXAxis; }
 
         /// <summary>
-        /// Constructor
+        /// Constructor, initializes the class with information fromthe GUI
         /// </summary>
-        /// <param name="titleFromGui"></param>
-        /// <param name="intervalXFromGui"></param>
-        /// <param name="IntervalYFromGui"></param>
-        /// <param name="divisionsXFromGui"></param>
-        /// <param name="divisionsYFromGui"></param>
-        /// <param name="diagramContainerHeight"></param>
+        /// <param name="titleFromGui">The title of the diagram</param>
+        /// <param name="intervalXFromGui">X axis interval</param>
+        /// <param name="IntervalYFromGui">Y axis interval </param>
+        /// <param name="divisionsXFromGui">Number of divisions of X axis</param>
+        /// <param name="divisionsYFromGui">Number of divisions of X axis</param>
+        /// <param name="diagramContainerHeight">The height of the diagram container of GUI</param>
         public DiagramInformation(string titleFromGui, int intervalXFromGui, int IntervalYFromGui, int divisionsXFromGui, int divisionsYFromGui, double diagramContainerHeight)
         {
             Title = titleFromGui;
@@ -71,27 +71,48 @@ namespace BussinessLogic
             pixelIntervalXAxis = (WidthOfAxes - OffsetXAxis) / DivisionsX;
         }
 
+        /// <summary>
+        /// Converts an X point value to corresponding X cordinate
+        /// </summary>
+        /// <param name="XValidatedValue">XValue to convert/param>
+        /// <returns>X corrdinate</returns>
         public double ConvertXPointToBeUsed(double XValidatedValue)
         {
             return OffsetXAxis + (IntervalDistanceXAxis * XValidatedValue);
         }
 
-
+        /// <summary>
+        /// Converts an Y point value to corresponding Y cordinate
+        /// </summary>
+        /// <param name="YValidatedValue">YValue to convert</param>
+        /// <returns>Y cordinate</returns>
         public double ConvertYPointToBeUsed(double YValidatedValue)
         {
             return HeightOfAxes - (IntervalDistanceYAxis * (YValidatedValue / IntervalY));
         }
 
+        /// <summary>
+        /// Sort Points according to X axis value
+        /// </summary>
         public void SortPointsAccordingToXAxis()
         {
             DataPoints = DataPoints.OrderBy(p => p.Value.X).ToDictionary(x => x.Key, x => x.Value);
         }
 
+        /// <summary>
+        /// Sort Points according to Y axis value
+        /// </summary>
         public void SortPointsAccordingToYAxis()
         {
             DataPoints = DataPoints.OrderByDescending(p => p.Value.Y).ToDictionary(x => x.Key, x => x.Value);
         }
 
+        /// <summary>
+        /// Adds a point
+        /// </summary>
+        /// <param name="XValidatedValue">x value</param>
+        /// <param name="YValidatedValue">Y value</param>
+        /// <returns>Bool indicating if successfull</returns>
         public bool AddPoint(double XValidatedValue, double YValidatedValue)
         {
             int nbrPointsBeforeAdd = DataPoints.Count();
@@ -117,16 +138,28 @@ namespace BussinessLogic
             return (DataPoints.Count > nbrPointsBeforeRemove);
         }
 
+        /// <summary>
+        /// Clear diagram points
+        /// </summary>
         public void ClearDiagramPoints()
         {
             DataPoints.Clear();
         }
 
+        /// <summary>
+        /// Gets the Id of last added point
+        /// </summary>
+        /// <returns>Id of last added point</returns>
         public string GetOriginalNumberFromPointIdLastAdded()
         {
             return DataPoints.Last().Key;
         }
 
+        /// <summary>
+        /// Check if a particular Point exists
+        /// </summary>
+        /// <param name="checkIfExist">Point to check if it exists</param>
+        /// <returns>true/false</returns>
         public bool DoesPointExist(Point checkIfExist)
         {
             return DataPoints.ContainsValue(checkIfExist);
