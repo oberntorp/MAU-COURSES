@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assignment6.BussinessLogic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -56,7 +57,8 @@ namespace BussinessLogic
         /// <param name="divisionsXFromGui">Number of divisions of X axis</param>
         /// <param name="divisionsYFromGui">Number of divisions of X axis</param>
         /// <param name="diagramContainerHeight">The height of the diagram container of GUI</param>
-        public DiagramInformation(string titleFromGui, int intervalXFromGui, int IntervalYFromGui, int divisionsXFromGui, int divisionsYFromGui, double diagramContainerHeight)
+        /// <param name="diagramContainerWidth">The width of the diagram container of GUI</param>
+        public DiagramInformation(string titleFromGui, int intervalXFromGui, int IntervalYFromGui, int divisionsXFromGui, int divisionsYFromGui, double diagramContainerHeight, double diagramContainerWidth)
         {
             Title = titleFromGui;
             IntervalX = intervalXFromGui;
@@ -64,8 +66,11 @@ namespace BussinessLogic
             DivisionsX = divisionsXFromGui;
             DivisionsY = divisionsYFromGui;
             DataPoints = new Dictionary<string, Point>();
-            HeightOfAxes = diagramContainerHeight - OffsetYAxis;
-            WidthOfAxes = HeightOfAxes * 0.8;
+
+            DiagramDimentionsCalculator scaleCalculator = new DiagramDimentionsCalculator(HeightOfAxes, HeightOfAxes, diagramContainerWidth, diagramContainerHeight, OffsetXAxis, OffsetYAxis);
+
+            HeightOfAxes = scaleCalculator.CalculatedHeight;
+            WidthOfAxes = scaleCalculator.CalculatedWidth;
 
             pixelIntervalYAxis = (HeightOfAxes - OffsetYAxis) / DivisionsY;
             pixelIntervalXAxis = (WidthOfAxes - OffsetXAxis) / DivisionsX;
@@ -130,12 +135,13 @@ namespace BussinessLogic
         /// </summary>
         /// <param name="dataPointToRemove">DataPoint being removed</param>
         /// <returns>true/false</returns>
-        public bool RemovePoint(Point dataPointToRemove)
+        public bool RemovePoint(int dataPointToRemove)
         {
             int nbrPointsBeforeRemove = DataPoints.Count();
+            string keyOfObjectToRemove = "";
+            keyOfObjectToRemove = DataPoints.Keys.ToArray()[dataPointToRemove];
+            DataPoints.Remove(keyOfObjectToRemove);
             return (nbrPointsBeforeRemove > DataPoints.Count);
-
-            return (DataPoints.Count > nbrPointsBeforeRemove);
         }
 
         /// <summary>

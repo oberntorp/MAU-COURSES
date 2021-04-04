@@ -30,10 +30,11 @@ namespace BussinessLogic
         /// <param name="intervalYAxis">This is the diagram interval Y axis from the GUI</param>
         /// <param name="divisionsXAxis">This is the diagram divisions X axis from the GUI</param>
         /// <param name="divisionsYAxis">This is the diagram divisions Y axis from the GUI</param>
-        /// <param name="widthOfDiagramGrid">The width of the diagram containing the grid (used to calculate the size of the diagram)</param>
-        public void CreateDiagramInformationObject(string title, int intervalXAxis, int intervalYAxis, int divisionsXAxis, int divisionsYAxis, double heightOfDiagramGrid)
+        /// <param name="heightOfDiagramGrid">The height of the grid containing the diagram (used to calculate the size of the diagram)</param>
+        /// <param name="widthOfDiagramGrid">The width of the grid containing the diagram (used to calculate the size of the diagram)</param>
+        public void CreateDiagramInformationObject(string title, int intervalXAxis, int intervalYAxis, int divisionsXAxis, int divisionsYAxis, double heightOfDiagramGrid, double widthOfDiagramGrid)
         {
-            DiagramInformation = new DiagramInformation(title, intervalXAxis, intervalYAxis, divisionsXAxis, divisionsYAxis, heightOfDiagramGrid);
+            DiagramInformation = new DiagramInformation(title, intervalXAxis, intervalYAxis, divisionsXAxis, divisionsYAxis, heightOfDiagramGrid, widthOfDiagramGrid);
         }
 
         /// <summary>

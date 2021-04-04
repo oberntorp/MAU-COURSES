@@ -43,7 +43,7 @@ namespace Assignment6
         {
             if (AllDataEntered(diagramHandler.DiagramInformation))
             {
-                diagramHandler.CreateDiagramInformationObject(DiaTitleTextBox.Text, int.Parse(DiaIntervalXAxisTextBox.Text), int.Parse(DiaIntervalYAxisTextBox.Text), int.Parse(DiaDivisionsXAxisTextBox.Text), int.Parse(DiaDivisionsYAxisTextBox.Text), DiagramGrid.RowDefinitions[0].ActualHeight);
+                diagramHandler.CreateDiagramInformationObject(DiaTitleTextBox.Text, int.Parse(DiaIntervalXAxisTextBox.Text), int.Parse(DiaIntervalYAxisTextBox.Text), int.Parse(DiaDivisionsXAxisTextBox.Text), int.Parse(DiaDivisionsYAxisTextBox.Text), DiagramGrid.RowDefinitions[0].ActualHeight, DiagramGrid.ColumnDefinitions[1].ActualWidth);
                 diagramHandler.CreatePointsGenerator();
                 diagramGenerator = new DiagramGenerator(DiagramGrid.ColumnDefinitions[0].ActualWidth, DiagramGrid.RowDefinitions[0].ActualHeight, diagramHandler.DiagramInformation, diagramHandler.IntervalPointsGenerator.YPointsUsedInDiagramGeneration, diagramHandler.IntervalPointsGenerator.XPointsUsedInDiagramGeneration);
                 DiagramGrid.Children.Add(diagramGenerator);
@@ -259,9 +259,18 @@ namespace Assignment6
             SavePointsInDiagramGenerator();
         }
 
+        /// <summary>
+        /// Event Handler for clicking "Remove Point"
+        /// </summary>
+        /// <param name="sender">The Button initiating the click</param>
+        /// <param name="e">Event arguments</param>
         private void RemovePointButton_Click(object sender, RoutedEventArgs e)
         {
-
+            int indexOfPointRemove = PointsListBox.SelectedIndex;
+            diagramHandler.DiagramInformation.RemovePoint(indexOfPointRemove);
+            PointsListBox.Items.Remove(PointsListBox.SelectedItem);
+            diagramHandler.UpdatePointsGeneratorDiagramPoints();
+            UpdateDiagramGeneratorAndGenerateDiagram();
         }
     }
 }
